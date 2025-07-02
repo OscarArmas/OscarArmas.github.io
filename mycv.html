@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscar A — Senior MLOps Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent: #ffffff;
+            --border: #2a2a2a;
+            --hover: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 3rem;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.2s ease;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.5;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: all 0.2s ease;
+            letter-spacing: -0.01em;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        .btn-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.2s ease;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Sections */
+        section {
+            padding: 8rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            min-width: 200px;
+        }
+
+        .section-content {
+            flex: 1;
+            margin-left: 4rem;
+        }
+
+        /* About Section */
+        .about-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 700px;
+            letter-spacing: -0.01em;
+        }
+
+        .about-text p {
+            margin-bottom: 2rem;
+        }
+
+        .credentials {
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .credential-item {
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+        }
+
+        .credential-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .credential-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        /* Experience Section */
+        .experience-list {
+            list-style: none;
+        }
+
+        .experience-item {
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 0;
+            transition: all 0.2s ease;
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-item:hover {
+            padding-left: 2rem;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .experience-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .experience-date {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .experience-company {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .company-logo {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            filter: brightness(0.9);
+            transition: filter 0.2s ease;
+        }
+
+        .company-logo:hover {
+            filter: brightness(1);
+        }
+
+        .experience-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 600px;
+            letter-spacing: -0.01em;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.01em;
+            transition: color 0.2s ease;
+        }
+
+        .skill-list li:hover {
+            color: var(--text-primary);
+        }
+
+        /* Projects Section */
+        .projects-content {
+            text-align: left;
+        }
+
+        .projects-content h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .projects-content p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            letter-spacing: -0.01em;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .service-item {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-number {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .service-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
+        }
+
+        /* Team Section */
+        .team-intro {
+            margin-bottom: 4rem;
+        }
+
+        .team-intro h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .team-intro p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 600px;
+            letter-spacing: -0.01em;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .team-member {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-role {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .member-bio {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
+        }
+
+        .studio-header {
+            margin-bottom: 6rem;
+        }
+
+        .studio-tagline {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            letter-spacing: -0.01em;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-item {
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+        }
+
+        .contact-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .contact-value a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-value a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: -0.01em;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 0 1.5rem;
+            }
+
+            section {
+                padding: 6rem 1.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 2rem;
+                margin-bottom: 4rem;
+            }
+
+            .section-content {
+                margin-left: 0;
+            }
+
+            .section-title {
+                min-width: auto;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .experience-item:hover {
+                padding-left: 0;
+            }
+
+            .company-logo {
+                width: 20px;
+                height: 20px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Smooth animations */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="logo">Oscar A</a>
+            <ul class="nav-links">
+                <li><a href="#neostudio">NeoStudio</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-label">Senior MLOps Engineer</div>
+            <h1>Building scalable AI solutions for production environments</h1>
+            <p class="hero-description">
+                Specialized in MLOps infrastructure, machine learning platforms, and AI automation. 
+                Transforming complex ML workflows into robust, production-ready systems.
+            </p>
+            <div class="hero-cta">
+                <a href="#neostudio" class="btn">Explore NeoStudio</a>
+                <a href="#experience" class="btn-link">View experience →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NeoStudio Section -->
+    <section id="neostudio" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">NeoStudio</div>
+            <div class="section-content">
+                <div class="studio-header">
+                    <p class="studio-tagline">
+                        A specialized consultancy focused on transforming businesses through intelligent AI implementations. 
+                        We build custom MLOps platforms, automate complex workflows, and scale machine learning operations 
+                        for forward-thinking organizations.
+                    </p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-item">
+                        <div class="service-number">01</div>
+                        <h3 class="service-title">MLOps Platform Development</h3>
+                        <p class="service-description">
+                            End-to-end MLOps infrastructure design and implementation. From CI/CD pipelines to model monitoring, 
+                            we build robust platforms that scale with your ML initiatives using Kubernetes, Databricks, and cloud-native technologies.
+                        </p>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">02</div>
+                        <h3 class="service-title">AI Strategy & Implementation</h3>
+                        <p class="service-description">
+                            Strategic AI adoption consulting for enterprises. We assess your current capabilities, design implementation 
+                            roadmaps, and guide teams through successful AI transformations that deliver measurable business value.
+                        </p>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">03</div>
+                        <h3 class="service-title">Machine Learning Engineering</h3>
+                        <p class="service-description">
+                            Production-ready ML systems development. We architect scalable solutions for real-time inference, 
+                            batch processing, and model serving that handle enterprise-scale workloads with reliability and performance.
+                        </p>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">04</div>
+                        <h3 class="service-title">Data Infrastructure & Analytics</h3>
+                        <p class="service-description">
+                            Modern data stack implementation and optimization. From data lakes to real-time streaming, 
+                            we design infrastructure that enables data-driven decision making and supports ML workflows at scale.
+                        </p>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">05</div>
+                        <h3 class="service-title">Team Training & Enablement</h3>
+                        <p class="service-description">
+                            Technical training programs for engineering teams. We conduct workshops on MLOps best practices, 
+                            AI implementation strategies, and modern tooling to accelerate your team's capabilities and adoption.
+                        </p>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">06</div>
+                        <h3 class="service-title">Technical Due Diligence</h3>
+                        <p class="service-description">
+                            Comprehensive evaluation of AI/ML systems for investors and acquirers. We assess technical architecture, 
+                            scalability potential, and implementation quality to inform strategic decisions.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="team-intro">
+                    <h3>Our Team</h3>
+                    <p>
+                        A collective of seasoned engineers, data scientists, and AI specialists who have built and scaled 
+                        ML systems at unicorn startups and Fortune 500 companies. We bring hands-on experience from the trenches 
+                        of production AI deployments.
+                    </p>
+                </div>
+
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-role">Founder & Lead MLOps Engineer</div>
+                        <div class="member-name">Oscar A</div>
+                        <p class="member-bio">
+                            Senior MLOps Engineer with 4+ years building production ML platforms at Clara, Rappi, and LexisNexis. 
+                            Specializes in Kubernetes-based ML infrastructure and enterprise AI adoption.
+                        </p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-role">Senior Data Engineer</div>
+                        <div class="member-name">Available Position</div>
+                        <p class="member-bio">
+                            We're expanding our team with experienced data engineers who share our passion for building 
+                            scalable data infrastructure and enabling ML at enterprise scale.
+                        </p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-role">ML Research Scientist</div>
+                        <div class="member-name">Available Position</div>
+                        <p class="member-bio">
+                            Looking for researchers with expertise in NLP, computer vision, or deep learning who want to 
+                            bridge the gap between cutting-edge research and production implementations.
+                        </p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-role">DevOps Specialist</div>
+                        <div class="member-name">Available Position</div>
+                        <p class="member-bio">
+                            Seeking cloud infrastructure experts with experience in Kubernetes, Terraform, and CI/CD 
+                            who understand the unique requirements of ML workloads.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 4rem;">
+                    <a href="#contact" class="btn">Start a project</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">About</div>
+            <div class="section-content">
+                <div class="about-text">
+                    <p>
+                        I'm a Senior MLOps Engineer with over 4 years of experience building machine learning infrastructure 
+                        at scale. I've led MLOps initiatives at unicorn startups like Clara and established companies like LexisNexis, 
+                        designing platforms that serve millions of users.
+                    </p>
+                    <p>
+                        My expertise spans the entire ML lifecycle—from research and experimentation to production deployment 
+                        and monitoring. I specialize in Kubernetes, Databricks, and cloud-native architectures that enable 
+                        teams to iterate quickly while maintaining reliability.
+                    </p>
+                    <p>
+                        Computer Systems Engineer from ESCOM-IPN with advanced training in Machine Learning from Stanford 
+                        and Neural Networks specialization. Currently driving AI adoption and operational excellence 
+                        in enterprise environments.
+                    </p>
+                </div>
+                
+                <div class="credentials">
+                    <div class="credential-item">
+                        <div class="credential-label">Education</div>
+                        <div class="credential-value">Computer Systems Engineer, B.S.<br>ESCOM, IPN — CGPA 90/100</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">Location</div>
+                        <div class="credential-value">Mexico City, Mexico</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">Experience</div>
+                        <div class="credential-value">4+ years in ML/AI<br>Currently at LexisNexis</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">Specialization</div>
+                        <div class="credential-value">MLOps, AI Infrastructure<br>Production ML Systems</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">Experience</div>
+            <div class="section-content">
+                <ul class="experience-list">
+                    <li class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Sr Engineer MLOps & AI</div>
+                            <div class="experience-date">Current</div>
+                        </div>
+                        <div class="experience-company">
+                            <img src="https://logo.clearbit.com/lexisnexis.com" alt="LexisNexis" class="company-logo lexisnexis" onerror="this.style.display='none'">
+                            LexisNexis
+                        </div>
+                        <div class="experience-description">
+                            Leading the adoption of AI/ML best practices across engineering teams to improve operational reliability. 
+                            Contributing enhancements to internal MLOps tooling and infrastructure, simplifying development and deployment processes.
+                        </div>
+                    </li>
+                    
+                    <li class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Sr. Machine Learning Engineer / MLOps</div>
+                            <div class="experience-date">Feb 2023 – Sep 2024</div>
+                        </div>
+                        <div class="experience-company">
+                            <img src="https://logo.clearbit.com/clara.com" alt="Clara" class="company-logo clara" onerror="this.style.display='none'">
+                            Clara
+                        </div>
+                        <div class="experience-description">
+                            Established the MLOps team from scratch, building the complete ML lifecycle for personalization and risk domains 
+                            in a unicorn startup. Designed and built a Databricks-based MLOps platform using Kubernetes, MLflow, Terraform, 
+                            Airflow, and Docker, enabling full CI/CD, monitoring, and inference capabilities.
+                        </div>
+                    </li>
+                    
+                    <li class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Machine Learning Engineer</div>
+                            <div class="experience-date">Feb 2022 – Feb 2023</div>
+                        </div>
+                        <div class="experience-company">
+                            <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" class="company-logo rappi" onerror="this.style.display='none'">
+                            Rappi
+                        </div>
+                        <div class="experience-description">
+                            Built and maintained high-availability microservices (Python/Go) serving ML solutions to millions of users. 
+                            Automated ML model training and deployment through CI/CD pipelines with Kubernetes and Airflow. 
+                            Executed comprehensive stress testing using Locust and JMeter.
+                        </div>
+                    </li>
+                    
+                    <li class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">Data Scientist</div>
+                            <div class="experience-date">Jul 2021 – Feb 2022</div>
+                        </div>
+                        <div class="experience-company">
+                            <img src="https://logo.clearbit.com/merqueo.com" alt="Merqueo" class="company-logo merqueo" onerror="this.style.display='none'">
+                            Merqueo
+                        </div>
+                        <div class="experience-description">
+                            Monitored and maintained recommender systems serving personalized content. Prototyped new solutions using 
+                            Neo4j and Elasticsearch. Automated ETL processes leveraging AWS Lambda and S3, developing key performance 
+                            indicators for system evaluation.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">Skills</div>
+            <div class="section-content">
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Languages & Frameworks</h3>
+                        <ul class="skill-list">
+                            <li>Python (6 years)</li>
+                            <li>Golang (2 years)</li>
+                            <li>SQL (5 years)</li>
+                            <li>JavaScript (2 years)</li>
+                            <li>FastAPI, Flask</li>
+                            <li>TensorFlow, PyTorch</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>MLOps & Infrastructure</h3>
+                        <ul class="skill-list">
+                            <li>Kubernetes, Docker</li>
+                            <li>Databricks, MLflow</li>
+                            <li>Terraform, Helm</li>
+                            <li>Airflow, Jenkins</li>
+                            <li>ArgoCD, Git</li>
+                            <li>AWS (EKS, Lambda, S3)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Machine Learning</h3>
+                        <ul class="skill-list">
+                            <li>Hugging Face, Transformers</li>
+                            <li>Spacy, NLTK</li>
+                            <li>Ray, Distributed Computing</li>
+                            <li>Feature Stores</li>
+                            <li>Model Monitoring</li>
+                            <li>A/B Testing</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Data & Cloud</h3>
+                        <ul class="skill-list">
+                            <li>PostgreSQL, BigQuery</li>
+                            <li>Elasticsearch, Redis</li>
+                            <li>MongoDB, DynamoDB</li>
+                            <li>Snowflake, Data Warehousing</li>
+                            <li>AWS, Cloud Architecture</li>
+                            <li>ETL/ELT Pipelines</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">Projects</div>
+            <div class="section-content">
+                <div class="projects-content">
+                    <h3>Selected Work</h3>
+                    <p>
+                        I've developed numerous projects spanning web development, machine learning, data science, 
+                        and automation. Each project represents an exploration of new technologies and solutions 
+                        to real-world problems, from ML platforms to web scrapers and data visualization tools.
+                    </p>
+                    <a href="https://github.com/o?tab=repositories" target="_blank" class="btn">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">Contact</div>
+            <div class="section-content">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">
+                            <a href="mailto:.exe@gmail.com">.exe@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">
+                            <a href="tel:+525551625252">+52 55516252</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">GitHub</div>
+                        <div class="contact-value">
+                            <a href="https://github.com/o?tab=repositories" target="_blank">View repositories</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">Location</div>
+                        <div class="contact-value">Mexico City, Mexico</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2025 Oscar A. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -10% 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect
+        let lastScrollY = window.scrollY;
+        const navbar = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        // Add subtle parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
