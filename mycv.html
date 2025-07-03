@@ -141,50 +141,55 @@
 
         .hero-visual {
             display: flex;
-            justify-content: center;
+            flex-direction: row;
+            justify-content: space-between;
             align-items: center;
             position: relative;
-            min-width: 350px;
+            min-width: 600px;
             height: 400px;
+            gap: 3rem;
         }
 
         .hero-avatar {
             position: relative;
-            width: 200px;
+            width: 100px;
             height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            flex-shrink: 0;
+            opacity: 0.85;
         }
 
         .hero-avatar:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 20px 40px rgba(255, 255, 255, 0.1));
+            opacity: 1;
+            transform: translateY(-3px) scale(1.05);
+            filter: drop-shadow(0 15px 30px rgba(255, 255, 255, 0.1));
         }
 
         .avatar-image {
             width: 100%;
             height: auto;
-            max-width: 200px;
-            max-height: 300px;
+            max-width: 100px;
+            max-height: 140px;
             object-fit: contain;
             transition: all 0.3s ease;
-            border-radius: 12px;
+            border-radius: 6px;
         }
 
         .avatar-placeholder {
-            width: 200px;
-            height: 280px;
-            border-radius: 12px;
+            width: 100px;
+            height: 130px;
+            border-radius: 6px;
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
             border: 2px solid var(--border);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             color: var(--text-secondary);
             font-weight: 300;
         }
@@ -199,18 +204,18 @@
         /* Message Bubble */
         .message-bubble {
             position: absolute;
-            top: -80px;
-            left: -160px;
+            top: -50px;
+            left: -80px;
             transform: translateX(0) scale(0);
             background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary));
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 1.2rem 1.8rem;
-            min-width: 280px;
-            max-width: 300px;
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            min-width: 180px;
+            max-width: 200px;
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
             z-index: 10;
         }
@@ -296,17 +301,17 @@
         /* Quick Messages */
         .quick-messages {
             position: absolute;
-            top: -140px;
-            left: -50px;
+            top: -80px;
+            left: -20px;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem;
+            border-radius: 10px;
+            padding: 0.8rem;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            min-width: 220px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-width: 160px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .quick-messages.show {
@@ -339,21 +344,21 @@
 
         .message-trigger {
             position: absolute;
-            top: 8px;
-            left: 8px;
-            width: 30px;
-            height: 30px;
+            top: 5px;
+            left: 5px;
+            width: 22px;
+            height: 22px;
             background: var(--text-primary);
             color: var(--bg-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             cursor: pointer;
             transition: all 0.3s ease;
             animation: bounce 2s infinite;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
         }
 
         .message-trigger:hover {
@@ -368,6 +373,171 @@
         }
 
         /* Status and floating elements removed - keeping only message bubble */
+
+        /* Work Portfolio Panel */
+        .work-portfolio-panel {
+            flex: 1;
+            width: 100%;
+            max-width: 480px;
+            background: linear-gradient(145deg, var(--bg-secondary), rgba(255, 255, 255, 0.02));
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .work-portfolio-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(91, 200, 250, 0.5), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .work-portfolio-panel:hover {
+            transform: scale(1.03);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Portfolio Carousel */
+        .portfolio-carousel {
+            padding: 2rem;
+        }
+
+        .carousel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .carousel-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .carousel-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .carousel-btn {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .slide-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 1rem 0;
+        }
+
+        .mermaid-diagram {
+            margin: 1rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #1a1a1a;
+            padding: 1rem;
+        }
+
+        .mermaid-diagram svg {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+        }
+
+        .slide-description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 1rem 0 0 0;
+            line-height: 1.4;
+        }
+
+        /* Carousel Indicators */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .indicator.active {
+            background: var(--text-primary);
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Animations */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
 
         .hero-label {
             font-size: 0.85rem;
@@ -1051,7 +1221,90 @@
                 margin-top: 0.6rem;
             }
 
-            /* Mobile styles for removed elements cleaned up */
+            /* Mobile adjustments for hero visual */
+            .hero-visual {
+                flex-direction: column;
+                min-width: 300px;
+                height: auto;
+                gap: 1.5rem;
+            }
+
+            .hero-avatar {
+                width: 80px;
+                opacity: 0.9;
+            }
+
+            .avatar-image {
+                max-width: 80px;
+                max-height: 110px;
+            }
+
+            .avatar-placeholder {
+                width: 80px;
+                height: 100px;
+                font-size: 1.2rem;
+            }
+
+            .message-bubble {
+                top: -40px;
+                left: -60px;
+                min-width: 150px;
+                max-width: 170px;
+                padding: 0.7rem 1rem;
+            }
+
+            .message-trigger {
+                width: 18px;
+                height: 18px;
+                font-size: 0.6rem;
+            }
+
+            .quick-messages {
+                top: -60px;
+                left: -10px;
+                min-width: 140px;
+            }
+
+            /* Mobile styles for work portfolio panel */
+            .work-portfolio-panel {
+                max-width: 340px;
+                margin: 0 auto;
+                transform: scale(1) !important;
+            }
+
+            .portfolio-carousel {
+                padding: 1.5rem;
+            }
+
+            .carousel-header h3 {
+                font-size: 1rem;
+            }
+
+            .carousel-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 1rem;
+            }
+
+            .slide-content {
+                padding: 1.2rem;
+            }
+
+            .slide-content h4 {
+                font-size: 0.9rem;
+            }
+
+            .slide-description {
+                font-size: 0.8rem;
+            }
+
+            .mermaid-diagram {
+                padding: 0.8rem;
+            }
+
+            .mermaid-diagram svg {
+                max-height: 150px;
+            }
 
             .message-bubble {
                 top: -60px;
@@ -1407,7 +1660,150 @@
                 </div>
             </div>
 
-            <!-- Floating Tech Stack removed -->
+            <!-- Work Status & Portfolio Panel -->
+            <div class="work-portfolio-panel">
+                <!-- Portfolio Carousel -->
+                <div class="portfolio-carousel">
+                    <div class="carousel-header">
+                        <h3>Technical Diagrams</h3>
+                        <div class="carousel-controls">
+                            <button class="carousel-btn prev" onclick="previousSlide()">‹</button>
+                            <button class="carousel-btn next" onclick="nextSlide()">›</button>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-container">
+                        <div class="carousel-track" id="carouselTrack">
+                            <!-- MLOps Architecture -->
+                            <div class="carousel-slide active">
+                                <div class="slide-content">
+                                    <h4>MLOps Platform Architecture</h4>
+                                    <div class="mermaid-diagram">
+                                        <svg viewBox="0 0 400 300">
+                                            <!-- Simple MLOps diagram representation -->
+                                            <rect x="50" y="20" width="80" height="40" fill="#2a2a2a" stroke="#fff" stroke-width="1" rx="5"/>
+                                            <text x="90" y="45" fill="#fff" text-anchor="middle" font-size="10">Data Sources</text>
+                                            
+                                            <rect x="160" y="20" width="80" height="40" fill="#2a2a2a" stroke="#5ac8fa" stroke-width="2" rx="5"/>
+                                            <text x="200" y="45" fill="#fff" text-anchor="middle" font-size="10">ML Pipeline</text>
+                                            
+                                            <rect x="270" y="20" width="80" height="40" fill="#2a2a2a" stroke="#27ca3f" stroke-width="2" rx="5"/>
+                                            <text x="310" y="45" fill="#fff" text-anchor="middle" font-size="10">Production</text>
+                                            
+                                            <rect x="50" y="100" width="80" height="40" fill="#2a2a2a" stroke="#ffbd2e" stroke-width="1" rx="5"/>
+                                            <text x="90" y="125" fill="#fff" text-anchor="middle" font-size="10">Kubernetes</text>
+                                            
+                                            <rect x="160" y="100" width="80" height="40" fill="#2a2a2a" stroke="#ff6b6b" stroke-width="1" rx="5"/>
+                                            <text x="200" y="125" fill="#fff" text-anchor="middle" font-size="10">MLflow</text>
+                                            
+                                            <rect x="270" y="100" width="80" height="40" fill="#2a2a2a" stroke="#9b59b6" stroke-width="1" rx="5"/>
+                                            <text x="310" y="125" fill="#fff" text-anchor="middle" font-size="10">Monitoring</text>
+                                            
+                                            <!-- Arrows -->
+                                            <path d="M 130 40 L 160 40" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 240 40 L 270 40" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 90 60 L 90 100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 200 60 L 200 100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 310 60 L 310 100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            
+                                            <defs>
+                                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                                    <polygon points="0 0, 10 3.5, 0 7" fill="#fff"/>
+                                                </marker>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                    <p class="slide-description">End-to-end MLOps platform serving 50+ models in production</p>
+                                </div>
+                            </div>
+
+                            <!-- Cloud Architecture -->
+                            <div class="carousel-slide">
+                                <div class="slide-content">
+                                    <h4>Cloud Infrastructure</h4>
+                                    <div class="mermaid-diagram">
+                                        <svg viewBox="0 0 400 300">
+                                            <!-- Cloud architecture diagram -->
+                                            <circle cx="200" cy="50" r="30" fill="#2a2a2a" stroke="#5ac8fa" stroke-width="2"/>
+                                            <text x="200" y="55" fill="#fff" text-anchor="middle" font-size="10">AWS</text>
+                                            
+                                            <rect x="50" y="120" width="80" height="40" fill="#2a2a2a" stroke="#27ca3f" stroke-width="1" rx="5"/>
+                                            <text x="90" y="145" fill="#fff" text-anchor="middle" font-size="10">EKS</text>
+                                            
+                                            <rect x="160" y="120" width="80" height="40" fill="#2a2a2a" stroke="#ffbd2e" stroke-width="1" rx="5"/>
+                                            <text x="200" y="145" fill="#fff" text-anchor="middle" font-size="10">Lambda</text>
+                                            
+                                            <rect x="270" y="120" width="80" height="40" fill="#2a2a2a" stroke="#ff6b6b" stroke-width="1" rx="5"/>
+                                            <text x="310" y="145" fill="#fff" text-anchor="middle" font-size="10">S3</text>
+                                            
+                                            <rect x="105" y="220" width="80" height="40" fill="#2a2a2a" stroke="#9b59b6" stroke-width="1" rx="5"/>
+                                            <text x="145" y="245" fill="#fff" text-anchor="middle" font-size="10">RDS</text>
+                                            
+                                            <rect x="215" y="220" width="80" height="40" fill="#2a2a2a" stroke="#e67e22" stroke-width="1" rx="5"/>
+                                            <text x="255" y="245" fill="#fff" text-anchor="middle" font-size="10">ElastiCache</text>
+                                            
+                                            <!-- Connections -->
+                                            <path d="M 180 70 L 90 120" stroke="#fff" stroke-width="1"/>
+                                            <path d="M 200 80 L 200 120" stroke="#fff" stroke-width="1"/>
+                                            <path d="M 220 70 L 310 120" stroke="#fff" stroke-width="1"/>
+                                            <path d="M 110 160 L 145 220" stroke="#fff" stroke-width="1"/>
+                                            <path d="M 220 160 L 255 220" stroke="#fff" stroke-width="1"/>
+                                        </svg>
+                                    </div>
+                                    <p class="slide-description">Scalable cloud infrastructure handling 10M+ daily requests</p>
+                                </div>
+                            </div>
+
+                            <!-- Data Pipeline -->
+                            <div class="carousel-slide">
+                                <div class="slide-content">
+                                    <h4>Data Pipeline Flow</h4>
+                                    <div class="mermaid-diagram">
+                                        <svg viewBox="0 0 400 300">
+                                            <!-- Data pipeline flow -->
+                                            <rect x="20" y="50" width="70" height="30" fill="#2a2a2a" stroke="#3498db" stroke-width="1" rx="5"/>
+                                            <text x="55" y="70" fill="#fff" text-anchor="middle" font-size="9">Raw Data</text>
+                                            
+                                            <rect x="120" y="50" width="70" height="30" fill="#2a2a2a" stroke="#e74c3c" stroke-width="1" rx="5"/>
+                                            <text x="155" y="70" fill="#fff" text-anchor="middle" font-size="9">Processing</text>
+                                            
+                                            <rect x="220" y="50" width="70" height="30" fill="#2a2a2a" stroke="#f39c12" stroke-width="1" rx="5"/>
+                                            <text x="255" y="70" fill="#fff" text-anchor="middle" font-size="9">Features</text>
+                                            
+                                            <rect x="320" y="50" width="70" height="30" fill="#2a2a2a" stroke="#2ecc71" stroke-width="1" rx="5"/>
+                                            <text x="355" y="70" fill="#fff" text-anchor="middle" font-size="9">Model</text>
+                                            
+                                            <rect x="70" y="150" width="70" height="30" fill="#2a2a2a" stroke="#9b59b6" stroke-width="1" rx="5"/>
+                                            <text x="105" y="170" fill="#fff" text-anchor="middle" font-size="9">Validation</text>
+                                            
+                                            <rect x="170" y="150" width="70" height="30" fill="#2a2a2a" stroke="#1abc9c" stroke-width="1" rx="5"/>
+                                            <text x="205" y="170" fill="#fff" text-anchor="middle" font-size="9">Deploy</text>
+                                            
+                                            <rect x="270" y="150" width="70" height="30" fill="#2a2a2a" stroke="#e67e22" stroke-width="1" rx="5"/>
+                                            <text x="305" y="170" fill="#fff" text-anchor="middle" font-size="9">Monitor</text>
+                                            
+                                            <!-- Flow arrows -->
+                                            <path d="M 90 65 L 120 65" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 190 65 L 220 65" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 290 65 L 320 65" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 155 80 L 105 150" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 140 165 L 170 165" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 240 165 L 270 165" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                        </svg>
+                                    </div>
+                                    <p class="slide-description">Automated data pipeline with continuous model validation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-indicators">
+                        <span class="indicator active" onclick="goToSlide(0)"></span>
+                        <span class="indicator" onclick="goToSlide(1)"></span>
+                        <span class="indicator" onclick="goToSlide(2)"></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1973,12 +2369,69 @@
             }
         });
 
+        // Carousel functionality
+        let currentSlide = 0;
+        const totalSlides = 3;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.indicator');
+            const track = document.getElementById('carouselTrack');
+            
+            // Remove active class from all slides and indicators
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // Add active class to current slide and indicator
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            // Move track
+            track.style.transform = `translateX(-${index * 100}%)`;
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % totalSlides;
+            showSlide(nextIndex);
+        }
+
+        function previousSlide() {
+            const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prevIndex);
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        // Auto-advance carousel every 8 seconds
+        let carouselInterval;
+        
+        function startCarousel() {
+            carouselInterval = setInterval(nextSlide, 8000);
+        }
+
+        function stopCarousel() {
+            clearInterval(carouselInterval);
+        }
+
         // Load saved message on page load
         document.addEventListener('DOMContentLoaded', function() {
             // Load saved custom message
             const savedMessage = localStorage.getItem('oscarCustomMessage');
             if (savedMessage) {
                 document.getElementById('bubbleMessage').textContent = savedMessage;
+            }
+
+            // Start carousel auto-advance
+            startCarousel();
+
+            // Pause carousel on hover
+            const carouselContainer = document.querySelector('.carousel-container');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', stopCarousel);
+                carouselContainer.addEventListener('mouseleave', startCarousel);
             }
 
             // Prevent bubble from closing when clicking inside it
