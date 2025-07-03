@@ -843,7 +843,7 @@
             z-index: 10;
         }
 
-        /* Positioning items around the circle */
+        /* Positioning items around the circle - 6 items */
         .experience-item:nth-child(1) {
             top: -40px;
             left: 50%;
@@ -851,12 +851,12 @@
         }
 
         .experience-item:nth-child(2) {
-            top: 30px;
+            top: 15px;
             right: -40px;
         }
 
         .experience-item:nth-child(3) {
-            bottom: 30px;
+            bottom: 45px;
             right: -40px;
         }
 
@@ -864,6 +864,16 @@
             bottom: -40px;
             left: 50%;
             transform: translateX(-50%);
+        }
+
+        .experience-item:nth-child(5) {
+            bottom: 45px;
+            left: -40px;
+        }
+
+        .experience-item:nth-child(6) {
+            top: 15px;
+            left: -40px;
         }
 
         .experience-item .company-logo {
@@ -943,6 +953,205 @@
 
         .company-logo:hover {
             filter: brightness(1);
+        }
+
+        /* Companies Section */
+        .companies-intro {
+            margin-bottom: 4rem;
+        }
+
+        .companies-intro h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .companies-intro p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 700px;
+            letter-spacing: -0.01em;
+        }
+
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .company-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-primary);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .company-card.current {
+            border-color: #27ca3f;
+            background: linear-gradient(145deg, var(--bg-secondary), rgba(39, 202, 63, 0.05));
+        }
+
+        .company-card.current::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #27ca3f, #5ac8fa);
+        }
+
+        .company-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 60px;
+            position: relative;
+        }
+
+        .company-logo-large {
+            height: 48px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+            filter: brightness(0.9);
+            transition: filter 0.2s ease;
+        }
+
+        .company-logo-large:hover {
+            filter: brightness(1);
+        }
+
+        .company-fallback {
+            display: none;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .company-logo-large[style*="display: none"] + .company-fallback {
+            display: flex;
+        }
+
+        .company-info {
+            flex: 1;
+        }
+
+        .company-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .company-role {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .company-period {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-type {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: var(--bg-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .company-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.5;
+            letter-spacing: -0.01em;
+        }
+
+        .current-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #27ca3f;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Companies Stats */
+        .companies-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         /* Skills Section */
@@ -1106,7 +1315,7 @@
         }
 
         .studio-header {
-            margin-bottom: 6rem;
+            margin-bottom: 4rem;
         }
 
         .studio-tagline {
@@ -1117,6 +1326,68 @@
             margin-bottom: 2rem;
             max-width: 700px;
             letter-spacing: -0.01em;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-secondary);
+        }
+
+        .tab-btn.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--text-primary);
+            animation: tabUnderline 0.3s ease;
+        }
+
+        @keyframes tabUnderline {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .contact-grid {
             display: grid;
@@ -1263,6 +1534,74 @@
                 top: -60px;
                 left: -10px;
                 min-width: 140px;
+            }
+
+            /* Mobile styles for tabs */
+            .tab-navigation {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                margin-bottom: 2rem;
+            }
+
+            .tab-btn {
+                font-size: 0.9rem;
+                padding: 0.8rem 1rem;
+                flex: 1;
+                min-width: 80px;
+                text-align: center;
+            }
+
+            /* Mobile styles for companies section */
+            .companies-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .company-card {
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+
+            .company-logo-container {
+                height: 50px;
+            }
+
+            .company-logo-large {
+                height: 40px;
+                max-width: 100px;
+            }
+
+            .company-fallback {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .company-name {
+                font-size: 1.2rem;
+            }
+
+            .company-role {
+                font-size: 0.9rem;
+            }
+
+            .company-description {
+                font-size: 0.85rem;
+            }
+
+            .companies-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .current-badge {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
             }
 
             /* Mobile styles for work portfolio panel */
@@ -1550,12 +1889,12 @@
         <div class="nav-container">
             <a href="#home" class="logo">Oscar A</a>
             <ul class="nav-links">
-                <li><a href="#neostudio">NeoStudio</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
+                <li><a href="#companies">Companies</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#neostudio">NeoStudio</a></li>
             </ul>
         </div>
     </nav>
@@ -1571,12 +1910,12 @@
             <p class="hero-description">
                 Specialized in MLOps infrastructure, machine learning platforms, and AI automation. 
                 Leading enterprise-scale AI transformations with 4+ years of hands-on experience 
-                at unicorn startups and Fortune 500 companies.
+                across unicorns, FinTech, scale-ups, enterprises, and EdTech companies.
             </p>
             
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <div class="hero-stat-number">7+</div>
+                    <div class="hero-stat-number">4+</div>
                     <div class="hero-stat-label">Years Experience</div>
                 </div>
                 <div class="hero-stat">
@@ -1594,8 +1933,8 @@
             </div>
             
             <div class="hero-cta">
-                <a href="#neostudio" class="btn btn-primary">Explore NeoStudio</a>
-                <a href="#experience" class="btn-link">View Experience</a>
+                <a href="#companies" class="btn btn-primary">View Companies</a>
+                <a href="#contact" class="btn-link">Get in Touch</a>
             </div>
         </div>
 
@@ -1808,127 +2147,7 @@
     </section>
 
     <!-- NeoStudio Section -->
-    <section id="neostudio" class="fade-in">
-        <div class="section-header">
-            <div class="section-title">NeoStudio</div>
-            <div class="section-content">
-                <div class="studio-header">
-                    <p class="studio-tagline">
-                        A specialized consultancy focused on transforming businesses through intelligent AI implementations. 
-                        We build custom MLOps platforms, automate complex workflows, and scale machine learning operations 
-                        for forward-thinking organizations.
-                    </p>
-                </div>
 
-                <div class="services-grid">
-                    <div class="service-item">
-                        <div class="service-number">01</div>
-                        <h3 class="service-title">MLOps Platform Development</h3>
-                        <p class="service-description">
-                            End-to-end MLOps infrastructure design and implementation. From CI/CD pipelines to model monitoring, 
-                            we build robust platforms that scale with your ML initiatives using Kubernetes, Databricks, and cloud-native technologies.
-                        </p>
-                    </div>
-
-                    <div class="service-item">
-                        <div class="service-number">02</div>
-                        <h3 class="service-title">AI Strategy & Implementation</h3>
-                        <p class="service-description">
-                            Strategic AI adoption consulting for enterprises. We assess your current capabilities, design implementation 
-                            roadmaps, and guide teams through successful AI transformations that deliver measurable business value.
-                        </p>
-                    </div>
-
-                    <div class="service-item">
-                        <div class="service-number">03</div>
-                        <h3 class="service-title">Machine Learning Engineering</h3>
-                        <p class="service-description">
-                            Production-ready ML systems development. We architect scalable solutions for real-time inference, 
-                            batch processing, and model serving that handle enterprise-scale workloads with reliability and performance.
-                        </p>
-                    </div>
-
-                    <div class="service-item">
-                        <div class="service-number">04</div>
-                        <h3 class="service-title">Data Infrastructure & Analytics</h3>
-                        <p class="service-description">
-                            Modern data stack implementation and optimization. From data lakes to real-time streaming, 
-                            we design infrastructure that enables data-driven decision making and supports ML workflows at scale.
-                        </p>
-                    </div>
-
-                    <div class="service-item">
-                        <div class="service-number">05</div>
-                        <h3 class="service-title">Team Training & Enablement</h3>
-                        <p class="service-description">
-                            Technical training programs for engineering teams. We conduct workshops on MLOps best practices, 
-                            AI implementation strategies, and modern tooling to accelerate your team's capabilities and adoption.
-                        </p>
-                    </div>
-
-                    <div class="service-item">
-                        <div class="service-number">06</div>
-                        <h3 class="service-title">Technical Due Diligence</h3>
-                        <p class="service-description">
-                            Comprehensive evaluation of AI/ML systems for investors and acquirers. We assess technical architecture, 
-                            scalability potential, and implementation quality to inform strategic decisions.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="team-intro">
-                    <h3>Our Team</h3>
-                    <p>
-                        A collective of seasoned engineers, data scientists, and AI specialists who have built and scaled 
-                        ML systems at unicorn startups and Fortune 500 companies. We bring hands-on experience from the trenches 
-                        of production AI deployments.
-                    </p>
-                </div>
-
-                <div class="team-grid">
-                    <div class="team-member">
-                        <div class="member-role">Founder & Lead MLOps Engineer</div>
-                        <div class="member-name">Oscar A</div>
-                        <p class="member-bio">
-                            Senior MLOps Engineer with 4+ years building production ML platforms at Clara, Rappi, and LexisNexis. 
-                            Specializes in Kubernetes-based ML infrastructure and enterprise AI adoption.
-                        </p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="member-role">Senior Data Engineer</div>
-                        <div class="member-name">Available Position</div>
-                        <p class="member-bio">
-                            We're expanding our team with experienced data engineers who share our passion for building 
-                            scalable data infrastructure and enabling ML at enterprise scale.
-                        </p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="member-role">ML Research Scientist</div>
-                        <div class="member-name">Available Position</div>
-                        <p class="member-bio">
-                            Looking for researchers with expertise in NLP, computer vision, or deep learning who want to 
-                            bridge the gap between cutting-edge research and production implementations.
-                        </p>
-                    </div>
-
-                    <div class="team-member">
-                        <div class="member-role">DevOps Specialist</div>
-                        <div class="member-name">Available Position</div>
-                        <p class="member-bio">
-                            Seeking cloud infrastructure experts with experience in Kubernetes, Terraform, and CI/CD 
-                            who understand the unique requirements of ML workloads.
-                        </p>
-                    </div>
-                </div>
-
-                <div style="margin-top: 4rem;">
-                    <a href="#contact" class="btn">Start a project</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- About Section -->
     <section id="about" class="fade-in">
@@ -1938,7 +2157,8 @@
                 <div class="about-text">
                     <p>
                         I'm a Senior MLOps Engineer with over 4 years of experience building machine learning infrastructure 
-                        at scale. I've led MLOps initiatives at unicorn startups like Clara and established companies like LexisNexis, 
+                        at scale. I've worked across diverse organizations including unicorn startups (Clara, Rappi), 
+                        FinTech companies (Baubap), scale-ups (Merqueo), established enterprises (LexisNexis), and EdTech (CoderHouse), 
                         designing platforms that serve millions of users.
                     </p>
                     <p>
@@ -1949,7 +2169,7 @@
                     <p>
                         Computer Systems Engineer from ESCOM-IPN with advanced training in Machine Learning from Stanford 
                         and Neural Networks specialization. Currently driving AI adoption and operational excellence 
-                        in enterprise environments.
+                        in enterprise environments. Experience spans from FinTech and EdTech to unicorn startups and Fortune 500 companies.
                     </p>
                 </div>
                 
@@ -1964,7 +2184,7 @@
                     </div>
                     <div class="credential-item">
                         <div class="credential-label">Experience</div>
-                        <div class="credential-value">4+ years in ML/AI<br>Currently at LexisNexis</div>
+                        <div class="credential-value">4+ years in ML/AI<br>6 Companies • 2 Unicorns</div>
                     </div>
                     <div class="credential-item">
                         <div class="credential-label">Specialization</div>
@@ -1975,83 +2195,143 @@
         </div>
     </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="fade-in">
+
+
+    <!-- Companies Section -->
+    <section id="companies" class="fade-in">
         <div class="section-header">
-            <div class="section-title">Experience</div>
+            <div class="section-title">Companies</div>
             <div class="section-content">
-                <div class="experience-container">
-                    <div class="experience-circle">
-                        <div class="experience-item">
-                            <img src="https://logo.clearbit.com/lexisnexis.com" alt="LexisNexis" class="company-logo" onerror="this.style.display='none'">
-                            <div class="experience-title-short">Sr MLOps Engineer</div>
-                            <div class="experience-tooltip" style="top: 100px; left: -160px;">
-                                <div class="tooltip-title">Sr Engineer MLOps & AI</div>
-                                <div class="tooltip-company">
-                                    <img src="https://logo.clearbit.com/lexisnexis.com" alt="LexisNexis" class="company-logo" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
-                                    LexisNexis
-                                </div>
-                                <div class="tooltip-date">Current</div>
-                                <div class="tooltip-description">
-                                    Leading the adoption of AI/ML best practices across engineering teams to improve operational reliability. 
-                                    Contributing enhancements to internal MLOps tooling and infrastructure, simplifying development and deployment processes.
-                                </div>
+                <div class="companies-intro">
+                    <h3>Organizations I've worked with</h3>
+                    <p>
+                        Throughout my career, I've had the privilege of contributing to 6 diverse organizations, 
+                        from FinTech and unicorn startups to established enterprises and EdTech platforms, 
+                        each offering unique challenges and opportunities to build scalable AI/ML solutions.
+                    </p>
+                </div>
+
+                <div class="companies-grid">
+                    <div class="company-card current">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/lexisnexis.com" alt="LexisNexis" class="company-logo-large" onerror="this.style.display='none'">
+                            <div class="company-fallback">LN</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">LexisNexis</div>
+                            <div class="company-role">Sr Engineer MLOps & AI</div>
+                            <div class="company-period">2023 - Present</div>
+                            <div class="company-type">Enterprise • Legal Tech</div>
+                            <div class="company-description">
+                                Leading AI/ML adoption across engineering teams, enhancing MLOps tooling and infrastructure 
+                                for improved operational reliability and deployment processes.
                             </div>
                         </div>
-                        
-                        <div class="experience-item">
-                            <img src="https://logo.clearbit.com/clara.com" alt="Clara" class="company-logo" onerror="this.style.display='none'">
-                            <div class="experience-title-short">Sr ML Engineer</div>
-                            <div class="experience-tooltip" style="top: -20px; left: -340px;">
-                                <div class="tooltip-title">Sr. Machine Learning Engineer / MLOps</div>
-                                <div class="tooltip-company">
-                                    <img src="https://logo.clearbit.com/clara.com" alt="Clara" class="company-logo" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
-                                    Clara
-                                </div>
-                                <div class="tooltip-date">Feb 2023 – Sep 2024</div>
-                                <div class="tooltip-description">
-                                    Established the MLOps team from scratch, building the complete ML lifecycle for personalization and risk domains 
-                                    in a unicorn startup. Designed and built a Databricks-based MLOps platform using Kubernetes, MLflow, Terraform, 
-                                    Airflow, and Docker, enabling full CI/CD, monitoring, and inference capabilities.
-                                </div>
+                        <div class="current-badge">Current</div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/clara.com" alt="Clara" class="company-logo-large" onerror="this.style.display='none'">
+                            <div class="company-fallback">CL</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">Clara</div>
+                            <div class="company-role">Sr. Machine Learning Engineer / MLOps</div>
+                            <div class="company-period">2022 - 2023</div>
+                            <div class="company-type">Unicorn • FinTech</div>
+                            <div class="company-description">
+                                Built end-to-end MLOps platform from scratch, implementing CI/CD pipelines, 
+                                model monitoring, and serving infrastructure for 1M+ users.
                             </div>
                         </div>
-                        
-                        <div class="experience-item">
-                            <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" class="company-logo" onerror="this.style.display='none'">
-                            <div class="experience-title-short">ML Engineer</div>
-                            <div class="experience-tooltip" style="bottom: 70px; left: -340px;">
-                                <div class="tooltip-title">Machine Learning Engineer</div>
-                                <div class="tooltip-company">
-                                    <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" class="company-logo" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
-                                    Rappi
-                                </div>
-                                <div class="tooltip-date">Feb 2022 – Feb 2023</div>
-                                <div class="tooltip-description">
-                                    Built and maintained high-availability microservices (Python/Go) serving ML solutions to millions of users. 
-                                    Automated ML model training and deployment through CI/CD pipelines with Kubernetes and Airflow. 
-                                    Executed comprehensive stress testing using Locust and JMeter.
-                                </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" class="company-logo-large" onerror="this.style.display='none'">
+                            <div class="company-fallback">RP</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">Rappi</div>
+                            <div class="company-role">Machine Learning Engineer</div>
+                            <div class="company-period">2022</div>
+                            <div class="company-type">Unicorn • On-Demand Delivery</div>
+                            <div class="company-description">
+                                Developed ML solutions for demand forecasting and logistics optimization, 
+                                working with massive datasets and real-time prediction systems.
                             </div>
                         </div>
-                        
-                        <div class="experience-item">
-                            <img src="https://logo.clearbit.com/merqueo.com" alt="Merqueo" class="company-logo" onerror="this.style.display='none'">
-                            <div class="experience-title-short">Data Scientist</div>
-                            <div class="experience-tooltip" style="bottom: 100px; left: -160px;">
-                                <div class="tooltip-title">Data Scientist</div>
-                                <div class="tooltip-company">
-                                    <img src="https://logo.clearbit.com/merqueo.com" alt="Merqueo" class="company-logo" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
-                                    Merqueo
-                                </div>
-                                <div class="tooltip-date">Jul 2021 – Feb 2022</div>
-                                <div class="tooltip-description">
-                                    Monitored and maintained recommender systems serving personalized content. Prototyped new solutions using 
-                                    Neo4j and Elasticsearch. Automated ETL processes leveraging AWS Lambda and S3, developing key performance 
-                                    indicators for system evaluation.
-                                </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/merqueo.com" alt="Merqueo" class="company-logo-large" onerror="this.style.display='none'">
+                            <div class="company-fallback">MQ</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">Merqueo</div>
+                            <div class="company-role">Data Scientist</div>
+                            <div class="company-period">Jul 2021 - Feb 2022</div>
+                            <div class="company-type">Scale-up • E-commerce</div>
+                            <div class="company-description">
+                                Maintained recommender systems, prototyped solutions with Neo4j and Elasticsearch, 
+                                automated ETL processes with AWS Lambda and S3.
                             </div>
                         </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/coderhouse.com" alt="CoderHouse" class="company-logo-large" onerror="this.style.display='none'">
+                            <div class="company-fallback">CH</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">CoderHouse</div>
+                            <div class="company-role">Data Scientist Tutor</div>
+                            <div class="company-period">Oct 2021 - Oct 2022</div>
+                            <div class="company-type">EdTech • Online Education</div>
+                            <div class="company-description">
+                                Mentored students in data science fundamentals, machine learning algorithms, and Python programming. 
+                                Guided career transitions into data science through hands-on projects and industry best practices.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/baubap.com" alt="Baubap" class="company-logo-large" onerror="this.style.display='none'">
+                            <div class="company-fallback">BB</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">Baubap</div>
+                            <div class="company-role">Data Scientist</div>
+                            <div class="company-period">Aug 2020 - Mar 2021</div>
+                            <div class="company-type">FinTech • Micro-lending</div>
+                            <div class="company-description">
+                                Developed EDA analysis to boost predictive models and validate service feasibility. 
+                                Applied NLP models for text clustering and trained multiple ML models (Regressions, Trees, XGBoost) for experimentation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="companies-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Unicorns</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label">Users Served</div>
                     </div>
                 </div>
             </div>
@@ -2067,9 +2347,9 @@
                     <div class="skill-category">
                         <h3>Languages & Frameworks</h3>
                         <ul class="skill-list">
-                            <li>Python (6 years)</li>
+                            <li>Python (4+ years)</li>
                             <li>Golang (2 years)</li>
-                            <li>SQL (5 years)</li>
+                            <li>SQL (4+ years)</li>
                             <li>JavaScript (2 years)</li>
                             <li>FastAPI, Flask</li>
                             <li>TensorFlow, PyTorch</li>
@@ -2167,6 +2447,172 @@
                         <div class="contact-label">Location</div>
                         <div class="contact-value">Mexico City, Mexico</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NeoStudio Section with Tabs -->
+    <section id="neostudio" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">NeoStudio</div>
+            <div class="section-content">
+                <div class="studio-header">
+                    <p class="studio-tagline">
+                        A specialized consultancy focused on transforming businesses through intelligent AI implementations. 
+                        We build custom MLOps platforms, automate complex workflows, and scale machine learning operations 
+                        for forward-thinking organizations.
+                    </p>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button class="tab-btn active" onclick="showTab('services')">Services</button>
+                    <button class="tab-btn" onclick="showTab('team')">Team</button>
+                    <button class="tab-btn" onclick="showTab('approach')">Approach</button>
+                </div>
+
+                <!-- Services Tab -->
+                <div id="services-tab" class="tab-content active">
+                    <div class="services-grid">
+                        <div class="service-item">
+                            <div class="service-number">01</div>
+                            <h3 class="service-title">MLOps Platform Development</h3>
+                            <p class="service-description">
+                                End-to-end MLOps infrastructure design and implementation. From CI/CD pipelines to model monitoring, 
+                                we build robust platforms that scale with your ML initiatives using Kubernetes, Databricks, and cloud-native technologies.
+                            </p>
+                        </div>
+
+                        <div class="service-item">
+                            <div class="service-number">02</div>
+                            <h3 class="service-title">AI Strategy & Implementation</h3>
+                            <p class="service-description">
+                                Strategic AI adoption consulting for enterprises. We assess your current capabilities, design implementation 
+                                roadmaps, and guide teams through successful AI transformations that deliver measurable business value.
+                            </p>
+                        </div>
+
+                        <div class="service-item">
+                            <div class="service-number">03</div>
+                            <h3 class="service-title">Machine Learning Engineering</h3>
+                            <p class="service-description">
+                                Production-ready ML systems development. We architect scalable solutions for real-time inference, 
+                                batch processing, and model serving that handle enterprise-scale workloads with reliability and performance.
+                            </p>
+                        </div>
+
+                        <div class="service-item">
+                            <div class="service-number">04</div>
+                            <h3 class="service-title">Data Infrastructure & Analytics</h3>
+                            <p class="service-description">
+                                Modern data stack implementation and optimization. From data lakes to real-time streaming, 
+                                we design infrastructure that enables data-driven decision making and supports ML workflows at scale.
+                            </p>
+                        </div>
+
+                        <div class="service-item">
+                            <div class="service-number">05</div>
+                            <h3 class="service-title">Team Training & Enablement</h3>
+                            <p class="service-description">
+                                Technical training programs for engineering teams. We conduct workshops on MLOps best practices, 
+                                AI implementation strategies, and modern tooling to accelerate your team's capabilities and adoption.
+                            </p>
+                        </div>
+
+                        <div class="service-item">
+                            <div class="service-number">06</div>
+                            <h3 class="service-title">Technical Due Diligence</h3>
+                            <p class="service-description">
+                                Comprehensive evaluation of AI/ML systems for investors and acquirers. We assess technical architecture, 
+                                scalability potential, and implementation quality to inform strategic decisions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Tab -->
+                <div id="team-tab" class="tab-content">
+                    <div class="team-intro">
+                        <h3>Our Team</h3>
+                        <p>
+                            A collective of seasoned engineers, data scientists, and AI specialists who have built and scaled 
+                            ML systems at unicorn startups and Fortune 500 companies. We bring hands-on experience from the trenches 
+                            of production AI deployments.
+                        </p>
+                    </div>
+
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-role">Founder & Lead MLOps Engineer</div>
+                            <div class="member-name">Oscar A</div>
+                                                    <p class="member-bio">
+                            Senior MLOps Engineer with 4+ years building production ML platforms across unicorns (Clara, Rappi), 
+                            FinTech (Baubap), scale-ups (Merqueo), enterprises (LexisNexis), and EdTech (CoderHouse). Specializes in Kubernetes-based ML infrastructure and enterprise AI adoption.
+                        </p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-role">Senior Data Engineer</div>
+                            <div class="member-name">Available Position</div>
+                            <p class="member-bio">
+                                We're expanding our team with experienced data engineers who share our passion for building 
+                                scalable data infrastructure and enabling ML at enterprise scale.
+                            </p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-role">ML Research Scientist</div>
+                            <div class="member-name">Available Position</div>
+                            <p class="member-bio">
+                                Looking for researchers with expertise in NLP, computer vision, or deep learning who want to 
+                                bridge the gap between cutting-edge research and production implementations.
+                            </p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-role">DevOps Specialist</div>
+                            <div class="member-name">Available Position</div>
+                            <p class="member-bio">
+                                Seeking cloud infrastructure experts with experience in Kubernetes, Terraform, and CI/CD 
+                                who understand the unique requirements of ML workloads.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Approach Tab -->
+                <div id="approach-tab" class="tab-content">
+                    <div class="approach-section">
+                        <h3>Our Approach</h3>
+                        <p>
+                            We believe in building sustainable AI solutions that grow with your organization. Our methodology combines 
+                            technical expertise with business acumen to deliver systems that not only work but create lasting value.
+                        </p>
+                        
+                        <div class="approach-grid">
+                            <div class="approach-item">
+                                <h4>Discovery & Assessment</h4>
+                                <p>Understanding your current state, challenges, and goals through comprehensive technical and business analysis.</p>
+                            </div>
+                            <div class="approach-item">
+                                <h4>Strategic Planning</h4>
+                                <p>Developing clear roadmaps with defined milestones, timelines, and success metrics that align with your objectives.</p>
+                            </div>
+                            <div class="approach-item">
+                                <h4>Implementation & Deployment</h4>
+                                <p>Building and deploying solutions using proven methodologies, best practices, and rigorous testing procedures.</p>
+                            </div>
+                            <div class="approach-item">
+                                <h4>Optimization & Support</h4>
+                                <p>Continuous monitoring, performance tuning, and knowledge transfer to ensure long-term success and team capability.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 4rem;">
+                    <a href="#contact" class="btn">Start a project</a>
                 </div>
             </div>
         </div>
@@ -2414,6 +2860,33 @@
 
         function stopCarousel() {
             clearInterval(carouselInterval);
+        }
+
+        // Tab functionality for NeoStudio
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab content
+            const selectedTab = document.getElementById(tabName + '-tab');
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            // Add active class to the correct button
+            const activeButton = document.querySelector(`[onclick="showTab('${tabName}')"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
         }
 
         // Load saved message on page load
