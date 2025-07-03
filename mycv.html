@@ -36,9 +36,9 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 2rem 3rem;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
+            padding: 1.5rem 3rem;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(30px);
             border-bottom: 1px solid var(--border);
             z-index: 1000;
             transition: all 0.3s ease;
@@ -53,30 +53,60 @@
         }
 
         .logo {
-            font-size: 1.1rem;
-            font-weight: 500;
+            font-size: 1.2rem;
+            font-weight: 600;
             color: var(--text-primary);
             text-decoration: none;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.02em;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--text-primary), transparent);
+            opacity: 0.7;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 3rem;
+            gap: 2.5rem;
         }
 
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 400;
-            transition: color 0.2s ease;
-            letter-spacing: -0.01em;
+            transition: all 0.3s ease;
+            letter-spacing: 0.01em;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: var(--text-primary);
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--text-primary);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
         }
 
         /* Hero Section */
@@ -87,38 +117,342 @@
             padding: 0 3rem;
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            justify-content: space-between;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+            flex: 1;
         }
 
-        .hero-label {
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-width: 350px;
+            height: 400px;
+        }
+
+        .hero-avatar {
+            position: relative;
+            width: 200px;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hero-avatar:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 20px 40px rgba(255, 255, 255, 0.1));
+        }
+
+        .avatar-image {
+            width: 100%;
+            height: auto;
+            max-width: 200px;
+            max-height: 300px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+
+        .avatar-placeholder {
+            width: 200px;
+            height: 280px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .placeholder-text {
+            margin-top: 1rem;
+            font-size: 1rem;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Message Bubble */
+        .message-bubble {
+            position: absolute;
+            top: -80px;
+            left: -160px;
+            transform: translateX(0) scale(0);
+            background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            min-width: 280px;
+            max-width: 300px;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .message-bubble.show {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        .message-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 12px solid transparent;
+            border-top-color: var(--bg-secondary);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .bubble-content {
+            position: relative;
+        }
+
+        .bubble-message {
             font-size: 0.9rem;
-            color: var(--text-muted);
+            color: var(--text-primary);
             font-weight: 400;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 2rem;
+            line-height: 1.4;
+            margin-bottom: 0.8rem;
+            text-align: center;
         }
 
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 600;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 2rem;
+        .bubble-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bubble-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 400;
+        }
+
+        .bubble-btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        .bubble-btn.edit {
+            background: var(--bg-primary);
             color: var(--text-primary);
         }
 
-        .hero-description {
-            font-size: 1.3rem;
+        /* Message Input */
+        .message-input {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-input:focus {
+            border-color: var(--text-primary);
+        }
+
+        /* Quick Messages */
+        .quick-messages {
+            position: absolute;
+            top: -140px;
+            left: -50px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .quick-messages.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .quick-messages h4 {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .quick-message-item {
+            padding: 0.5rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
-            font-weight: 300;
-            line-height: 1.5;
-            margin-bottom: 4rem;
-            max-width: 600px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            margin-bottom: 0.3rem;
+        }
+
+        .quick-message-item:hover {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .message-trigger {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 30px;
+            height: 30px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .message-trigger:hover {
+            transform: scale(1.1);
+            background: var(--text-secondary);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
+        }
+
+        /* Status and floating elements removed - keeping only message bubble */
+
+        .hero-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .hero-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.2rem;
+            height: 1px;
+            background: var(--text-muted);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 2.5rem;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            max-width: 700px;
             letter-spacing: -0.01em;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 4rem;
+            max-width: 650px;
+            letter-spacing: -0.005em;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hero-stat-number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         .hero-cta {
@@ -128,35 +462,84 @@
         }
 
         .btn {
-            padding: 1rem 2rem;
+            padding: 1.1rem 2.5rem;
             border: 1px solid var(--border);
             background: transparent;
             color: var(--text-primary);
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 400;
-            transition: all 0.2s ease;
-            letter-spacing: -0.01em;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
             cursor: pointer;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
             background: var(--text-primary);
             color: var(--bg-primary);
             border-color: var(--text-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--text-primary);
+            border-color: var(--text-primary);
         }
 
         .btn-link {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 400;
-            transition: color 0.2s ease;
-            letter-spacing: -0.01em;
+            transition: all 0.3s ease;
+            letter-spacing: 0.01em;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .btn-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-primary);
+            transition: width 0.3s ease;
         }
 
         .btn-link:hover {
             color: var(--text-primary);
+        }
+
+        .btn-link:hover::after {
+            width: 100%;
         }
 
         /* Sections */
@@ -234,55 +617,150 @@
             letter-spacing: -0.01em;
         }
 
-        /* Experience Section */
-        .experience-list {
-            list-style: none;
+        /* Experience Section - Circular Layout */
+        .experience-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            position: relative;
+        }
+
+        .experience-circle {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .experience-circle::before {
+            content: 'Career Journey';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            text-align: center;
+            pointer-events: none;
         }
 
         .experience-item {
-            border-bottom: 1px solid var(--border);
-            padding: 3rem 0;
-            transition: all 0.2s ease;
-        }
-
-        .experience-item:last-child {
-            border-bottom: none;
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
         }
 
         .experience-item:hover {
-            padding-left: 2rem;
+            transform: scale(1.1);
+            border-color: var(--text-primary);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            z-index: 10;
         }
 
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
+        /* Positioning items around the circle */
+        .experience-item:nth-child(1) {
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        .experience-title {
-            font-size: 1.1rem;
+        .experience-item:nth-child(2) {
+            top: 30px;
+            right: -40px;
+        }
+
+        .experience-item:nth-child(3) {
+            bottom: 30px;
+            right: -40px;
+        }
+
+        .experience-item:nth-child(4) {
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .experience-item .company-logo {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-title-short {
+            font-size: 0.7rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        /* Tooltip for experience details */
+        .experience-tooltip {
+            position: absolute;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-width: 320px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .experience-item:hover .experience-tooltip {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .tooltip-title {
+            font-size: 1rem;
             font-weight: 500;
             color: var(--text-primary);
-            letter-spacing: -0.01em;
+            margin-bottom: 0.5rem;
         }
 
-        .experience-date {
+        .tooltip-company {
             font-size: 0.9rem;
-            color: var(--text-muted);
-            font-weight: 400;
-            letter-spacing: -0.01em;
-        }
-
-        .experience-company {
-            font-size: 0.95rem;
             color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.01em;
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
+        }
+
+        .tooltip-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: var(--bg-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .tooltip-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
         }
 
         .company-logo {
@@ -295,15 +773,6 @@
 
         .company-logo:hover {
             filter: brightness(1);
-        }
-
-        .experience-description {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            font-weight: 300;
-            line-height: 1.6;
-            max-width: 600px;
-            letter-spacing: -0.01em;
         }
 
         /* Skills Section */
@@ -535,7 +1004,11 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
             nav {
-                padding: 1.5rem 1.5rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
             }
 
             .nav-links {
@@ -544,6 +1017,76 @@
 
             .hero {
                 padding: 0 1.5rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-visual {
+                min-width: auto;
+                height: 300px;
+                order: -1;
+            }
+
+            .hero-avatar {
+                width: 160px;
+                height: auto;
+            }
+
+            .avatar-image {
+                max-width: 160px;
+                max-height: 240px;
+                border-radius: 8px;
+            }
+
+            .avatar-placeholder {
+                width: 160px;
+                height: 220px;
+                font-size: 2rem;
+                border-radius: 8px;
+            }
+
+            .placeholder-text {
+                font-size: 0.8rem;
+                margin-top: 0.6rem;
+            }
+
+            /* Mobile styles for removed elements cleaned up */
+
+            .message-bubble {
+                top: -60px;
+                left: -120px;
+                min-width: 250px;
+                max-width: 280px;
+                transform: translateX(0) scale(0);
+            }
+
+            .message-bubble.show {
+                transform: translateX(0) scale(1);
+            }
+
+            .bubble-message {
+                font-size: 0.85rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .bubble-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+            }
+
+            .quick-messages {
+                top: -110px;
+                left: -80px;
+                min-width: 180px;
+            }
+
+            .message-trigger {
+                width: 26px;
+                height: 26px;
+                top: 4px;
+                left: 4px;
+                font-size: 0.8rem;
             }
 
             section {
@@ -567,7 +1110,45 @@
             .hero-cta {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
+                gap: 1.5rem;
+            }
+
+            .hero-stats {
+                flex-wrap: wrap;
+                gap: 2rem;
+                padding: 1rem 0;
+            }
+
+            .hero-stat {
+                min-width: calc(50% - 1rem);
+            }
+
+            .hero-stat-number {
+                font-size: 1.5rem;
+            }
+
+            .hero-label {
+                padding-left: 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            .hero-label::before {
+                width: 1rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(2rem, 8vw, 3rem);
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 2rem;
             }
 
             .experience-header {
@@ -575,8 +1156,78 @@
                 gap: 0.5rem;
             }
 
-            .experience-item:hover {
-                padding-left: 0;
+            .experience-container {
+                min-height: 60vh;
+                padding: 2rem 0;
+            }
+
+            .experience-circle {
+                width: 280px;
+                height: 280px;
+            }
+
+            .experience-circle::before {
+                font-size: 1rem;
+            }
+
+            .experience-item {
+                width: 60px;
+                height: 60px;
+                padding: 0.3rem;
+            }
+
+            .experience-item .company-logo {
+                width: 24px;
+                height: 24px;
+                margin-bottom: 0.15rem;
+            }
+
+            .experience-title-short {
+                font-size: 0.6rem;
+                line-height: 1;
+            }
+
+            .experience-tooltip {
+                max-width: 250px;
+                padding: 1rem;
+                font-size: 0.8rem;
+            }
+
+            .tooltip-title {
+                font-size: 0.9rem;
+            }
+
+            .tooltip-company {
+                font-size: 0.8rem;
+            }
+
+            .tooltip-date {
+                font-size: 0.7rem;
+            }
+
+            .tooltip-description {
+                font-size: 0.75rem;
+            }
+
+            /* Reposition tooltips for mobile */
+            .experience-item:nth-child(1) .experience-tooltip {
+                top: 80px !important;
+                left: -125px !important;
+            }
+
+            .experience-item:nth-child(2) .experience-tooltip {
+                top: -30px !important;
+                left: -270px !important;
+            }
+
+            .experience-item:nth-child(3) .experience-tooltip {
+                bottom: 50px !important;
+                left: -270px !important;
+            }
+
+            .experience-item:nth-child(4) .experience-tooltip {
+                bottom: 80px !important;
+                left: -125px !important;
             }
 
             .company-logo {
@@ -660,15 +1311,103 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <div class="hero-label">Senior MLOps Engineer</div>
-            <h1>Building scalable AI solutions for production environments</h1>
+            <h1>Oscar Armas</h1>
+            <p class="hero-subtitle">
+                Building scalable AI solutions for production environments
+            </p>
             <p class="hero-description">
                 Specialized in MLOps infrastructure, machine learning platforms, and AI automation. 
-                Transforming complex ML workflows into robust, production-ready systems.
+                Leading enterprise-scale AI transformations with 4+ years of hands-on experience 
+                at unicorn startups and Fortune 500 companies.
             </p>
-            <div class="hero-cta">
-                <a href="#neostudio" class="btn">Explore NeoStudio</a>
-                <a href="#experience" class="btn-link">View experience →</a>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">7+</div>
+                    <div class="hero-stat-label">Years Experience</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">50+</div>
+                    <div class="hero-stat-label">ML Models Deployed</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">99.9%</div>
+                    <div class="hero-stat-label">Platform Uptime</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">3</div>
+                    <div class="hero-stat-label">Platforms Built</div>
+                </div>
             </div>
+            
+            <div class="hero-cta">
+                <a href="#neostudio" class="btn btn-primary">Explore NeoStudio</a>
+                <a href="#experience" class="btn-link">View Experience</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <!-- Status Control Buttons removed -->
+
+            <!-- Avatar with Status Indicator -->
+            <div class="hero-avatar" onclick="toggleMessageBubble()">
+                <!-- 
+                    INSTRUCCIONES PARA TU IMAGEN DE CUERPO COMPLETO:
+                    1. Guarda tu imagen PNG como "oscar-fullbody.png" en la misma carpeta
+                    2. Descomenta la línea de abajo 
+                    3. Comenta o elimina el div "avatar-placeholder"
+                    
+                    ✨ PERFECTO PARA: Fotos de cuerpo completo, retratos profesionales
+                    ✨ El bubble aparecerá al lado izquierdo sin cubrir tu imagen
+                    ✨ Tamaño recomendado: 300px ancho, cualquier altura
+                -->
+                <img src="oscar-fullbody.png" alt="Oscar Alvarado" class="avatar-image">
+                <!-- <div class="avatar-placeholder">
+                    👤
+                    <div class="placeholder-text">Tu imagen de<br>cuerpo completo<br>aparecerá aquí</div>
+                </div> -->
+                
+                <!-- Message Trigger Button -->
+                <div class="message-trigger" title="Click para ver mi mensaje">💬</div>
+                
+                <!-- Status Indicator removed -->
+
+                <!-- Message Bubble -->
+                <div class="message-bubble" id="messageBubble">
+                    <div class="bubble-content">
+                        <div class="bubble-message" id="bubbleMessage">
+                            ¡Hola! 👋 Soy Oscar, Senior MLOps Engineer. Siempre buscando nuevos desafíos en AI/ML.
+                        </div>
+                        <div class="bubble-actions">
+                            <button class="bubble-btn" onclick="editMessage(event)">✏️ Editar</button>
+                            <button class="bubble-btn" onclick="showQuickMessages(event)">⚡ Rápidos</button>
+                            <button class="bubble-btn" onclick="hideMessageBubble(event)">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Messages Panel -->
+                <div class="quick-messages" id="quickMessages">
+                    <h4>Mensajes Rápidos</h4>
+                    <div class="quick-message-item" onclick="setQuickMessage('¡Hola! 👋 Open to new opportunities in MLOps & AI!')">
+                        🟢 Open to Work
+                    </div>
+                    <div class="quick-message-item" onclick="setQuickMessage('¡Hola! 🚀 Disponible para proyectos de consultoría en ML/AI.')">
+                        💼 Consulting Available  
+                    </div>
+                    <div class="quick-message-item" onclick="setQuickMessage('👨‍💻 Actualmente construyendo plataformas MLOps en LexisNexis.')">
+                        🏢 Currently Working
+                    </div>
+                    <div class="quick-message-item" onclick="setQuickMessage('🎯 Especialista en Kubernetes, Databricks y MLflow. ¡Conectemos!')">
+                        🔧 Tech Expert
+                    </div>
+                    <div class="quick-message-item" onclick="setQuickMessage('📈 4+ años escalando AI en unicorns. Transformando ML en producción.')">
+                        📊 Experience Highlight
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Tech Stack removed -->
         </div>
     </section>
 
@@ -845,70 +1584,80 @@
         <div class="section-header">
             <div class="section-title">Experience</div>
             <div class="section-content">
-                <ul class="experience-list">
-                    <li class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">Sr Engineer MLOps & AI</div>
-                            <div class="experience-date">Current</div>
+                <div class="experience-container">
+                    <div class="experience-circle">
+                        <div class="experience-item">
+                            <img src="https://logo.clearbit.com/lexisnexis.com" alt="LexisNexis" class="company-logo" onerror="this.style.display='none'">
+                            <div class="experience-title-short">Sr MLOps Engineer</div>
+                            <div class="experience-tooltip" style="top: 100px; left: -160px;">
+                                <div class="tooltip-title">Sr Engineer MLOps & AI</div>
+                                <div class="tooltip-company">
+                                    <img src="https://logo.clearbit.com/lexisnexis.com" alt="LexisNexis" class="company-logo" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
+                                    LexisNexis
+                                </div>
+                                <div class="tooltip-date">Current</div>
+                                <div class="tooltip-description">
+                                    Leading the adoption of AI/ML best practices across engineering teams to improve operational reliability. 
+                                    Contributing enhancements to internal MLOps tooling and infrastructure, simplifying development and deployment processes.
+                                </div>
+                            </div>
                         </div>
-                        <div class="experience-company">
-                            <img src="https://logo.clearbit.com/lexisnexis.com" alt="LexisNexis" class="company-logo lexisnexis" onerror="this.style.display='none'">
-                            LexisNexis
+                        
+                        <div class="experience-item">
+                            <img src="https://logo.clearbit.com/clara.com" alt="Clara" class="company-logo" onerror="this.style.display='none'">
+                            <div class="experience-title-short">Sr ML Engineer</div>
+                            <div class="experience-tooltip" style="top: -20px; left: -340px;">
+                                <div class="tooltip-title">Sr. Machine Learning Engineer / MLOps</div>
+                                <div class="tooltip-company">
+                                    <img src="https://logo.clearbit.com/clara.com" alt="Clara" class="company-logo" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
+                                    Clara
+                                </div>
+                                <div class="tooltip-date">Feb 2023 – Sep 2024</div>
+                                <div class="tooltip-description">
+                                    Established the MLOps team from scratch, building the complete ML lifecycle for personalization and risk domains 
+                                    in a unicorn startup. Designed and built a Databricks-based MLOps platform using Kubernetes, MLflow, Terraform, 
+                                    Airflow, and Docker, enabling full CI/CD, monitoring, and inference capabilities.
+                                </div>
+                            </div>
                         </div>
-                        <div class="experience-description">
-                            Leading the adoption of AI/ML best practices across engineering teams to improve operational reliability. 
-                            Contributing enhancements to internal MLOps tooling and infrastructure, simplifying development and deployment processes.
+                        
+                        <div class="experience-item">
+                            <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" class="company-logo" onerror="this.style.display='none'">
+                            <div class="experience-title-short">ML Engineer</div>
+                            <div class="experience-tooltip" style="bottom: 70px; left: -340px;">
+                                <div class="tooltip-title">Machine Learning Engineer</div>
+                                <div class="tooltip-company">
+                                    <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" class="company-logo" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
+                                    Rappi
+                                </div>
+                                <div class="tooltip-date">Feb 2022 – Feb 2023</div>
+                                <div class="tooltip-description">
+                                    Built and maintained high-availability microservices (Python/Go) serving ML solutions to millions of users. 
+                                    Automated ML model training and deployment through CI/CD pipelines with Kubernetes and Airflow. 
+                                    Executed comprehensive stress testing using Locust and JMeter.
+                                </div>
+                            </div>
                         </div>
-                    </li>
-                    
-                    <li class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">Sr. Machine Learning Engineer / MLOps</div>
-                            <div class="experience-date">Feb 2023 – Sep 2024</div>
+                        
+                        <div class="experience-item">
+                            <img src="https://logo.clearbit.com/merqueo.com" alt="Merqueo" class="company-logo" onerror="this.style.display='none'">
+                            <div class="experience-title-short">Data Scientist</div>
+                            <div class="experience-tooltip" style="bottom: 100px; left: -160px;">
+                                <div class="tooltip-title">Data Scientist</div>
+                                <div class="tooltip-company">
+                                    <img src="https://logo.clearbit.com/merqueo.com" alt="Merqueo" class="company-logo" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
+                                    Merqueo
+                                </div>
+                                <div class="tooltip-date">Jul 2021 – Feb 2022</div>
+                                <div class="tooltip-description">
+                                    Monitored and maintained recommender systems serving personalized content. Prototyped new solutions using 
+                                    Neo4j and Elasticsearch. Automated ETL processes leveraging AWS Lambda and S3, developing key performance 
+                                    indicators for system evaluation.
+                                </div>
+                            </div>
                         </div>
-                        <div class="experience-company">
-                            <img src="https://logo.clearbit.com/clara.com" alt="Clara" class="company-logo clara" onerror="this.style.display='none'">
-                            Clara
-                        </div>
-                        <div class="experience-description">
-                            Established the MLOps team from scratch, building the complete ML lifecycle for personalization and risk domains 
-                            in a unicorn startup. Designed and built a Databricks-based MLOps platform using Kubernetes, MLflow, Terraform, 
-                            Airflow, and Docker, enabling full CI/CD, monitoring, and inference capabilities.
-                        </div>
-                    </li>
-                    
-                    <li class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">Machine Learning Engineer</div>
-                            <div class="experience-date">Feb 2022 – Feb 2023</div>
-                        </div>
-                        <div class="experience-company">
-                            <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" class="company-logo rappi" onerror="this.style.display='none'">
-                            Rappi
-                        </div>
-                        <div class="experience-description">
-                            Built and maintained high-availability microservices (Python/Go) serving ML solutions to millions of users. 
-                            Automated ML model training and deployment through CI/CD pipelines with Kubernetes and Airflow. 
-                            Executed comprehensive stress testing using Locust and JMeter.
-                        </div>
-                    </li>
-                    
-                    <li class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">Data Scientist</div>
-                            <div class="experience-date">Jul 2021 – Feb 2022</div>
-                        </div>
-                        <div class="experience-company">
-                            <img src="https://logo.clearbit.com/merqueo.com" alt="Merqueo" class="company-logo merqueo" onerror="this.style.display='none'">
-                            Merqueo
-                        </div>
-                        <div class="experience-description">
-                            Monitored and maintained recommender systems serving personalized content. Prototyped new solutions using 
-                            Neo4j and Elasticsearch. Automated ETL processes leveraging AWS Lambda and S3, developing key performance 
-                            indicators for system evaluation.
-                        </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1092,6 +1841,154 @@
             if (hero && scrolled < window.innerHeight) {
                 hero.style.transform = `translateY(${rate}px)`;
             }
+        });
+
+        // Status management removed - keeping only message bubble functionality
+
+        // Message Bubble Management
+        function toggleMessageBubble() {
+            const bubble = document.getElementById('messageBubble');
+            const quickMessages = document.getElementById('quickMessages');
+            
+            if (bubble.classList.contains('show')) {
+                hideMessageBubble();
+            } else {
+                bubble.classList.add('show');
+                quickMessages.classList.remove('show');
+            }
+        }
+
+        function hideMessageBubble(event) {
+            if (event) event.stopPropagation();
+            const bubble = document.getElementById('messageBubble');
+            const quickMessages = document.getElementById('quickMessages');
+            
+            bubble.classList.remove('show');
+            quickMessages.classList.remove('show');
+        }
+
+        function editMessage(event) {
+            event.stopPropagation();
+            const messageDiv = document.getElementById('bubbleMessage');
+            const currentMessage = messageDiv.textContent;
+            
+            // Create textarea for editing
+            const textarea = document.createElement('textarea');
+            textarea.className = 'message-input';
+            textarea.value = currentMessage;
+            textarea.rows = 3;
+            
+            // Replace message with textarea
+            messageDiv.style.display = 'none';
+            messageDiv.parentNode.insertBefore(textarea, messageDiv);
+            textarea.focus();
+            
+            // Save on Enter, Cancel on Escape
+            textarea.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    saveMessage(textarea.value);
+                } else if (e.key === 'Escape') {
+                    cancelEdit();
+                }
+            });
+            
+            // Save button
+            const actions = document.querySelector('.bubble-actions');
+            actions.innerHTML = `
+                <button class="bubble-btn edit" onclick="saveMessage(document.querySelector('.message-input').value)">💾 Guardar</button>
+                <button class="bubble-btn" onclick="cancelEdit()">✕ Cancelar</button>
+            `;
+        }
+
+        function saveMessage(newMessage) {
+            if (!newMessage.trim()) return;
+            
+            const messageDiv = document.getElementById('bubbleMessage');
+            const textarea = document.querySelector('.message-input');
+            
+            // Update message
+            messageDiv.textContent = newMessage.trim();
+            messageDiv.style.display = 'block';
+            
+            // Remove textarea
+            if (textarea) {
+                textarea.remove();
+            }
+            
+            // Restore original buttons
+            restoreButtons();
+            
+            // Save to localStorage
+            localStorage.setItem('oscarCustomMessage', newMessage.trim());
+        }
+
+        function cancelEdit() {
+            const messageDiv = document.getElementById('bubbleMessage');
+            const textarea = document.querySelector('.message-input');
+            
+            messageDiv.style.display = 'block';
+            if (textarea) {
+                textarea.remove();
+            }
+            
+            restoreButtons();
+        }
+
+        function restoreButtons() {
+            const actions = document.querySelector('.bubble-actions');
+            actions.innerHTML = `
+                <button class="bubble-btn" onclick="editMessage(event)">✏️ Editar</button>
+                <button class="bubble-btn" onclick="showQuickMessages(event)">⚡ Rápidos</button>
+                <button class="bubble-btn" onclick="hideMessageBubble(event)">✕</button>
+            `;
+        }
+
+        function showQuickMessages(event) {
+            event.stopPropagation();
+            const quickMessages = document.getElementById('quickMessages');
+            quickMessages.classList.toggle('show');
+        }
+
+        function setQuickMessage(message) {
+            const messageDiv = document.getElementById('bubbleMessage');
+            messageDiv.textContent = message;
+            
+            // Hide quick messages
+            document.getElementById('quickMessages').classList.remove('show');
+            
+            // Save to localStorage
+            localStorage.setItem('oscarCustomMessage', message);
+        }
+
+        // Close bubble when clicking outside
+        document.addEventListener('click', function(event) {
+            const bubble = document.getElementById('messageBubble');
+            const quickMessages = document.getElementById('quickMessages');
+            const avatar = document.querySelector('.hero-avatar');
+            
+            if (bubble && !avatar.contains(event.target)) {
+                bubble.classList.remove('show');
+                quickMessages.classList.remove('show');
+            }
+        });
+
+        // Load saved message on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved custom message
+            const savedMessage = localStorage.getItem('oscarCustomMessage');
+            if (savedMessage) {
+                document.getElementById('bubbleMessage').textContent = savedMessage;
+            }
+
+            // Prevent bubble from closing when clicking inside it
+            document.getElementById('messageBubble').addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+
+            document.getElementById('quickMessages').addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
         });
     </script>
 </body>
