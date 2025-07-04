@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Oscar A — Senior MLOps Engineer</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0a0a0a',
+                        secondary: '#1a1a1a',
+                        accent: '#3b82f6',
+                        accentLight: '#60a5fa',
+                        accentDark: '#1d4ed8',
+                        success: '#10b981',
+                        warning: '#f59e0b',
+                        error: '#ef4444',
+                        border: '#2a2a2a',
+                        borderLight: '#3a3a3a',
+                        textPrimary: '#ffffff',
+                        textSecondary: '#a0a0a0',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    fontSize: {
+                        'xs': ['0.75rem', { lineHeight: '1rem' }],
+                        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+                        'base': ['1rem', { lineHeight: '1.5rem' }],
+                        'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+                        'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+                        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+                        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+                        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+                        '5xl': ['3rem', { lineHeight: '1' }],
+                        '6xl': ['3.75rem', { lineHeight: '1' }],
+                        '7xl': ['4.5rem', { lineHeight: '1' }],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        glow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)' },
+                            '50%': { boxShadow: '0 0 30px rgba(59, 130, 246, 0.5)' }
+                        }
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full px-6 lg:px-12 py-6 bg-black/90 backdrop-blur-3xl border-b border-border z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#home" class="logo text-xl font-semibold text-white hover:text-accent transition-all duration-300"></a>
+            <ul class="hidden md:flex space-x-8 lg:space-x-12">
+                <li><a href="#about" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">About</a></li>
+                <li><a href="#companies" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Companies</a></li>
+                <li><a href="#skills" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Skills</a></li>
+                <li><a href="#projects" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Projects</a></li>
+                <li><a href="#contact" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Contact</a></li>
+            </ul>
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-white hover:text-accent transition-colors duration-300">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-label">Senior MLOps Engineer</div>
+            <div class="flex items-center gap-6 mb-6">
+                <h1>Oscar Armas</h1>
+                
+                <!-- Avatar with Status Indicator -->
+                <div class="hero-avatar" onclick="toggleMessageBubble()">
+                    <img src="oscar-fullbody.png" alt="Oscar Alvarado">
+                    
+                    <!-- Message Trigger Button -->
+                    <div class="message-trigger" title="Click para ver mi mensaje">💬</div>
+                    
+                    <!-- Message Bubble -->
+                    <div class="message-bubble" id="messageBubble">
+                        <div class="bg-secondary/90 backdrop-blur-xl border border-border rounded-lg p-3 min-w-40 max-w-48 shadow-2xl">
+                            <div class="bubble-message" id="bubbleMessage">
+                                ¡Hola! 👋 Soy Oscar, Senior MLOps Engineer. Siempre buscando nuevos desafíos en AI/ML.
+                            </div>
+                            <div class="bubble-actions">
+                                <button class="bubble-btn" onclick="editMessage(event)">✏️</button>
+                                <button class="bubble-btn" onclick="showQuickMessages(event)">⚡</button>
+                                <button class="bubble-btn" onclick="hideMessageBubble(event)">✕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Messages Panel -->
+                    <div class="quick-messages" id="quickMessages">
+                        <h4>Mensajes Rápidos</h4>
+                        <div class="space-y-1">
+                            <div class="quick-message-item" data-message="¡Hola! 👋 Open to new opportunities in MLOps & AI!">🟢 Open to Work</div>
+                            <div class="quick-message-item" data-message="¡Hola! 🚀 Disponible para proyectos de consultoría en ML/AI.">💼 Consulting Available</div>
+                            <div class="quick-message-item" data-message="👨‍💻 Actualmente construyendo plataformas MLOps en LexisNexis.">🏢 Currently Working</div>
+                            <div class="quick-message-item" data-message="🎯 Especialista en Kubernetes, Databricks y MLflow. ¡Conectemos!">🔧 Tech Expert</div>
+                            <div class="quick-message-item" data-message="📈 4+ años escalando AI en unicorns. Transformando ML en producción.">📊 Experience Highlight</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="hero-subtitle">
+                Building scalable AI solutions for production environments
+            </p>
+            <p class="hero-description">
+                Specialized in MLOps infrastructure, machine learning platforms, and AI automation. 
+                Leading enterprise-scale AI transformations with 4+ years of hands-on experience 
+                across unicorns, FinTech, scale-ups, enterprises, and EdTech companies.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">4+</div>
+                    <div class="hero-stat-label">Years Experience</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">50+</div>
+                    <div class="hero-stat-label">ML Models Deployed</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">99.9%</div>
+                    <div class="hero-stat-label">Platform Uptime</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">3</div>
+                    <div class="hero-stat-label">Platforms Built</div>
+                </div>
+            </div>
+            
+            <div class="hero-cta">
+                <a href="#companies" class="btn btn-primary">View Companies</a>
+                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <!-- Work Status & Portfolio Panel -->
+            <div class="work-portfolio-panel">
+                <!-- Portfolio Carousel -->
+                <div class="portfolio-carousel">
+                    <div class="carousel-header">
+                        <h3>Technical Diagrams</h3>
+                        <div class="carousel-controls">
+                            <button class="carousel-btn prev" onclick="previousSlide()">‹</button>
+                            <button class="carousel-btn next" onclick="nextSlide()">›</button>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-container">
+                        <div class="carousel-track" id="carouselTrack">
+                            <!-- MLOps Architecture -->
+                            <div class="carousel-slide active">
+                                <div class="slide-content">
+                                    <h4>MLOps Platform Architecture</h4>
+                                    <div class="mermaid-diagram">
+                                        <svg viewBox="0 0 400 300">
+                                            <!-- Simple MLOps diagram representation -->
+                                            <rect x="50" y="20" width="80" height="40" fill="#2a2a2a" stroke="#fff" stroke-width="1" rx="5"/>
+                                            <text x="90" y="45" fill="#fff" text-anchor="middle" font-size="10">Data Sources</text>
+                                            
+                                            <rect x="160" y="20" width="80" height="40" fill="#2a2a2a" stroke="#5ac8fa" stroke-width="2" rx="5"/>
+                                            <text x="200" y="45" fill="#fff" text-anchor="middle" font-size="10">ML Pipeline</text>
+                                            
+                                            <rect x="270" y="20" width="80" height="40" fill="#2a2a2a" stroke="#27ca3f" stroke-width="2" rx="5"/>
+                                            <text x="310" y="45" fill="#fff" text-anchor="middle" font-size="10">Production</text>
+                                            
+                                            <rect x="50" y="100" width="80" height="40" fill="#2a2a2a" stroke="#ffbd2e" stroke-width="1" rx="5"/>
+                                            <text x="90" y="125" fill="#fff" text-anchor="middle" font-size="10">Kubernetes</text>
+                                            
+                                            <rect x="160" y="100" width="80" height="40" fill="#2a2a2a" stroke="#ff6b6b" stroke-width="1" rx="5"/>
+                                            <text x="200" y="125" fill="#fff" text-anchor="middle" font-size="10">MLflow</text>
+                                            
+                                            <rect x="270" y="100" width="80" height="40" fill="#2a2a2a" stroke="#9b59b6" stroke-width="1" rx="5"/>
+                                            <text x="310" y="125" fill="#fff" text-anchor="middle" font-size="10">Monitoring</text>
+                                            
+                                            <!-- Arrows -->
+                                            <path d="M 130 40 L 160 40" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 240 40 L 270 40" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 90 60 L 90 100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 200 60 L 200 100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 310 60 L 310 100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            
+                                            <defs>
+                                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                                    <polygon points="0 0, 10 3.5, 0 7" fill="#fff"/>
+                                                </marker>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                    <p class="slide-description">End-to-end MLOps platform serving 50+ models in production</p>
+                                </div>
+                            </div>
+
+                            <!-- Cloud Architecture -->
+                            <div class="carousel-slide">
+                                <div class="slide-content">
+                                    <h4>Cloud Infrastructure</h4>
+                                    <div class="mermaid-diagram">
+                                        <svg viewBox="0 0 400 300">
+                                            <!-- Cloud architecture diagram -->
+                                            <circle cx="200" cy="50" r="30" fill="#2a2a2a" stroke="#5ac8fa" stroke-width="2"/>
+                                            <text x="200" y="55" fill="#fff" text-anchor="middle" font-size="10">AWS</text>
+                                            
+                                            <rect x="50" y="120" width="80" height="40" fill="#2a2a2a" stroke="#27ca3f" stroke-width="1" rx="5"/>
+                                            <text x="90" y="145" fill="#fff" text-anchor="middle" font-size="10">EKS</text>
+                                            
+                                            <rect x="160" y="120" width="80" height="40" fill="#2a2a2a" stroke="#ffbd2e" stroke-width="1" rx="5"/>
+                                            <text x="200" y="145" fill="#fff" text-anchor="middle" font-size="10">Lambda</text>
+                                            
+                                            <rect x="270" y="120" width="80" height="40" fill="#2a2a2a" stroke="#ff6b6b" stroke-width="1" rx="5"/>
+                                            <text x="310" y="145" fill="#fff" text-anchor="middle" font-size="10">S3</text>
+                                            
+                                            <rect x="105" y="220" width="80" height="40" fill="#2a2a2a" stroke="#9b59b6" stroke-width="1" rx="5"/>
+                                            <text x="145" y="245" fill="#fff" text-anchor="middle" font-size="10">RDS</text>
+                                            
+                                            <rect x="215" y="220" width="80" height="40" fill="#2a2a2a" stroke="#e67e22" stroke-width="1" rx="5"/>
+                                            <text x="255" y="245" fill="#fff" text-anchor="middle" font-size="10">ElastiCache</text>
+                                            
+                                            <!-- Connections -->
+                                            <path d="M 180 70 L 90 120" stroke="#fff" stroke-width="1"/>
+                                            <path d="M 200 80 L 200 120" stroke="#fff" stroke-width="1"/>
+                                            <path d="M 220 70 L 310 120" stroke="#fff" stroke-width="1"/>
+                                            <path d="M 110 160 L 145 220" stroke="#fff" stroke-width="1"/>
+                                            <path d="M 220 160 L 255 220" stroke="#fff" stroke-width="1"/>
+                                        </svg>
+                                    </div>
+                                    <p class="slide-description">Scalable cloud infrastructure handling 10M+ daily requests</p>
+                                </div>
+                            </div>
+
+                            <!-- Data Pipeline -->
+                            <div class="carousel-slide">
+                                <div class="slide-content">
+                                    <h4>Data Pipeline Flow</h4>
+                                    <div class="mermaid-diagram">
+                                        <svg viewBox="0 0 400 300">
+                                            <!-- Data pipeline flow -->
+                                            <rect x="20" y="50" width="70" height="30" fill="#2a2a2a" stroke="#3498db" stroke-width="1" rx="5"/>
+                                            <text x="55" y="70" fill="#fff" text-anchor="middle" font-size="9">Raw Data</text>
+                                            
+                                            <rect x="120" y="50" width="70" height="30" fill="#2a2a2a" stroke="#e74c3c" stroke-width="1" rx="5"/>
+                                            <text x="155" y="70" fill="#fff" text-anchor="middle" font-size="9">Processing</text>
+                                            
+                                            <rect x="220" y="50" width="70" height="30" fill="#2a2a2a" stroke="#f39c12" stroke-width="1" rx="5"/>
+                                            <text x="255" y="70" fill="#fff" text-anchor="middle" font-size="9">Features</text>
+                                            
+                                            <rect x="320" y="50" width="70" height="30" fill="#2a2a2a" stroke="#2ecc71" stroke-width="1" rx="5"/>
+                                            <text x="355" y="70" fill="#fff" text-anchor="middle" font-size="9">Model</text>
+                                            
+                                            <rect x="70" y="150" width="70" height="30" fill="#2a2a2a" stroke="#9b59b6" stroke-width="1" rx="5"/>
+                                            <text x="105" y="170" fill="#fff" text-anchor="middle" font-size="9">Validation</text>
+                                            
+                                            <rect x="170" y="150" width="70" height="30" fill="#2a2a2a" stroke="#1abc9c" stroke-width="1" rx="5"/>
+                                            <text x="205" y="170" fill="#fff" text-anchor="middle" font-size="9">Deploy</text>
+                                            
+                                            <rect x="270" y="150" width="70" height="30" fill="#2a2a2a" stroke="#e67e22" stroke-width="1" rx="5"/>
+                                            <text x="305" y="170" fill="#fff" text-anchor="middle" font-size="9">Monitor</text>
+                                            
+                                            <!-- Flow arrows -->
+                                            <path d="M 90 65 L 120 65" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 190 65 L 220 65" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 290 65 L 320 65" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 155 80 L 105 150" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 140 165 L 170 165" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                            <path d="M 240 165 L 270 165" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
+                                        </svg>
+                                    </div>
+                                    <p class="slide-description">Automated data pipeline with continuous model validation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-indicators">
+                        <span class="indicator active" onclick="goToSlide(0)"></span>
+                        <span class="indicator" onclick="goToSlide(1)"></span>
+                        <span class="indicator" onclick="goToSlide(2)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">About</div>
+            <div class="section-content">
+                <div class="about-text">
+                    <p>
+                        I'm a Senior MLOps Engineer with over 4 years of experience building machine learning infrastructure 
+                        at scale. I've worked across diverse organizations including unicorn startups (Clara, Rappi), 
+                        FinTech companies (Baubap), scale-ups (Merqueo), established enterprises (LexisNexis), EdTech (CoderHouse), and AI research (JunoAI.org), 
+                        designing platforms that serve millions of users.
+                    </p>
+                    <p>
+                        My expertise spans the entire ML lifecycle—from research and experimentation to production deployment 
+                        and monitoring. I specialize in Kubernetes, Databricks, and cloud-native architectures that enable 
+                        teams to iterate quickly while maintaining reliability.
+                    </p>
+                    <p>
+                        Computer Systems Engineer from ESCOM-IPN with advanced training in Machine Learning from Stanford 
+                        and Neural Networks specialization. Currently driving AI adoption and operational excellence 
+                        in enterprise environments. Experience spans from FinTech and EdTech to unicorn startups and Fortune 500 companies.
+                    </p>
+                </div>
+                
+                <div class="credentials">
+                    <div class="credential-item">
+                        <div class="credential-label">Education</div>
+                        <div class="credential-value">Computer Systems Engineer, B.S.<br>ESCOM, IPN — CGPA 90/100</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">Location</div>
+                        <div class="credential-value">Mexico City, Mexico</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">Experience</div>
+                        <div class="credential-value">4+ years in ML/AI<br>7 Companies • 2 Unicorns</div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">Specialization</div>
+                        <div class="credential-value">MLOps, AI Infrastructure<br>Production ML Systems</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Companies Section -->
+    <section id="companies" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">Companies</div>
+            <div class="section-content">
+                <div class="companies-intro">
+                    <h3>Organizations I've worked with</h3>
+                    <p>
+                        Throughout my career, I've had the privilege of contributing to 7 diverse organizations, 
+                        from FinTech and unicorn startups to established enterprises, EdTech platforms, and AI research initiatives, 
+                        each offering unique challenges and opportunities to build scalable AI/ML solutions.
+                    </p>
+                </div>
+
+                <div class="companies-grid">
+                    <div class="company-card current">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/lexisnexis.com" alt="LexisNexis" class="company-logo-large">
+                            <div class="company-fallback">LN</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">LexisNexis</div>
+                            <div class="company-role">Sr Engineer MLOps & AI</div>
+                            <div class="company-period">2023 - Present</div>
+                            <div class="company-type">Enterprise • Legal Tech</div>
+                            <div class="company-description">
+                                Leading AI/ML adoption across engineering teams, enhancing MLOps tooling and infrastructure 
+                                for improved operational reliability and deployment processes.
+                            </div>
+                        </div>
+                        <div class="current-badge">Current</div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/junoai.org" alt="JunoAI" class="company-logo-large">
+                            <div class="company-fallback">JA</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">JunoAI.org</div>
+                            <div class="company-role">Co-Founder</div>
+                            <div class="company-period">Jan 2025 - Present</div>
+                            <div class="company-type">AI Research • Part-time</div>
+                            <div class="company-description">
+                                Co-founded JunoAI.org, focusing on the research and development of innovative rhizomatic tools. 
+                                Leveraged technologies such as ChatGPT, LLM, OpenSource, LangChain, and Whisper to enhance AI capabilities. 
+                                Authored insightful articles on the intersection of philosophy and artificial intelligence.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/clara.com" alt="Clara" class="company-logo-large">
+                            <div class="company-fallback">CL</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">Clara</div>
+                            <div class="company-role">Sr. Machine Learning Engineer / MLOps</div>
+                            <div class="company-period">2022 - 2023</div>
+                            <div class="company-type">Unicorn • FinTech</div>
+                            <div class="company-description">
+                                Built end-to-end MLOps platform from scratch, implementing CI/CD pipelines, 
+                                model monitoring, and serving infrastructure for 1M+ users.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" class="company-logo-large">
+                            <div class="company-fallback">RP</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">Rappi</div>
+                            <div class="company-role">Machine Learning Engineer</div>
+                            <div class="company-period">2022</div>
+                            <div class="company-type">Unicorn • On-Demand Delivery</div>
+                            <div class="company-description">
+                                Developed ML solutions for demand forecasting and logistics optimization, 
+                                working with massive datasets and real-time prediction systems.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/merqueo.com" alt="Merqueo" class="company-logo-large">
+                            <div class="company-fallback">MQ</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">Merqueo</div>
+                            <div class="company-role">Data Scientist</div>
+                            <div class="company-period">Jul 2021 - Feb 2022</div>
+                            <div class="company-type">Scale-up • E-commerce</div>
+                            <div class="company-description">
+                                Maintained recommender systems, prototyped solutions with Neo4j and Elasticsearch, 
+                                automated ETL processes with AWS Lambda and S3.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/coderhouse.com" alt="CoderHouse" class="company-logo-large">
+                            <div class="company-fallback">CH</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">CoderHouse</div>
+                            <div class="company-role">Data Scientist Tutor</div>
+                            <div class="company-period">Oct 2021 - Oct 2022</div>
+                            <div class="company-type">EdTech • Online Education</div>
+                            <div class="company-description">
+                                Mentored students in data science fundamentals, machine learning algorithms, and Python programming. 
+                                Guided career transitions into data science through hands-on projects and industry best practices.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-logo-container">
+                            <img src="https://logo.clearbit.com/baubap.com" alt="Baubap" class="company-logo-large">
+                            <div class="company-fallback">BB</div>
+                        </div>
+                        <div class="company-info">
+                            <div class="company-name">Baubap</div>
+                            <div class="company-role">Data Scientist</div>
+                            <div class="company-period">Aug 2020 - Mar 2021</div>
+                            <div class="company-type">FinTech • Micro-lending</div>
+                            <div class="company-description">
+                                Developed EDA analysis to boost predictive models and validate service feasibility. 
+                                Applied NLP models for text clustering and trained multiple ML models (Regressions, Trees, XGBoost) for experimentation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="companies-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Unicorns</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label">Users Served</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">Skills</div>
+            <div class="section-content">
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Languages & Frameworks</h3>
+                        <ul class="skill-list">
+                            <li>Python (4+ years)</li>
+                            <li>Golang (2 years)</li>
+                            <li>SQL (4+ years)</li>
+                            <li>JavaScript (2 years)</li>
+                            <li>FastAPI, Flask</li>
+                            <li>TensorFlow, PyTorch</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>MLOps & Infrastructure</h3>
+                        <ul class="skill-list">
+                            <li>Kubernetes, Docker</li>
+                            <li>Databricks, MLflow</li>
+                            <li>Terraform, Helm</li>
+                            <li>Airflow, Jenkins</li>
+                            <li>ArgoCD, Git</li>
+                            <li>AWS (EKS, Lambda, S3)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Machine Learning</h3>
+                        <ul class="skill-list">
+                            <li>Hugging Face, Transformers</li>
+                            <li>Spacy, NLTK</li>
+                            <li>Ray, Distributed Computing</li>
+                            <li>Feature Stores</li>
+                            <li>Model Monitoring</li>
+                            <li>A/B Testing</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Data & Cloud</h3>
+                        <ul class="skill-list">
+                            <li>PostgreSQL, BigQuery</li>
+                            <li>Elasticsearch, Redis</li>
+                            <li>MongoDB, DynamoDB</li>
+                            <li>Snowflake, Data Warehousing</li>
+                            <li>AWS, Cloud Architecture</li>
+                            <li>ETL/ELT Pipelines</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">Projects</div>
+            <div class="section-content">
+                <div class="projects-content">
+                    <h3>Selected Work</h3>
+                    <p>
+                        I've developed numerous projects spanning web development, machine learning, data science, 
+                        and automation. Each project represents an exploration of new technologies and solutions 
+                        to real-world problems, from ML platforms to web scrapers and data visualization tools.
+                    </p>
+                    <a href="https://github.com/o?tab=repositories" target="_blank" class="btn btn-primary">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <div class="section-header">
+            <div class="section-title">Contact</div>
+            <div class="section-content">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">
+                            <a href="mailto:.exe@gmail.com">.exe@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">
+                            <a href="tel:+525551625252">+52 55516252</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">GitHub</div>
+                        <div class="contact-value">
+                            <a href="https://github.com/o?tab=repositories" target="_blank">View repositories</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-label">Location</div>
+                        <div class="contact-value">Mexico City, Mexico</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2025 Oscar A. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/bubble.js"></script>
+    <script src="js/carousel.js"></script>
+</body>
+</html> 
