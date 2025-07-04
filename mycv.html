@@ -1411,67 +1411,7 @@
             letter-spacing: -0.01em;
         }
 
-        /* Tab Navigation */
-        .tab-navigation {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0;
-        }
 
-        .tab-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-
-        .tab-btn:hover {
-            color: var(--text-secondary);
-        }
-
-        .tab-btn.active {
-            color: var(--text-primary);
-            border-bottom-color: var(--text-primary);
-        }
-
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--text-primary);
-            animation: tabUnderline 0.3s ease;
-        }
-
-        @keyframes tabUnderline {
-            from { transform: scaleX(0); }
-            to { transform: scaleX(1); }
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1619,20 +1559,7 @@
                 min-width: 140px;
             }
 
-            /* Mobile styles for tabs */
-            .tab-navigation {
-                gap: 0.5rem;
-                flex-wrap: wrap;
-                margin-bottom: 2rem;
-            }
 
-            .tab-btn {
-                font-size: 0.9rem;
-                padding: 0.8rem 1rem;
-                flex: 1;
-                min-width: 80px;
-                text-align: center;
-            }
 
             /* Mobile styles for companies section */
             .companies-grid {
@@ -1977,7 +1904,6 @@
                 <li><a href="#skills" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Skills</a></li>
                 <li><a href="#projects" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Projects</a></li>
                 <li><a href="#contact" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Contact</a></li>
-                <li><a href="#neostudio" class="text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">NeoStudio</a></li>
             </ul>
             <!-- Mobile menu button -->
             <button class="md:hidden text-white hover:text-accent transition-colors duration-300">
@@ -2555,171 +2481,7 @@
         </div>
     </section>
 
-    <!-- NeoStudio Section with Tabs -->
-    <section id="neostudio" class="fade-in">
-        <div class="section-header">
-            <div class="section-title">NeoStudio</div>
-            <div class="section-content">
-                <div class="studio-header">
-                    <p class="studio-tagline">
-                        A specialized consultancy focused on transforming businesses through intelligent AI implementations. 
-                        We build custom MLOps platforms, automate complex workflows, and scale machine learning operations 
-                        for forward-thinking organizations.
-                    </p>
-                </div>
 
-                <!-- Tab Navigation -->
-                <div class="tab-navigation">
-                    <button class="tab-btn active" onclick="showTab('services')">Services</button>
-                    <button class="tab-btn" onclick="showTab('team')">Team</button>
-                    <button class="tab-btn" onclick="showTab('approach')">Approach</button>
-                </div>
-
-                <!-- Services Tab -->
-                <div id="services-tab" class="tab-content active">
-                    <div class="services-grid">
-                        <div class="service-item">
-                            <div class="service-number">01</div>
-                            <h3 class="service-title">MLOps Platform Development</h3>
-                            <p class="service-description">
-                                End-to-end MLOps infrastructure design and implementation. From CI/CD pipelines to model monitoring, 
-                                we build robust platforms that scale with your ML initiatives using Kubernetes, Databricks, and cloud-native technologies.
-                            </p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="service-number">02</div>
-                            <h3 class="service-title">AI Strategy & Implementation</h3>
-                            <p class="service-description">
-                                Strategic AI adoption consulting for enterprises. We assess your current capabilities, design implementation 
-                                roadmaps, and guide teams through successful AI transformations that deliver measurable business value.
-                            </p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="service-number">03</div>
-                            <h3 class="service-title">Machine Learning Engineering</h3>
-                            <p class="service-description">
-                                Production-ready ML systems development. We architect scalable solutions for real-time inference, 
-                                batch processing, and model serving that handle enterprise-scale workloads with reliability and performance.
-                            </p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="service-number">04</div>
-                            <h3 class="service-title">Data Infrastructure & Analytics</h3>
-                            <p class="service-description">
-                                Modern data stack implementation and optimization. From data lakes to real-time streaming, 
-                                we design infrastructure that enables data-driven decision making and supports ML workflows at scale.
-                            </p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="service-number">05</div>
-                            <h3 class="service-title">Team Training & Enablement</h3>
-                            <p class="service-description">
-                                Technical training programs for engineering teams. We conduct workshops on MLOps best practices, 
-                                AI implementation strategies, and modern tooling to accelerate your team's capabilities and adoption.
-                            </p>
-                        </div>
-
-                        <div class="service-item">
-                            <div class="service-number">06</div>
-                            <h3 class="service-title">Technical Due Diligence</h3>
-                            <p class="service-description">
-                                Comprehensive evaluation of AI/ML systems for investors and acquirers. We assess technical architecture, 
-                                scalability potential, and implementation quality to inform strategic decisions.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Tab -->
-                <div id="team-tab" class="tab-content">
-                    <div class="team-intro">
-                        <h3>Our Team</h3>
-                        <p>
-                            A collective of seasoned engineers, data scientists, and AI specialists who have built and scaled 
-                            ML systems at unicorn startups and Fortune 500 companies. We bring hands-on experience from the trenches 
-                            of production AI deployments.
-                        </p>
-                    </div>
-
-                    <div class="team-grid">
-                        <div class="team-member">
-                            <div class="member-role">Founder & Lead MLOps Engineer</div>
-                            <div class="member-name">Oscar A</div>
-                                                    <p class="member-bio">
-                            Senior MLOps Engineer with 4+ years building production ML platforms across unicorns (Clara, Rappi), 
-                            FinTech (Baubap), scale-ups (Merqueo), enterprises (LexisNexis), and EdTech (CoderHouse). Specializes in Kubernetes-based ML infrastructure and enterprise AI adoption.
-                        </p>
-                        </div>
-
-                        <div class="team-member">
-                            <div class="member-role">Senior Data Engineer</div>
-                            <div class="member-name">Available Position</div>
-                            <p class="member-bio">
-                                We're expanding our team with experienced data engineers who share our passion for building 
-                                scalable data infrastructure and enabling ML at enterprise scale.
-                            </p>
-                        </div>
-
-                        <div class="team-member">
-                            <div class="member-role">ML Research Scientist</div>
-                            <div class="member-name">Available Position</div>
-                            <p class="member-bio">
-                                Looking for researchers with expertise in NLP, computer vision, or deep learning who want to 
-                                bridge the gap between cutting-edge research and production implementations.
-                            </p>
-                        </div>
-
-                        <div class="team-member">
-                            <div class="member-role">DevOps Specialist</div>
-                            <div class="member-name">Available Position</div>
-                            <p class="member-bio">
-                                Seeking cloud infrastructure experts with experience in Kubernetes, Terraform, and CI/CD 
-                                who understand the unique requirements of ML workloads.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Approach Tab -->
-                <div id="approach-tab" class="tab-content">
-                    <div class="approach-section">
-                        <h3>Our Approach</h3>
-                        <p>
-                            We believe in building sustainable AI solutions that grow with your organization. Our methodology combines 
-                            technical expertise with business acumen to deliver systems that not only work but create lasting value.
-                        </p>
-                        
-                        <div class="approach-grid">
-                            <div class="approach-item">
-                                <h4>Discovery & Assessment</h4>
-                                <p>Understanding your current state, challenges, and goals through comprehensive technical and business analysis.</p>
-                            </div>
-                            <div class="approach-item">
-                                <h4>Strategic Planning</h4>
-                                <p>Developing clear roadmaps with defined milestones, timelines, and success metrics that align with your objectives.</p>
-                            </div>
-                            <div class="approach-item">
-                                <h4>Implementation & Deployment</h4>
-                                <p>Building and deploying solutions using proven methodologies, best practices, and rigorous testing procedures.</p>
-                            </div>
-                            <div class="approach-item">
-                                <h4>Optimization & Support</h4>
-                                <p>Continuous monitoring, performance tuning, and knowledge transfer to ensure long-term success and team capability.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 4rem;">
-                    <a href="#contact" class="btn">Start a project</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer>
@@ -3018,32 +2780,7 @@
             startCarousel();
         });
 
-        // Tab functionality for NeoStudio
-        function showTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
 
-            // Remove active class from all tab buttons
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            tabButtons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected tab content
-            const selectedTab = document.getElementById(tabName + '-tab');
-            if (selectedTab) {
-                selectedTab.classList.add('active');
-            }
-
-            // Add active class to the correct button
-            const activeButton = document.querySelector(`[onclick="showTab('${tabName}')"]`);
-            if (activeButton) {
-                activeButton.classList.add('active');
-            }
-        }
 
         // Load saved message on page load
         document.addEventListener('DOMContentLoaded', function() {
