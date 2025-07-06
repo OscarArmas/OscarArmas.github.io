@@ -185,122 +185,227 @@
         </div>
 
         <div class="hero-visual">
-            <!-- Work Status & Portfolio Panel -->
-            <div class="work-portfolio-panel">
-                <!-- Portfolio Diagrams -->
-                <div class="portfolio-diagrams">
-                    <div class="diagrams-header">
-                        <h3>Technical Architecture</h3>
-                        <div class="diagrams-nav">
-                            <button class="nav-btn prev" aria-label="Previous diagram">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M15 18l-6-6 6-6"/>
-                                </svg>
-                            </button>
-                            <button class="nav-btn next" aria-label="Next diagram">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 18l6-6-6-6"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="diagrams-scroll">
-                        <div class="diagrams-track">
-                            <!-- MLOps Architecture -->
-                            <div class="diagram-card">
-                                <div class="diagram-image">
-                                    <!-- REEMPLAZAR CON -->
-                                    <img src="images/diagrams/training-evolution.png" alt="MLOps Architecture">
-                                    <div class="diagram-overlay">
-                                        <div class="overlay-content">
-                                            <h4>MLOps Platform</h4>
-                                            <p>End-to-end platform serving 50+ models in production</p>
-                                        </div>
+            <!-- Experience Timeline Panel -->
+            <div class="experience-hybrid-panel">
+                <div class="experience-header">
+                    <h3>Professional Experience</h3>
+                </div>
+                
+                <!-- Timeline -->
+                <div class="experience-timeline">
+                    <div class="timeline-track" id="timelineTrack">
+                        <!-- Current & Recent Roles -->
+                        <div class="timeline-item current visible">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-main">
+                                    <div class="timeline-company-wrapper">
+                                        <div class="timeline-company">LexisNexis</div>
+                                        <a href="https://www.lexisnexis.com" target="_blank" class="company-link">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                <polyline points="15,3 21,3 21,9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </a>
                                     </div>
+                                    <div class="timeline-role">Sr MLOps Engineer</div>
+                                    <div class="timeline-period">2023 - Present</div>
+                                    <div class="timeline-description">Leading AI/ML adoption across engineering teams, enhancing MLOps infrastructure for operational excellence</div>
                                 </div>
-                                <div class="diagram-info">
-                                    <span class="diagram-tag">Infrastructure</span>
-                                    <span class="diagram-stats">50+ Models</span>
-                                </div>
-                            </div>
-
-                            <!-- Cloud Architecture -->
-                            <div class="diagram-card">
-                                <div class="diagram-image">
-                                    <img src="images/diagrams/simple-rag.png" alt="Cloud Infrastructure">
-                                    <div class="diagram-overlay">
-                                        <div class="overlay-content">
-                                            <h4>Cloud Infrastructure</h4>
-                                            <p>Scalable AWS infrastructure handling 10M+ daily requests</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="diagram-info">
-                                    <span class="diagram-tag">AWS</span>
-                                    <span class="diagram-stats">10M+ Requests</span>
-                                </div>
-                            </div>
-
-                            <!-- Data Pipeline -->
-                            <div class="diagram-card">
-                                <div class="diagram-image">
-                                    <img src="images/diagrams/feature-store.png" alt="Data Pipeline">
-                                    <div class="diagram-overlay">
-                                        <div class="overlay-content">
-                                            <h4>Data Pipeline</h4>
-                                            <p>Automated pipeline with continuous model validation</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="diagram-info">
-                                    <span class="diagram-tag">Pipeline</span>
-                                    <span class="diagram-stats">Real-time</span>
-                                </div>
-                            </div>
-
-                            <!-- Microservices -->
-                            <div class="diagram-card">
-                                <div class="diagram-image">
-                                    <img src="https://via.placeholder.com/400x250/1f2937/8b5cf6?text=Microservices" alt="Microservices">
-                                    <div class="diagram-overlay">
-                                        <div class="overlay-content">
-                                            <h4>Microservices</h4>
-                                            <p>Distributed architecture with 20+ microservices</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="diagram-info">
-                                    <span class="diagram-tag">Architecture</span>
-                                    <span class="diagram-stats">20+ Services</span>
-                                </div>
-                            </div>
-
-                            <!-- Security -->
-                            <div class="diagram-card">
-                                <div class="diagram-image">
-                                    <img src="https://via.placeholder.com/400x250/1f2937/ef4444?text=Security" alt="Security">
-                                    <div class="diagram-overlay">
-                                        <div class="overlay-content">
-                                            <h4>Security Layer</h4>
-                                            <p>Multi-layer security with encryption and monitoring</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="diagram-info">
-                                    <span class="diagram-tag">Security</span>
-                                    <span class="diagram-stats">Multi-layer</span>
+                                <div class="timeline-tech-tags">
+                                    <span class="tech-tag">Kubernetes</span>
+                                    <span class="tech-tag">Databricks</span>
+                                    <span class="tech-tag">MLflow</span>
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">AWS</span>
+                                    <span class="tech-tag">Terraform</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="diagrams-indicators">
-                        <span class="indicator active" data-index="0"></span>
-                        <span class="indicator" data-index="1"></span>
-                        <span class="indicator" data-index="2"></span>
-                        <span class="indicator" data-index="3"></span>
-                        <span class="indicator" data-index="4"></span>
+                        
+                        <div class="timeline-item side-project visible">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-main">
+                                    <div class="timeline-company-wrapper">
+                                        <div class="timeline-company">JunoAI.org</div>
+                                        <a href="https://junoai.org" target="_blank" class="company-link">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                <polyline points="15,3 21,3 21,9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="timeline-role">Co-Founder</div>
+                                    <div class="timeline-period">Jan 2025 - Present</div>
+                                    <div class="timeline-description">Co-founded research initiative focusing on rhizomatic AI tools and philosophy-AI intersection</div>
+                                </div>
+                                <div class="timeline-tech-tags">
+                                    <span class="tech-tag">ChatGPT</span>
+                                    <span class="tech-tag">LangChain</span>
+                                    <span class="tech-tag">Whisper</span>
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Streamlit</span>
+                                    <span class="tech-tag">FastAPI</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item unicorn visible">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-main">
+                                    <div class="timeline-company-wrapper">
+                                        <div class="timeline-company">Clara</div>
+                                        <a href="https://clara.com" target="_blank" class="company-link">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                <polyline points="15,3 21,3 21,9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="timeline-role">Sr ML Engineer / MLOps</div>
+                                    <div class="timeline-period">2022 - 2023</div>
+                                    <div class="timeline-description">Built end-to-end MLOps platform from scratch, implementing CI/CD pipelines, model monitoring, and serving infrastructure for 1M+ users</div>
+                                </div>
+                                <div class="timeline-tech-tags">
+                                    <span class="tech-tag">Kubernetes</span>
+                                    <span class="tech-tag">TensorFlow</span>
+                                    <span class="tech-tag">PyTorch</span>
+                                    <span class="tech-tag">Airflow</span>
+                                    <span class="tech-tag">MLflow</span>
+                                    <span class="tech-tag">AWS</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Expandable Roles -->
+                        <div class="timeline-item unicorn expandable">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-main">
+                                    <div class="timeline-company-wrapper">
+                                        <div class="timeline-company">Rappi</div>
+                                        <a href="https://rappi.com" target="_blank" class="company-link">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                <polyline points="15,3 21,3 21,9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="timeline-role">Machine Learning Engineer</div>
+                                    <div class="timeline-period">2022</div>
+                                    <div class="timeline-description">Developed ML solutions for demand forecasting and logistics optimization, working with massive datasets and real-time prediction systems</div>
+                                </div>
+                                <div class="timeline-tech-tags">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Spark</span>
+                                    <span class="tech-tag">Kafka</span>
+                                    <span class="tech-tag">XGBoost</span>
+                                    <span class="tech-tag">BigQuery</span>
+                                    <span class="tech-tag">GCP</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item expandable">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-main">
+                                    <div class="timeline-company-wrapper">
+                                        <div class="timeline-company">Merqueo</div>
+                                        <a href="https://merqueo.com" target="_blank" class="company-link">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                <polyline points="15,3 21,3 21,9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="timeline-role">Data Scientist</div>
+                                    <div class="timeline-period">Jul 2021 - Feb 2022</div>
+                                    <div class="timeline-description">Maintained recommender systems, prototyped solutions with Neo4j and Elasticsearch, automated ETL processes with AWS Lambda and S3</div>
+                                </div>
+                                <div class="timeline-tech-tags">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Neo4j</span>
+                                    <span class="tech-tag">Elasticsearch</span>
+                                    <span class="tech-tag">AWS Lambda</span>
+                                    <span class="tech-tag">S3</span>
+                                    <span class="tech-tag">PostgreSQL</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item education expandable">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-main">
+                                    <div class="timeline-company-wrapper">
+                                        <div class="timeline-company">CoderHouse</div>
+                                        <a href="https://coderhouse.com" target="_blank" class="company-link">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                <polyline points="15,3 21,3 21,9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="timeline-role">Data Scientist Tutor</div>
+                                    <div class="timeline-period">Oct 2021 - Oct 2022</div>
+                                    <div class="timeline-description">Mentored students in data science fundamentals, machine learning algorithms, and Python programming. Guided career transitions into data science</div>
+                                </div>
+                                <div class="timeline-tech-tags">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Jupyter</span>
+                                    <span class="tech-tag">Pandas</span>
+                                    <span class="tech-tag">Scikit-learn</span>
+                                    <span class="tech-tag">Matplotlib</span>
+                                    <span class="tech-tag">SQL</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item expandable">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-main">
+                                    <div class="timeline-company-wrapper">
+                                        <div class="timeline-company">Baubap</div>
+                                        <a href="https://baubap.com" target="_blank" class="company-link">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                <polyline points="15,3 21,3 21,9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="timeline-role">Data Scientist</div>
+                                    <div class="timeline-period">Aug 2020 - Mar 2021</div>
+                                    <div class="timeline-description">Developed EDA analysis to boost predictive models and validate service feasibility. Applied NLP models for text clustering and trained multiple ML models</div>
+                                </div>
+                                <div class="timeline-tech-tags">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">XGBoost</span>
+                                    <span class="tech-tag">NLTK</span>
+                                    <span class="tech-tag">Spacy</span>
+                                    <span class="tech-tag">Pandas</span>
+                                    <span class="tech-tag">AWS</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Expand Button -->
+                        <div class="timeline-expand-section">
+                            <button class="expand-timeline-btn" id="expandTimelineBtn">
+                                <span class="btn-text">View more experiences</span>
+                                <span class="btn-icon">⌄</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
