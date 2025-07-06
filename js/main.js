@@ -276,6 +276,50 @@ function initializeTimelineExpand() {
     });
 }
 
+// Global function for timeline toggle (called from HTML)
+function toggleTimeline() {
+    const expandBtn = document.querySelector('button[onclick="toggleTimeline()"]');
+    const timelineTrack = document.getElementById('timelineTrack');
+    const expandableItems = document.querySelectorAll('.timeline-item.expandable');
+    const btnText = expandBtn.querySelector('.btn-text');
+    const btnIcon = expandBtn.querySelector('.btn-icon');
+    
+    if (!timelineTrack) return;
+    
+    const isExpanded = timelineTrack.classList.contains('expanded');
+    
+    if (!isExpanded) {
+        // Expand timeline
+        timelineTrack.classList.add('expanded');
+        btnText.textContent = 'View less';
+        btnIcon.style.transform = 'rotate(180deg)';
+        
+        // Show expandable items with staggered animation
+        expandableItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('show');
+            }, index * 100);
+        });
+        
+    } else {
+        // Collapse timeline
+        timelineTrack.classList.remove('expanded');
+        btnText.textContent = 'View more experiences';
+        btnIcon.style.transform = 'rotate(0deg)';
+        
+        // Hide expandable items
+        expandableItems.forEach(item => {
+            item.classList.remove('show');
+        });
+        
+        // Scroll back to top of timeline
+        timelineTrack.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+}
+
 // Initialize company links
 function initializeCompanyLinks() {
     const companyLinks = document.querySelectorAll('.company-link');

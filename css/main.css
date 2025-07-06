@@ -406,4 +406,31 @@ html {
 ::-moz-selection {
     background: rgba(59, 130, 246, 0.3);
     color: #ffffff;
+}
+
+/* ===== TIMELINE EXPANDABLE STYLES ===== */
+.timeline-item.expandable {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.timeline-item.expandable.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#timelineTrack.expanded {
+    max-height: none !important;
+}
+
+/* Timeline expand button styles */
+button[onclick="toggleTimeline()"] {
+    transition: all 0.3s ease;
+}
+
+button[onclick="toggleTimeline()"] .btn-icon {
+    transition: transform 0.3s ease;
 } 
