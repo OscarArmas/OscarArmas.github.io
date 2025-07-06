@@ -13,10 +13,40 @@
     .hero-content {
         max-width: 32rem;
     }
+    
+    .diagrams-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+    
+    .diagram-card {
+        min-width: 400px;
+        max-width: 400px;
+    }
+    
+    .diagram-image {
+        aspect-ratio: 16/10;
+        min-height: 320px;
+    }
+    
+    .diagrams-track {
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .overlay-content h4 {
+        font-size: 1.5rem;
+    }
+    
+    .overlay-content p {
+        font-size: 1rem;
+    }
+    
+
 }
 
 /* Medium screens (768px to 1199px) */
-@media (max-width: 1199px) {
+@media (min-width: 768px) and (max-width: 1199px) {
     .hero {
         flex-direction: column;
         text-align: center;
@@ -40,6 +70,35 @@
         max-width: 480px;
         margin: 0 auto;
     }
+    
+    .diagrams-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .diagram-card {
+        min-width: 350px;
+        max-width: 350px;
+    }
+    
+    .diagram-image {
+        min-height: 280px;
+    }
+    
+    .diagrams-track {
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .overlay-content h4 {
+        font-size: 1.25rem;
+    }
+    
+    .overlay-content p {
+        font-size: 0.9rem;
+    }
+    
+
 }
 
 /* Small screens (768px and down) */
@@ -179,44 +238,52 @@
     
     /* Work Portfolio Panel */
     .work-portfolio-panel {
-        max-width: 340px;
+        max-width: 280px;
         margin: 0 auto;
-        transform: scale(1) !important;
     }
     
-    .portfolio-carousel {
-        padding: 1.5rem;
+    .diagrams-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-top: 1rem;
     }
     
-    .carousel-header h3 {
-        font-size: 1rem;
+    .diagram-card {
+        min-width: 300px;
+        max-width: 300px;
     }
     
-    .carousel-btn {
-        width: 1.75rem;
-        height: 1.75rem;
-        font-size: 1rem;
+    .diagram-image {
+        min-height: 240px;
     }
     
-    .slide-content {
-        padding: 1.2rem;
+    .diagram-info {
+        padding: 0.875rem;
     }
     
-    .slide-content h4 {
-        font-size: 0.9rem;
+    .overlay-content h4 {
+        font-size: 1.125rem;
     }
     
-    .slide-description {
-        font-size: 0.8rem;
+    .overlay-content p {
+        font-size: 0.875rem;
     }
     
-    .mermaid-diagram {
-        padding: 0.8rem;
+    .diagram-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
     }
     
-    .mermaid-diagram svg {
-        max-height: 150px;
+    .diagram-stats {
+        font-size: 0.7rem;
     }
+    
+    .indicator {
+        width: 0.4rem;
+        height: 0.4rem;
+    }
+    
+
     
     /* Sections */
     section {
@@ -301,6 +368,8 @@
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+    
+
 }
 
 /* Extra small screens (480px and down) */
@@ -338,34 +407,38 @@
         margin: 0 auto;
     }
     
-    .portfolio-carousel {
+    .diagrams-grid {
+        gap: 1rem;
+    }
+    
+    .diagram-card {
+        min-width: 280px;
+        max-width: 280px;
+    }
+    
+    .diagram-image {
+        min-height: 200px;
+    }
+    
+    .diagram-info {
         padding: 0.75rem;
     }
     
-    .carousel-header {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
+    .overlay-content h4 {
+        font-size: 1rem;
     }
     
-    .carousel-controls {
-        align-self: flex-end;
+    .overlay-content p {
+        font-size: 0.8rem;
     }
     
-    .slide-content {
-        padding: 1rem;
+    .diagram-tag {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.5rem;
     }
     
-    .slide-content h4 {
-        font-size: 0.875rem;
-    }
-    
-    .slide-description {
-        font-size: 0.75rem;
-    }
-    
-    .mermaid-diagram svg {
-        max-height: 120px;
+    .diagram-stats {
+        font-size: 0.65rem;
     }
     
     .message-bubble {
@@ -438,10 +511,29 @@
         height: 1rem;
         font-size: 0.5rem;
     }
+    
+    .diagrams-header {
+        gap: 0.75rem;
+    }
+    
+    .nav-btn {
+        width: 2rem;
+        height: 2rem;
+    }
+    
+    .diagrams-track {
+        gap: 0.75rem;
+        padding: 0.75rem;
+    }
+    
+    .indicator {
+        width: 0.35rem;
+        height: 0.35rem;
+    }
 }
 
 /* Landscape orientation adjustments */
-@media (max-height: 600px) and (orientation: landscape) {
+@media (orientation: landscape) and (max-height: 600px) {
     .hero {
         min-height: auto;
         padding: 4rem 3rem 2rem 3rem;
@@ -467,6 +559,47 @@
     .work-portfolio-panel {
         max-height: 300px;
         overflow-y: auto;
+    }
+    
+    .diagrams-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    
+    .diagram-card {
+        min-width: 320px;
+        max-width: 320px;
+    }
+    
+    .diagram-image {
+        min-height: 180px;
+    }
+    
+    .diagrams-track {
+        gap: 0.75rem;
+        padding: 0.75rem;
+    }
+    
+    .overlay-content h4 {
+        font-size: 0.9rem;
+    }
+    
+    .overlay-content p {
+        font-size: 0.75rem;
+    }
+    
+    .diagram-tag {
+        font-size: 0.6rem;
+        padding: 0.1rem 0.4rem;
+    }
+    
+    .diagram-stats {
+        font-size: 0.6rem;
+    }
+    
+    .indicator {
+        width: 0.3rem;
+        height: 0.3rem;
     }
 }
 
@@ -523,10 +656,7 @@
     .message-bubble,
     .quick-messages,
     .message-trigger,
-    .carousel-controls,
-    .carousel-indicators {
-        display: none !important;
-    }
+
     
     .hero {
         min-height: auto;
