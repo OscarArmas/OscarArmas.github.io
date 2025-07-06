@@ -3,6 +3,9 @@
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
+    initializeTimelineAnimations();
+    initializeTimelineExpand();
+    initializeCompanyLinks();
 });
 
 // Initialize all functionality
@@ -194,4 +197,97 @@ window.AppUtils = {
     debounce,
     throttle,
     trackEvent
-}; 
+};
+
+
+
+// Timeline animations
+function initializeTimelineAnimations() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    // Add staggered animation when scrolling into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('animate-in');
+                }, index * 200);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+    
+    timelineItems.forEach(item => {
+        observer.observe(item);
+    });
+}
+
+// Utility function to detect mobile devices
+function isMobile() {
+    return window.innerWidth <= 768 || 
+           ('ontouchstart' in window) || 
+           (navigator.maxTouchPoints > 0);
+}
+
+// Timeline expand/collapse functionality
+function initializeTimelineExpand() {
+    const expandBtn = document.getElementById('expandTimelineBtn');
+    const timelineTrack = document.getElementById('timelineTrack');
+    const expandableItems = document.querySelectorAll('.timeline-item.expandable');
+    
+    if (!expandBtn || !timelineTrack) return;
+    
+    let isExpanded = false;
+    
+    expandBtn.addEventListener('click', function() {
+        isExpanded = !isExpanded;
+        
+        if (isExpanded) {
+            // Expand timeline
+            timelineTrack.classList.add('expanded');
+            expandBtn.classList.add('expanded');
+            expandBtn.querySelector('.btn-text').textContent = 'View less';
+            
+            // Show expandable items with staggered animation
+            expandableItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('show');
+                }, index * 100);
+            });
+            
+        } else {
+            // Collapse timeline
+            timelineTrack.classList.remove('expanded');
+            expandBtn.classList.remove('expanded');
+            expandBtn.querySelector('.btn-text').textContent = 'View more experiences';
+            
+            // Hide expandable items
+            expandableItems.forEach(item => {
+                item.classList.remove('show');
+            });
+            
+            // Scroll back to top of timeline
+            timelineTrack.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    });
+}
+
+// Initialize company links
+function initializeCompanyLinks() {
+    const companyLinks = document.querySelectorAll('.company-link');
+    
+    companyLinks.forEach(link => {
+        // Add click event to open the company link
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('href');
+            if (url) {
+                window.open(url, '_blank');
+            }
+        });
+    });
+}
