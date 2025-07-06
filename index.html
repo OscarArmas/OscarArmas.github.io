@@ -84,8 +84,6 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -108,323 +106,165 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-label">Senior MLOps  & AI Engineer</div>
-            <div class="flex items-center gap-6 mb-6">
-                <h1>Oscar Armas</h1>
+    <section id="home" class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 lg:py-32 bg-gradient-to-br from-primary via-secondary to-primary">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 xl:gap-16">
                 
-                <!-- Avatar with Status Indicator -->
-                <div class="hero-avatar" onclick="toggleMessageBubble()">
-                    <img src="oscar-fullbody.png" alt="Oscar Alvarado">
+                <!-- Hero Content -->
+                <div class="flex-1 text-center lg:text-left space-y-6 lg:space-y-8 order-1 lg:order-1">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-medium">
+                        Senior MLOps & AI Engineer
+                    </div>
                     
-                    <!-- Message Trigger Button -->
-                    <div class="message-trigger" title="Click para ver mi mensaje">💬</div>
-                    
-                    <!-- Message Bubble -->
-                    <div class="message-bubble" id="messageBubble">
-                        <div class="bg-secondary/90 backdrop-blur-xl border border-border rounded-lg p-3 min-w-40 max-w-48 shadow-2xl">
-                            <div class="bubble-message" id="bubbleMessage">
-                                ¡Hola! 👋 Soy Oscar, Senior MLOps Engineer. Siempre buscando nuevos desafíos en AI/ML.
+                    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-6">
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
+                            Oscar Armas
+                        </h1>
+                        
+                        <!-- Avatar with Status Indicator -->
+                        <div class="relative group cursor-pointer" onclick="toggleMessageBubble()">
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden border-2 border-accent/30 hover:border-accent/50 transition-all duration-300">
+                                <img src="oscar-fullbody.png" alt="Oscar Alvarado" class="w-full h-full object-cover">
                             </div>
-                            <div class="bubble-actions">
-                                <button class="bubble-btn" onclick="editMessage(event)">✏️</button>
-                                <button class="bubble-btn" onclick="showQuickMessages(event)">⚡</button>
-                                <button class="bubble-btn" onclick="hideMessageBubble(event)">✕</button>
+                            
+                            <!-- Message Trigger Button -->
+                            <div class="absolute -bottom-2 -right-2 w-8 h-8 sm:w-10 sm:h-10 bg-accent rounded-full flex items-center justify-center text-white text-sm sm:text-base font-medium shadow-lg hover:scale-110 transition-all duration-300 cursor-pointer" title="Click para ver mi mensaje">
+                                💬
+                            </div>
+                            
+                            <!-- Message Bubble -->
+                            <div class="absolute bottom-full right-0 mb-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10" id="messageBubble">
+                                <div class="bg-secondary/95 backdrop-blur-xl border border-border rounded-lg p-4 min-w-48 max-w-64 shadow-2xl">
+                                    <div class="text-sm text-white mb-3" id="bubbleMessage">
+                                        ¡Hola! 👋 Soy Oscar, Senior MLOps Engineer. Siempre buscando nuevos desafíos en AI/ML.
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button class="px-2 py-1 bg-accent/20 hover:bg-accent/30 text-accent rounded text-xs transition-colors" onclick="editMessage(event)">✏️</button>
+                                        <button class="px-2 py-1 bg-accent/20 hover:bg-accent/30 text-accent rounded text-xs transition-colors" onclick="showQuickMessages(event)">⚡</button>
+                                        <button class="px-2 py-1 bg-accent/20 hover:bg-accent/30 text-accent rounded text-xs transition-colors" onclick="hideMessageBubble(event)">✕</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Messages Panel -->
+                            <div class="absolute bottom-full right-0 mb-4 opacity-0 invisible transition-all duration-300 z-10" id="quickMessages">
+                                <div class="bg-secondary/95 backdrop-blur-xl border border-border rounded-lg p-4 min-w-48 max-w-64 shadow-2xl">
+                                    <h4 class="text-sm font-semibold text-white mb-3">Mensajes Rápidos</h4>
+                                    <div class="space-y-2">
+                                        <div class="text-xs text-textSecondary hover:text-white cursor-pointer transition-colors" data-message="¡Hola! 👋 Open to new opportunities in MLOps & AI!">🟢 Open to Work</div>
+                                        <div class="text-xs text-textSecondary hover:text-white cursor-pointer transition-colors" data-message="¡Hola! 🚀 Disponible para proyectos de consultoría en ML/AI.">💼 Consulting Available</div>
+                                        <div class="text-xs text-textSecondary hover:text-white cursor-pointer transition-colors" data-message="👨‍💻 Actualmente construyendo plataformas MLOps en LexisNexis.">🏢 Currently Working</div>
+                                        <div class="text-xs text-textSecondary hover:text-white cursor-pointer transition-colors" data-message="🎯 Especialista en Kubernetes, Databricks y MLflow. ¡Conectemos!">🔧 Tech Expert</div>
+                                        <div class="text-xs text-textSecondary hover:text-white cursor-pointer transition-colors" data-message="📈 7+ años escalando AI en unicorns. Transformando ML en producción.">📊 Experience Highlight</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Quick Messages Panel -->
-                    <div class="quick-messages" id="quickMessages">
-                        <h4>Mensajes Rápidos</h4>
-                        <div class="space-y-1">
-                            <div class="quick-message-item" data-message="¡Hola! 👋 Open to new opportunities in MLOps & AI!">🟢 Open to Work</div>
-                            <div class="quick-message-item" data-message="¡Hola! 🚀 Disponible para proyectos de consultoría en ML/AI.">💼 Consulting Available</div>
-                            <div class="quick-message-item" data-message="👨‍💻 Actualmente construyendo plataformas MLOps en LexisNexis.">🏢 Currently Working</div>
-                            <div class="quick-message-item" data-message="🎯 Especialista en Kubernetes, Databricks y MLflow. ¡Conectemos!">🔧 Tech Expert</div>
-                            <div class="quick-message-item" data-message="📈 7+ años escalando AI en unicorns. Transformando ML en producción.">📊 Experience Highlight</div>
+                    
+                    <p class="text-lg sm:text-xl lg:text-2xl text-accent font-medium">
+                        Building scalable AI solutions for production
+                    </p>
+                    <p class="text-base sm:text-lg text-textSecondary leading-relaxed max-w-3xl mx-auto lg:mx-0">
+                        Specialized in MLOps infrastructure and AI automation. 
+                        Leading enterprise-scale AI transformations with 7+ years of experience 
+                        across unicorns, FinTech, and enterprise companies.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-2xl mx-auto lg:mx-0">
+                        <div class="text-center">
+                            <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">7+</div>
+                            <div class="text-xs sm:text-sm text-textSecondary">Years Experience</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">50+</div>
+                            <div class="text-xs sm:text-sm text-textSecondary">ML Models Deployed</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">3</div>
+                            <div class="text-xs sm:text-sm text-textSecondary">Unicorns Worked</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">3</div>
+                            <div class="text-xs sm:text-sm text-textSecondary">Platforms Built</div>
                         </div>
                     </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#about" class="inline-flex items-center justify-center px-6 py-3 bg-accent hover:bg-accentDark text-white font-medium rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                            Learn More
+                        </a>
+                        <a href="#contact" class="inline-flex items-center justify-center px-6 py-3 bg-transparent border border-accent/30 hover:border-accent/50 text-accent font-medium rounded-lg transition-all duration-300 hover:scale-105">
+                            Get in Touch
+                        </a>
+                    </div>
                 </div>
-            </div>
-            
-            <p class="hero-subtitle">
-                Building scalable AI solutions for production
-            </p>
-            <p class="hero-description">
-                Specialized in MLOps infrastructure and AI automation. 
-                Leading enterprise-scale AI transformations with 7+ years of experience 
-                across unicorns, FinTech, and enterprise companies.
-            </p>
-            
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-number">7+</div>
-                    <div class="hero-stat-label">Years Experience</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">50+</div>
-                    <div class="hero-stat-label">ML Models Deployed</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">3</div>
-                    <div class="hero-stat-label">Unicorns Worked</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">3</div>
-                    <div class="hero-stat-label">Platforms Built</div>
-                </div>
-            </div>
-            
-            <div class="hero-cta">
-                <a href="#about" class="btn btn-primary">Learn More</a>
-                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-            </div>
-        </div>
 
-        <div class="hero-visual">
-            <!-- Experience Timeline Panel -->
-            <div class="experience-hybrid-panel">
-                <div class="experience-header">
-                    <h3>Professional Experience</h3>
-                </div>
-                
-                <!-- Timeline -->
-                <div class="experience-timeline">
-                    <div class="timeline-track" id="timelineTrack">
-                        <!-- Current & Recent Roles -->
-                        <div class="timeline-item current visible">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header-section">
-                                    <div class="timeline-company-wrapper">
-                                        <div class="timeline-company">
-                                            LexisNexis
-                                            <a href="https://www.lexisnexis.com" target="_blank" class="company-link">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                                    <polyline points="15,3 21,3 21,9"></polyline>
-                                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="timeline-industry">Legal Tech • Enterprise</div>
-                                    </div>
-                                    <div class="timeline-tech-tags">
-                                        <span class="tech-tag">Kubernetes</span>
-                                        <span class="tech-tag">Databricks</span>
-                                        <span class="tech-tag">MLflow</span>
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">AWS</span>
-                                        <span class="tech-tag">Terraform</span>
-                                    </div>
-                                </div>
-                                <div class="timeline-role">Sr MLOps Engineer</div>
-                                <div class="timeline-period">2023 - Present</div>
-                                <div class="timeline-description">Leading AI/ML adoption across engineering teams, enhancing MLOps infrastructure for operational excellence</div>
-                            </div>
+                <!-- Experience Timeline Panel -->
+                <div class="flex-1 w-full max-w-lg lg:max-w-xl xl:max-w-2xl order-2 lg:order-2">
+                    <div class="bg-secondary/90 backdrop-blur-xl border border-border rounded-xl p-4 sm:p-6 lg:p-8 shadow-2xl">
+                        <div class="text-center mb-6">
+                            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">Professional Experience</h3>
                         </div>
                         
-                        <div class="timeline-item side-project visible">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header-section">
-                                    <div class="timeline-company-wrapper">
-                                        <div class="timeline-company">
-                                            JunoAI.org
-                                            <a href="https://junoai.org" target="_blank" class="company-link">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                                    <polyline points="15,3 21,3 21,9"></polyline>
-                                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                                </svg>
-                                            </a>
+                        <!-- Timeline -->
+                        <div class="relative">
+                            <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent/50 via-accent/30 to-transparent"></div>
+                            
+                            <div class="space-y-6 max-h-80 sm:max-h-96 lg:max-h-[28rem] overflow-y-auto pr-4" id="timelineTrack">
+                                <!-- Current & Recent Roles -->
+                                <div class="relative pl-8 group">
+                                    <div class="absolute left-2 top-3 w-3 h-3 bg-accent rounded-full border-2 border-secondary shadow-lg"></div>
+                                    <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-lg p-4 hover:bg-secondary/70 transition-all duration-300">
+                                        <div class="space-y-3">
+                                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                                                <div class="flex-1">
+                                                    <div class="flex items-center gap-2 mb-1">
+                                                        <h4 class="text-sm sm:text-base lg:text-lg font-semibold text-white">LexisNexis</h4>
+                                                        <a href="https://www.lexisnexis.com" target="_blank" class="inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 bg-accent/20 hover:bg-accent/30 text-accent rounded transition-colors">
+                                                            <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                                <polyline points="15,3 21,3 21,9"></polyline>
+                                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <p class="text-xs sm:text-sm text-textSecondary">Legal Tech • Enterprise</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex flex-wrap gap-1 sm:gap-2">
+                                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-500/15 text-blue-400 border border-blue-500/20">Kubernetes</span>
+                                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-500/15 text-purple-400 border border-purple-500/20">Databricks</span>
+                                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-500/15 text-green-400 border border-green-500/20">MLflow</span>
+                                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">Python</span>
+                                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-500/15 text-blue-400 border border-blue-500/20">AWS</span>
+                                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-500/15 text-purple-400 border border-purple-500/20">Terraform</span>
+                                            </div>
+                                            
+                                            <div>
+                                                <h5 class="text-sm sm:text-base font-medium text-white mb-1">Sr MLOps Engineer</h5>
+                                                <p class="text-xs sm:text-sm text-textSecondary mb-2">2023 - Present</p>
+                                                <p class="text-xs sm:text-sm text-textSecondary leading-relaxed">
+                                                    Leading AI/ML adoption across engineering teams, enhancing MLOps infrastructure for operational excellence
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="timeline-industry">AI Research • Part-time</div>
-                                    </div>
-                                    <div class="timeline-tech-tags">
-                                        <span class="tech-tag">ChatGPT</span>
-                                        <span class="tech-tag">LangChain</span>
-                                        <span class="tech-tag">Whisper</span>
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">Streamlit</span>
-                                        <span class="tech-tag">FastAPI</span>
                                     </div>
                                 </div>
-                                <div class="timeline-role">Co-Founder</div>
-                                <div class="timeline-period">Jan 2025 - Present</div>
-                                <div class="timeline-description">Co-founded research initiative focusing on rhizomatic AI tools and philosophy-AI intersection</div>
+                                
+                                <!-- More timeline items would continue here... -->
                             </div>
-                        </div>
-                        
-                        <div class="timeline-item unicorn visible">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header-section">
-                                    <div class="timeline-company-wrapper">
-                                        <div class="timeline-company">
-                                            Clara
-                                            <a href="https://clara.com" target="_blank" class="company-link">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                                    <polyline points="15,3 21,3 21,9"></polyline>
-                                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="timeline-industry">FinTech • Unicorn</div>
-                                    </div>
-                                    <div class="timeline-tech-tags">
-                                        <span class="tech-tag">Kubernetes</span>
-                                        <span class="tech-tag">TensorFlow</span>
-                                        <span class="tech-tag">PyTorch</span>
-                                        <span class="tech-tag">Airflow</span>
-                                        <span class="tech-tag">MLflow</span>
-                                        <span class="tech-tag">AWS</span>
-                                    </div>
-                                </div>
-                                <div class="timeline-role">Sr ML Engineer / MLOps</div>
-                                <div class="timeline-period">2022 - 2023</div>
-                                <div class="timeline-description">Built end-to-end MLOps platform from scratch, implementing CI/CD pipelines, model monitoring, and serving infrastructure for 1M+ users</div>
+                            
+                            <!-- Expand Button -->
+                            <div class="text-center pt-4 border-t border-border/30">
+                                <button class="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 hover:bg-accent/20 text-accent text-sm font-medium rounded-lg transition-all duration-300" onclick="toggleTimeline()">
+                                    <span class="btn-text">View more experiences</span>
+                                    <svg class="w-4 h-4 btn-icon transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
                             </div>
-                        </div>
-                        
-                        <!-- Expandable Roles -->
-                        <div class="timeline-item unicorn expandable">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header-section">
-                                    <div class="timeline-company-wrapper">
-                                        <div class="timeline-company">
-                                            Rappi
-                                            <a href="https://rappi.com" target="_blank" class="company-link">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                                    <polyline points="15,3 21,3 21,9"></polyline>
-                                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="timeline-industry">On-Demand Delivery • Unicorn</div>
-                                    </div>
-                                    <div class="timeline-tech-tags">
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">Spark</span>
-                                        <span class="tech-tag">Kafka</span>
-                                        <span class="tech-tag">XGBoost</span>
-                                        <span class="tech-tag">BigQuery</span>
-                                        <span class="tech-tag">GCP</span>
-                                    </div>
-                                </div>
-                                <div class="timeline-role">Machine Learning Engineer</div>
-                                <div class="timeline-period">2022</div>
-                                <div class="timeline-description">Developed ML solutions for demand forecasting and logistics optimization, working with massive datasets and real-time prediction systems</div>
-                            </div>
-                        </div>
-                        
-                        <div class="timeline-item expandable">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header-section">
-                                    <div class="timeline-company-wrapper">
-                                        <div class="timeline-company">
-                                            Merqueo
-                                            <a href="https://merqueo.com" target="_blank" class="company-link">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                                    <polyline points="15,3 21,3 21,9"></polyline>
-                                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="timeline-industry">E-commerce • Scale-up</div>
-                                    </div>
-                                    <div class="timeline-tech-tags">
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">Neo4j</span>
-                                        <span class="tech-tag">Elasticsearch</span>
-                                        <span class="tech-tag">AWS Lambda</span>
-                                        <span class="tech-tag">S3</span>
-                                        <span class="tech-tag">PostgreSQL</span>
-                                    </div>
-                                </div>
-                                <div class="timeline-role">Data Scientist</div>
-                                <div class="timeline-period">Jul 2021 - Feb 2022</div>
-                                <div class="timeline-description">Maintained recommender systems, prototyped solutions with Neo4j and Elasticsearch, automated ETL processes with AWS Lambda and S3</div>
-                            </div>
-                        </div>
-                        
-                        <div class="timeline-item education expandable">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header-section">
-                                    <div class="timeline-company-wrapper">
-                                        <div class="timeline-company">
-                                            CoderHouse
-                                            <a href="https://coderhouse.com" target="_blank" class="company-link">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                                    <polyline points="15,3 21,3 21,9"></polyline>
-                                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="timeline-industry">EdTech • Online Education</div>
-                                    </div>
-                                    <div class="timeline-tech-tags">
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">Jupyter</span>
-                                        <span class="tech-tag">Pandas</span>
-                                        <span class="tech-tag">Scikit-learn</span>
-                                        <span class="tech-tag">Matplotlib</span>
-                                        <span class="tech-tag">SQL</span>
-                                    </div>
-                                </div>
-                                <div class="timeline-role">Data Scientist Tutor</div>
-                                <div class="timeline-period">Oct 2021 - Oct 2022</div>
-                                <div class="timeline-description">Mentored students in data science fundamentals, machine learning algorithms, and Python programming. Guided career transitions into data science</div>
-                            </div>
-                        </div>
-                        
-                        <div class="timeline-item expandable">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-header-section">
-                                    <div class="timeline-company-wrapper">
-                                        <div class="timeline-company">
-                                            Baubap
-                                            <a href="https://baubap.com" target="_blank" class="company-link">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                                    <polyline points="15,3 21,3 21,9"></polyline>
-                                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="timeline-industry">FinTech • Micro-lending</div>
-                                    </div>
-                                    <div class="timeline-tech-tags">
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">XGBoost</span>
-                                        <span class="tech-tag">NLTK</span>
-                                        <span class="tech-tag">Spacy</span>
-                                        <span class="tech-tag">Pandas</span>
-                                        <span class="tech-tag">AWS</span>
-                                    </div>
-                                </div>
-                                <div class="timeline-role">Data Scientist</div>
-                                <div class="timeline-period">Aug 2020 - Mar 2021</div>
-                                <div class="timeline-description">Developed EDA analysis to boost predictive models and validate service feasibility. Applied NLP models for text clustering and trained multiple ML models</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Expand Button -->
-                        <div class="timeline-expand-section">
-                            <button class="expand-timeline-btn" id="expandTimelineBtn">
-                                <span class="btn-text">View more experiences</span>
-                                <span class="btn-icon">⌄</span>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -433,171 +273,245 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="fade-in">
-        <div class="section-header">
-            <div class="section-title">About</div>
-            <div class="section-content">
-                <div class="about-text">
-                    <p>
-                        I'm a Senior MLOps Engineer with over 7 years of experience building machine learning infrastructure 
-                        at scale. I've worked across diverse organizations including unicorn startups (Clara, Rappi), 
-                        FinTech companies (Baubap), scale-ups (Merqueo), established enterprises (LexisNexis), EdTech (CoderHouse), and AI research (JunoAI.org), 
-                        designing platforms that serve millions of users.
-                    </p>
-                    <p>
-                        My expertise spans the entire ML lifecycle—from research and experimentation to production deployment 
-                        and monitoring. I specialize in Kubernetes, Databricks, and cloud-native architectures that enable 
-                        teams to iterate quickly while maintaining reliability.
-                    </p>
-                    <p>
-                        Computer Systems Engineer from ESCOM-IPN with advanced training in Machine Learning from Stanford 
-                        and Neural Networks specialization. Currently driving AI adoption and operational excellence 
-                        in enterprise environments. Experience spans from FinTech and EdTech to unicorn startups and Fortune 500 companies.
+    <section id="about" class="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-secondary via-primary to-secondary">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 lg:mb-20">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">About Me</h2>
+                <div class="max-w-4xl mx-auto">
+                    <p class="text-lg sm:text-xl text-textSecondary leading-relaxed">
+                        I'm a Senior MLOps Engineer with 7+ years of experience building scalable AI solutions. 
+                        I've worked across 7 companies including 3 unicorns, specializing in MLOps infrastructure, 
+                        AI automation, and production ML systems. My expertise spans from Kubernetes orchestration 
+                        to end-to-end ML platform development.
                     </p>
                 </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <div class="text-sm font-semibold text-accent mb-3">Education</div>
+                    <div class="text-white text-sm leading-relaxed">
+                        Computer Systems Engineer, B.S.<br>ESCOM, IPN — CGPA 90/100
+                    </div>
+                </div>
                 
-                <div class="credentials">
-                    <div class="credential-item">
-                        <div class="credential-label">Education</div>
-                        <div class="credential-value">Computer Systems Engineer, B.S.<br>ESCOM, IPN — CGPA 90/100</div>
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <div class="text-sm font-semibold text-accent mb-3">Location</div>
+                    <div class="text-white text-sm leading-relaxed">
+                        Mexico City, Mexico
                     </div>
-                    <div class="credential-item">
-                        <div class="credential-label">Location</div>
-                        <div class="credential-value">Mexico City, Mexico</div>
+                </div>
+                
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <div class="text-sm font-semibold text-accent mb-3">Experience</div>
+                    <div class="text-white text-sm leading-relaxed">
+                        7+ years in ML/AI<br>7 Companies • 3 Unicorns
                     </div>
-                    <div class="credential-item">
-                        <div class="credential-label">Experience</div>
-                        <div class="credential-value">7+ years in ML/AI<br>7 Companies • 3 Unicorns</div>
-                    </div>
-                    <div class="credential-item">
-                        <div class="credential-label">Specialization</div>
-                        <div class="credential-value">MLOps, AI Infrastructure<br>Production ML Systems</div>
+                </div>
+                
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <div class="text-sm font-semibold text-accent mb-3">Specialization</div>
+                    <div class="text-white text-sm leading-relaxed">
+                        MLOps, AI Infrastructure<br>Production ML Systems
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-
-
     <!-- Skills Section -->
-    <section id="skills" class="fade-in">
-        <div class="section-header">
-            <div class="section-title">Skills</div>
-            <div class="section-content">
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3>Languages & Frameworks</h3>
-                        <ul class="skill-list">
-                            <li>Python (7+ years)</li>
-                            <li>Golang (2 years)</li>
-                            <li>SQL (7+ years)</li>
-                            <li>JavaScript (2 years)</li>
-                            <li>FastAPI, Flask</li>
-                            <li>TensorFlow, PyTorch</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>MLOps & Infrastructure</h3>
-                        <ul class="skill-list">
-                            <li>Kubernetes, Docker</li>
-                            <li>Databricks, MLflow</li>
-                            <li>Terraform, Helm</li>
-                            <li>Airflow, Jenkins</li>
-                            <li>ArgoCD, Git</li>
-                            <li>AWS (EKS, Lambda, S3)</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>Machine Learning</h3>
-                        <ul class="skill-list">
-                            <li>Hugging Face, Transformers</li>
-                            <li>Spacy, NLTK</li>
-                            <li>Ray, Distributed Computing</li>
-                            <li>Feature Stores</li>
-                            <li>Model Monitoring</li>
-                            <li>A/B Testing</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>Data & Cloud</h3>
-                        <ul class="skill-list">
-                            <li>PostgreSQL, BigQuery</li>
-                            <li>Elasticsearch, Redis</li>
-                            <li>MongoDB, DynamoDB</li>
-                            <li>Snowflake, Data Warehousing</li>
-                            <li>AWS, Cloud Architecture</li>
-                            <li>ETL/ELT Pipelines</li>
-                        </ul>
-                    </div>
+    <section id="skills" class="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary via-secondary to-primary">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 lg:mb-20">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">Skills</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-4">Languages & Frameworks</h3>
+                    <ul class="space-y-2 text-sm text-textSecondary">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Python (7+ years)
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Golang (2 years)
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            SQL (7+ years)
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            JavaScript (2 years)
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            FastAPI, Flask
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            TensorFlow, PyTorch
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-4">MLOps & Infrastructure</h3>
+                    <ul class="space-y-2 text-sm text-textSecondary">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Kubernetes, Docker
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Databricks, MLflow
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Terraform, Helm
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Airflow, Jenkins
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            ArgoCD, Git
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            AWS (EKS, Lambda, S3)
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-4">Machine Learning</h3>
+                    <ul class="space-y-2 text-sm text-textSecondary">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Hugging Face, Transformers
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Spacy, NLTK
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Ray, Distributed Computing
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Feature Stores
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Model Monitoring
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            A/B Testing
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-4">Data & Cloud</h3>
+                    <ul class="space-y-2 text-sm text-textSecondary">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            PostgreSQL, BigQuery
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Elasticsearch, Redis
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            MongoDB, DynamoDB
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            Snowflake, Data Warehousing
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            AWS, Cloud Architecture
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
+                            ETL/ELT Pipelines
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="fade-in">
-        <div class="section-header">
-            <div class="section-title">Projects</div>
-            <div class="section-content">
-                <div class="projects-content">
-                    <h3>Selected Work</h3>
-                    <p>
-                        I've developed numerous projects spanning web development, machine learning, data science, 
-                        and automation. Each project represents an exploration of new technologies and solutions 
-                        to real-world problems, from ML platforms to web scrapers and data visualization tools.
-                    </p>
-                    <a href="https://github.com/o?tab=repositories" target="_blank" class="btn btn-primary">
-                        View on GitHub
-                    </a>
-                </div>
+    <section id="projects" class="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-secondary via-primary to-secondary">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 lg:mb-20">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">Projects</h2>
+            </div>
+            
+            <div class="max-w-4xl mx-auto text-center">
+                <h3 class="text-2xl sm:text-3xl font-semibold text-white mb-6">Selected Work</h3>
+                <p class="text-lg sm:text-xl text-textSecondary leading-relaxed mb-8">
+                    I've developed numerous projects spanning web development, machine learning, data science, 
+                    and automation. Each project represents an exploration of new technologies and solutions 
+                    to real-world problems, from ML platforms to web scrapers and data visualization tools.
+                </p>
+                <a href="https://github.com/o?tab=repositories" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-accent hover:bg-accentDark text-white font-medium rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                    View on GitHub
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="fade-in">
-        <div class="section-header">
-            <div class="section-title">Contact</div>
-            <div class="section-content">
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <div class="contact-label">Email</div>
-                        <div class="contact-value">
-                            <a href="mailto:.exe@gmail.com">saga_cth@hotmail.com</a>
-                        </div>
+    <section id="contact" class="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary via-secondary to-primary">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 lg:mb-20">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">Contact</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <div class="text-sm font-semibold text-accent mb-3">Email</div>
+                    <div class="text-white text-sm">
+                        <a href="mailto:saga_cth@hotmail.com" class="hover:text-accent transition-colors">saga_cth@hotmail.com</a>
                     </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Phone</div>
-                        <div class="contact-value">
-                            <a href="tel:+525551625252">+52 55516252</a>
-                        </div>
+                </div>
+                
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <div class="text-sm font-semibold text-accent mb-3">Phone</div>
+                    <div class="text-white text-sm">
+                        <a href="tel:+525551625252" class="hover:text-accent transition-colors">+52 55516252</a>
                     </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">GitHub</div>
-                        <div class="contact-value">
-                            <a href="https://github.com/o?tab=repositories" target="_blank">View repositories</a>
-                        </div>
+                </div>
+                
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <div class="text-sm font-semibold text-accent mb-3">GitHub</div>
+                    <div class="text-white text-sm">
+                        <a href="https://github.com/o?tab=repositories" target="_blank" class="hover:text-accent transition-colors">View repositories</a>
                     </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-label">Location</div>
-                        <div class="contact-value">Mexico City, Mexico</div>
-                    </div>
+                </div>
+                
+                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
+                    <div class="text-sm font-semibold text-accent mb-3">Location</div>
+                    <div class="text-white text-sm">Mexico City, Mexico</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <p>© 2025 Oscar A. All rights reserved.</p>
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 bg-primary border-t border-border">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-textSecondary text-sm">© 2025 Oscar A. All rights reserved.</p>
         </div>
     </footer>
 
