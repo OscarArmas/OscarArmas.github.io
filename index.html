@@ -700,128 +700,397 @@
     <section id="skills" class="py-20 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary via-secondary to-primary">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 lg:mb-20">
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">Skills</h2>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">Technical Skills</h2>
+                <p class="text-lg text-textSecondary max-w-3xl mx-auto">
+                    6+ years of experience in Machine Learning, MLOps, and Data Science across multiple industries
+                </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-4">Languages & Frameworks</h3>
-                    <ul class="space-y-2 text-sm text-textSecondary">
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Python (7+ years)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Golang (2 years)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            SQL (7+ years)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            JavaScript (2 years)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            FastAPI, Flask
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            TensorFlow, PyTorch
-                        </li>
-                    </ul>
+            <!-- Skill Categories Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12">
+                <button class="skill-tab active px-6 py-3 bg-accent/20 border border-accent/30 rounded-lg text-accent font-medium hover:bg-accent/30 transition-all duration-300" data-category="core">
+                    Core Languages
+                </button>
+                <button class="skill-tab px-6 py-3 bg-secondary/30 border border-border/30 rounded-lg text-textSecondary font-medium hover:bg-secondary/50 transition-all duration-300" data-category="mlops">
+                    MLOps & Infrastructure
+                </button>
+                <button class="skill-tab px-6 py-3 bg-secondary/30 border border-border/30 rounded-lg text-textSecondary font-medium hover:bg-secondary/50 transition-all duration-300" data-category="ml">
+                    Machine Learning
+                </button>
+                <button class="skill-tab px-6 py-3 bg-secondary/30 border border-border/30 rounded-lg text-textSecondary font-medium hover:bg-secondary/50 transition-all duration-300" data-category="data">
+                    Data & Cloud
+                </button>
+            </div>
+            
+            <!-- Skills Content -->
+            <div class="skills-content">
+                <!-- Core Languages -->
+                <div class="skill-category active" data-category="core">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="skill-item">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center">
+                                    <span class="skill-icon">🐍</span>
+                                    <h3 class="text-lg font-semibold text-white">Python</h3>
+                                </div>
+                                <span class="text-sm text-accent font-medium">6 years</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar python" data-width="95"></div>
+                            </div>
+                            <div class="mt-2 text-sm text-textSecondary">
+                                <span class="skill-tag">FastAPI</span>
+                                <span class="skill-tag">Flask</span>
+                                <span class="skill-tag">TensorFlow</span>
+                                <span class="skill-tag">PyTorch</span>
+                                <span class="skill-tag">Scikit-learn</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center">
+                                    <span class="skill-icon">🔍</span>
+                                    <h3 class="text-lg font-semibold text-white">SQL</h3>
+                                </div>
+                                <span class="text-sm text-accent font-medium">5 years</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar sql" data-width="90"></div>
+                            </div>
+                            <div class="mt-2 text-sm text-textSecondary">
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">BigQuery</span>
+                                <span class="skill-tag">Snowflake</span>
+                                <span class="skill-tag">MySQL</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center">
+                                    <span class="skill-icon">🚀</span>
+                                    <h3 class="text-lg font-semibold text-white">Golang</h3>
+                                </div>
+                                <span class="text-sm text-accent font-medium">2 years</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar golang" data-width="75"></div>
+                            </div>
+                            <div class="mt-2 text-sm text-textSecondary">
+                                <span class="skill-tag">Goroutines</span>
+                                <span class="skill-tag">Echo</span>
+                                <span class="skill-tag">OpenTelemetry</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center">
+                                    <span class="skill-icon">⚡</span>
+                                    <h3 class="text-lg font-semibold text-white">JavaScript</h3>
+                                </div>
+                                <span class="text-sm text-accent font-medium">2 years</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar javascript" data-width="70"></div>
+                            </div>
+                            <div class="mt-2 text-sm text-textSecondary">
+                                <span class="skill-tag">HTML5</span>
+                                <span class="skill-tag">CSS3</span>
+                                <span class="skill-tag">Angular</span>
+                                <span class="skill-tag">Bootstrap</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-4">MLOps & Infrastructure</h3>
-                    <ul class="space-y-2 text-sm text-textSecondary">
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Kubernetes, Docker
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Databricks, MLflow
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Terraform, Helm
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Airflow, Jenkins
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            ArgoCD, Git
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            AWS (EKS, Lambda, S3)
-                        </li>
-                    </ul>
+                <!-- MLOps & Infrastructure -->
+                <div class="skill-category" data-category="mlops">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">☸️</span>
+                                <h3 class="text-lg font-semibold text-white">Container Orchestration</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Kubernetes</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Helm</span>
+                                <span class="skill-tag">ArgoCD</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🔧</span>
+                                <h3 class="text-lg font-semibold text-white">CI/CD & Automation</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Jenkins</span>
+                                <span class="skill-tag">Airflow</span>
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">Terraform</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🏗️</span>
+                                <h3 class="text-lg font-semibold text-white">ML Platform</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Databricks</span>
+                                <span class="skill-tag">MLflow</span>
+                                <span class="skill-tag">Feature Stores</span>
+                                <span class="skill-tag">Ray</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">☁️</span>
+                                <h3 class="text-lg font-semibold text-white">AWS Services</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">EKS</span>
+                                <span class="skill-tag">Lambda</span>
+                                <span class="skill-tag">S3</span>
+                                <span class="skill-tag">SQS</span>
+                                <span class="skill-tag">Route53</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🧪</span>
+                                <h3 class="text-lg font-semibold text-white">Testing & Monitoring</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Locust</span>
+                                <span class="skill-tag">JMeter</span>
+                                <span class="skill-tag">Model Monitoring</span>
+                                <span class="skill-tag">A/B Testing</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🔄</span>
+                                <h3 class="text-lg font-semibold text-white">Automation Tools</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">N8N</span>
+                                <span class="skill-tag">CloudFormation</span>
+                                <span class="skill-tag">Chalice</span>
+                                <span class="skill-tag">API Gateway</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-4">Machine Learning</h3>
-                    <ul class="space-y-2 text-sm text-textSecondary">
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Hugging Face, Transformers
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Spacy, NLTK
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Ray, Distributed Computing
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Feature Stores
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Model Monitoring
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            A/B Testing
-                        </li>
-                    </ul>
+                <!-- Machine Learning -->
+                <div class="skill-category" data-category="ml">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🤖</span>
+                                <h3 class="text-lg font-semibold text-white">Deep Learning</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">TensorFlow</span>
+                                <span class="skill-tag">PyTorch</span>
+                                <span class="skill-tag">Neural Networks</span>
+                                <span class="skill-tag">Transformers</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🗣️</span>
+                                <h3 class="text-lg font-semibold text-white">NLP & Text Mining</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">HuggingFace</span>
+                                <span class="skill-tag">Spacy</span>
+                                <span class="skill-tag">NLTK</span>
+                                <span class="skill-tag">FastText</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">📊</span>
+                                <h3 class="text-lg font-semibold text-white">Classical ML</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Scikit-learn</span>
+                                <span class="skill-tag">XGBoost</span>
+                                <span class="skill-tag">Regression</span>
+                                <span class="skill-tag">Trees</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🔍</span>
+                                <h3 class="text-lg font-semibold text-white">Data Analysis</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Pandas</span>
+                                <span class="skill-tag">NumPy</span>
+                                <span class="skill-tag">SciPy</span>
+                                <span class="skill-tag">Seaborn</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🎯</span>
+                                <h3 class="text-lg font-semibold text-white">Recommender Systems</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Collaborative Filtering</span>
+                                <span class="skill-tag">Neo4j</span>
+                                <span class="skill-tag">Content-Based</span>
+                                <span class="skill-tag">Personalization</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🧮</span>
+                                <h3 class="text-lg font-semibold text-white">Data Tools</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Jupyter</span>
+                                <span class="skill-tag">Google Colab</span>
+                                <span class="skill-tag">Tableau</span>
+                                <span class="skill-tag">Scrapy</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:bg-secondary/70 transition-all duration-300">
-                    <h3 class="text-lg sm:text-xl font-semibold text-white mb-4">Data & Cloud</h3>
-                    <ul class="space-y-2 text-sm text-textSecondary">
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            PostgreSQL, BigQuery
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Elasticsearch, Redis
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            MongoDB, DynamoDB
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            Snowflake, Data Warehousing
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            AWS, Cloud Architecture
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-accent rounded-full mr-3"></span>
-                            ETL/ELT Pipelines
-                        </li>
-                    </ul>
+                <!-- Data & Cloud -->
+                <div class="skill-category" data-category="data">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🗄️</span>
+                                <h3 class="text-lg font-semibold text-white">Relational Databases</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">MySQL</span>
+                                <span class="skill-tag">MariaDB</span>
+                                <span class="skill-tag">BigQuery</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">📄</span>
+                                <h3 class="text-lg font-semibold text-white">NoSQL & Document</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">MongoDB</span>
+                                <span class="skill-tag">DynamoDB</span>
+                                <span class="skill-tag">ElasticSearch</span>
+                                <span class="skill-tag">Redis</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🏢</span>
+                                <h3 class="text-lg font-semibold text-white">Data Warehousing</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Snowflake</span>
+                                <span class="skill-tag">BigQuery</span>
+                                <span class="skill-tag">Data Lakes</span>
+                                <span class="skill-tag">ETL/ELT</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🕷️</span>
+                                <h3 class="text-lg font-semibold text-white">Data Collection</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Web Scraping</span>
+                                <span class="skill-tag">BeautifulSoup</span>
+                                <span class="skill-tag">Selenium</span>
+                                <span class="skill-tag">Scrapy</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">☁️</span>
+                                <h3 class="text-lg font-semibold text-white">Cloud Storage</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">AWS S3</span>
+                                <span class="skill-tag">EFS</span>
+                                <span class="skill-tag">Lambda</span>
+                                <span class="skill-tag">SQS</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-card">
+                            <div class="skill-card-header">
+                                <span class="skill-icon">🔄</span>
+                                <h3 class="text-lg font-semibold text-white">Data Processing</h3>
+                            </div>
+                            <div class="skill-list">
+                                <span class="skill-tag">Apache Airflow</span>
+                                <span class="skill-tag">ETL Pipelines</span>
+                                <span class="skill-tag">Batch Processing</span>
+                                <span class="skill-tag">Real-time Processing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Certifications -->
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-semibold text-white mb-8">Certifications & Education</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="certification-badge">
+                        <span class="cert-icon">🎓</span>
+                        <div class="cert-info">
+                            <h4 class="text-sm font-semibold text-white">B.S. Computer Systems</h4>
+                            <p class="text-xs text-textSecondary">ESCOM, IPN • CGPA: 90/100</p>
+                        </div>
+                    </div>
+                    
+                    <div class="certification-badge">
+                        <span class="cert-icon">🤖</span>
+                        <div class="cert-info">
+                            <h4 class="text-sm font-semibold text-white">Machine Learning</h4>
+                            <p class="text-xs text-textSecondary">Stanford • Coursera</p>
+                        </div>
+                    </div>
+                    
+                    <div class="certification-badge">
+                        <span class="cert-icon">🧠</span>
+                        <div class="cert-info">
+                            <h4 class="text-sm font-semibold text-white">Neural Networks</h4>
+                            <p class="text-xs text-textSecondary">Deep Learning Specialization</p>
+                        </div>
+                    </div>
+                    
+                    <div class="certification-badge">
+                        <span class="cert-icon">🎯</span>
+                        <div class="cert-info">
+                            <h4 class="text-sm font-semibold text-white">Artificial Intelligence</h4>
+                            <p class="text-xs text-textSecondary">Intro to AI</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -986,7 +1255,72 @@
                 };
                 document.head.appendChild(script);
             }
+            
+            // Initialize Skills Section
+            initializeSkillsSection();
         });
+        
+        // Skills Section Functionality
+        function initializeSkillsSection() {
+            const skillTabs = document.querySelectorAll('.skill-tab');
+            const skillCategories = document.querySelectorAll('.skill-category');
+            
+            // Tab switching functionality
+            skillTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetCategory = this.dataset.category;
+                    
+                    // Remove active class from all tabs
+                    skillTabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all categories
+                    skillCategories.forEach(cat => cat.classList.remove('active'));
+                    // Show target category
+                    const targetCat = document.querySelector(`.skill-category[data-category="${targetCategory}"]`);
+                    if (targetCat) {
+                        targetCat.classList.add('active');
+                        // Animate skill bars if in core category
+                        if (targetCategory === 'core') {
+                            animateSkillBars();
+                        }
+                    }
+                });
+            });
+            
+            // Animate skill bars when skills section comes into view
+            const skillsSection = document.querySelector('#skills');
+            if (skillsSection) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Check if core category is active
+                            const coreCategory = document.querySelector('.skill-category[data-category="core"]');
+                            if (coreCategory && coreCategory.classList.contains('active')) {
+                                animateSkillBars();
+                            }
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                observer.observe(skillsSection);
+            }
+        }
+        
+        // Animate skill bars
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            skillBars.forEach(bar => {
+                const targetWidth = bar.dataset.width;
+                if (targetWidth) {
+                    setTimeout(() => {
+                        bar.style.width = targetWidth + '%';
+                    }, 300);
+                }
+            });
+        }
     </script>
 </body>
 </html> 
