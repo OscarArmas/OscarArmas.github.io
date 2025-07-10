@@ -500,11 +500,6 @@ button[onclick="toggleTimeline()"] .btn-icon {
     box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
 }
 
-.skill-icon {
-    font-size: 1.5rem;
-    margin-right: 0.75rem;
-}
-
 .skill-bar-container {
     width: 100%;
     height: 8px;
@@ -578,11 +573,6 @@ button[onclick="toggleTimeline()"] .btn-icon {
     margin-bottom: 1rem;
 }
 
-.skill-card-header .skill-icon {
-    font-size: 1.25rem;
-    margin-right: 0.5rem;
-}
-
 .skill-list {
     display: flex;
     flex-wrap: wrap;
@@ -605,11 +595,6 @@ button[onclick="toggleTimeline()"] .btn-icon {
     box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
 }
 
-.cert-icon {
-    font-size: 1.5rem;
-    margin-right: 0.75rem;
-}
-
 .cert-info {
     flex: 1;
 }
@@ -627,10 +612,5 @@ button[onclick="toggleTimeline()"] .btn-icon {
     .certification-badge {
         flex-direction: column;
         text-align: center;
-    }
-
-    .cert-icon {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
     }
 } 
