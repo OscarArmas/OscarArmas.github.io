@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeTimelineAnimations();
     initializeTimelineExpand();
     initializeCompanyLinks();
+    initializeMobileMenu();
+    initializeContactForm();
 });
 
 // Initialize all functionality
@@ -334,4 +336,155 @@ function initializeCompanyLinks() {
             }
         });
     });
+}
+
+// ===== MOBILE MENU FUNCTIONALITY =====
+function initializeMobileMenu() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    if (!mobileMenuButton || !mobileMenu) return;
+    
+    let isMenuOpen = false;
+    
+    // Toggle mobile menu
+    mobileMenuButton.addEventListener('click', function() {
+        isMenuOpen = !isMenuOpen;
+        toggleMobileMenu(isMenuOpen);
+    });
+    
+    // Close menu when clicking on nav links
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            isMenuOpen = false;
+            toggleMobileMenu(isMenuOpen);
+        });
+    });
+    
+    // Close menu with escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && isMenuOpen) {
+            isMenuOpen = false;
+            toggleMobileMenu(isMenuOpen);
+        }
+    });
+    
+    function toggleMobileMenu(open) {
+        if (open) {
+            mobileMenu.classList.remove('translate-x-full');
+            mobileMenu.classList.add('translate-x-0');
+            menuIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        } else {
+            mobileMenu.classList.add('translate-x-full');
+            mobileMenu.classList.remove('translate-x-0');
+            menuIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+}
+
+// ===== CONTACT FORM FUNCTIONALITY =====
+function initializeContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        // Show loading state
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+        submitButton.innerHTML = `
+            <span class="flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+            </span>
+        `;
+        submitButton.disabled = true;
+        
+        // Simulate form submission (replace with actual form handler)
+        setTimeout(() => {
+            // Create mailto link
+            const subject = encodeURIComponent(`Portfolio Contact: ${data.subject || 'General Inquiry'}`);
+            const body = encodeURIComponent(`
+Name: ${data.name}
+Email: ${data.email}
+Company: ${data.company || 'N/A'}
+Subject: ${data.subject || 'General Inquiry'}
+
+Message:
+${data.message}
+            `);
+            
+            const mailtoLink = `mailto:oscar.armas.contact@gmail.com?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+            
+            // Reset form
+            form.reset();
+            submitButton.innerHTML = originalText;
+            submitButton.disabled = false;
+            
+            // Show success message
+            showNotification('Message prepared! Your email client should open now.', 'success');
+        }, 1000);
+    });
+}
+
+// ===== NOTIFICATION SYSTEM =====
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification fixed top-4 right-4 z-50 max-w-sm p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+    
+    const bgColor = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-blue-600';
+    notification.classList.add(bgColor);
+    
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <div class="flex-1 text-white text-sm font-medium">${message}</div>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-3 text-white hover:text-gray-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+        notification.classList.add('translate-x-0');
+    }, 100);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+
+// ===== MESSAGE BUBBLE FUNCTIONALITY (RESTORED) =====
+function toggleMessageBubble() {
+    const bubble = document.getElementById('messageBubble');
+    if (bubble) {
+        bubble.classList.toggle('show');
+    }
 }
