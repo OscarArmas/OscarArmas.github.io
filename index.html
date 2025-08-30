@@ -141,15 +141,29 @@
     <!-- Navigation -->
     <nav class="fixed top-0 w-full px-6 lg:px-12 py-6 bg-black/90 backdrop-blur-3xl border-b border-border z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#home" class="logo text-xl font-semibold text-white hover:text-accent transition-all duration-300">Oscar A.</a>
+            <a href="#home" class="logo text-xl font-semibold text-white hover:text-accent transition-all duration-300">.</a>
             
             <!-- Desktop Menu -->
-            <ul class="hidden md:flex space-x-8 lg:space-x-12">
+            <ul class="hidden md:flex space-x-8 lg:space-x-12 items-center">
                 <li><a href="#about" class="nav-link text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">About</a></li>
                 <li><a href="#experience" class="nav-link text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Experience</a></li>
                 <li><a href="#skills" class="nav-link text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Skills</a></li>
                 <li><a href="#projects" class="nav-link text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Projects</a></li>
                 <li><a href="#contact" class="nav-link text-textSecondary hover:text-white transition-all duration-300 font-medium text-sm lg:text-base">Contact</a></li>
+                
+                <!-- Theme Toggle -->
+                <li>
+                    <button id="theme-toggle" class="p-2 rounded-lg text-textSecondary hover:text-white transition-all duration-300 hover:bg-secondary/30" title="Toggle theme">
+                        <!-- Sun Icon (Light Mode) -->
+                        <svg id="sun-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <!-- Moon Icon (Dark Mode) -->
+                        <svg id="moon-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </li>
             </ul>
             
             <!-- Mobile menu button -->
@@ -171,6 +185,21 @@
                 <a href="#skills" class="mobile-nav-link text-white text-2xl font-medium hover:text-accent transition-colors duration-300">Skills</a>
                 <a href="#projects" class="mobile-nav-link text-white text-2xl font-medium hover:text-accent transition-colors duration-300">Projects</a>
                 <a href="#contact" class="mobile-nav-link text-white text-2xl font-medium hover:text-accent transition-colors duration-300">Contact</a>
+                
+                <!-- Theme Toggle Mobile -->
+                <div class="mb-8">
+                    <button id="mobile-theme-toggle" class="p-3 rounded-lg text-white hover:text-accent transition-all duration-300 hover:bg-secondary/30 flex items-center justify-center gap-3" title="Toggle theme">
+                        <span class="text-sm font-medium">Theme</span>
+                        <!-- Sun Icon (Light Mode) -->
+                        <svg id="mobile-sun-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <!-- Moon Icon (Dark Mode) -->
+                        <svg id="mobile-moon-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
                 
                 <!-- Mobile Contact Info -->
                 <div class="mt-8 text-center">

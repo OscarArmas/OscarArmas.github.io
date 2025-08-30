@@ -1,5 +1,6 @@
 /* ===== VARIABLES Y CONFIGURACIÓN ===== */
 :root {
+    /* Dark Mode Variables (Default) */
     --bg-primary: #0a0a0a;
     --bg-secondary: #1a1a1a;
     --text-primary: #ffffff;
@@ -8,6 +9,39 @@
     --accent: #ffffff;
     --border: #2a2a2a;
     --hover: #f5f5f5;
+    
+    /* Common Colors */
+    --accent-blue: #3b82f6;
+    --accent-blue-light: #60a5fa;
+    --accent-blue-dark: #1d4ed8;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+}
+
+/* Light Mode Variables - Professional Design System */
+[data-theme="light"] {
+    --bg-primary: #fefefe;
+    --bg-secondary: #f9fafb;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --accent: #374151;
+    --border: #f3f4f6;
+    --hover: #111827;
+    
+    /* Professional card backgrounds */
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --card-border: rgba(229, 231, 235, 0.6);
+    --card-shadow: rgba(16, 24, 40, 0.08);
+    
+    /* Navigation specific */
+    --nav-bg: rgba(255, 255, 255, 0.85);
+    --nav-border: rgba(229, 231, 235, 0.4);
+    
+    /* Interactive elements */
+    --button-hover: rgba(249, 250, 251, 0.8);
+    --focus-ring: rgba(59, 130, 246, 0.12);
 }
 
 /* ===== RESET Y ESTILOS BASE ===== */
@@ -19,8 +53,8 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #0a0a0a;
-    color: #ffffff;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -29,6 +63,7 @@ body {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ===== SCROLLBAR PERSONALIZADA ===== */
@@ -746,6 +781,452 @@ button[onclick="toggleTimeline()"] .btn-icon {
     }
 }
 
+/* ===== PROFESSIONAL LIGHT MODE DESIGN ===== */
+[data-theme="light"] {
+    /* Navigation - Glassmorphism effect */
+    nav {
+        background: var(--nav-bg) !important;
+        border-bottom: 1px solid var(--nav-border) !important;
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        box-shadow: 0 1px 3px var(--card-shadow) !important;
+    }
+    
+    /* Mobile menu - Clean and minimal */
+    #mobile-menu {
+        background: rgba(255, 255, 255, 0.92) !important;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
+    
+    /* Professional card system */
+    .bg-secondary\/50,
+    .bg-secondary\/30,
+    .bg-secondary\/90 {
+        background: var(--card-bg) !important;
+        border: 1px solid var(--card-border) !important;
+        box-shadow: 0 1px 3px var(--card-shadow), 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    }
+    
+    /* Enhanced cards with subtle elevation */
+    .skill-item,
+    .skill-card,
+    .certification-badge {
+        background: var(--card-bg) !important;
+        border: 1px solid var(--card-border) !important;
+        box-shadow: 
+            0 1px 3px var(--card-shadow),
+            0 1px 2px rgba(0, 0, 0, 0.04) !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    .skill-item:hover,
+    .skill-card:hover,
+    .certification-badge:hover {
+        box-shadow: 
+            0 4px 6px rgba(16, 24, 40, 0.1),
+            0 2px 4px rgba(16, 24, 40, 0.06) !important;
+        transform: translateY(-1px) !important;
+    }
+    
+    /* Form elements with clean aesthetics */
+    input, textarea, select {
+        background: var(--bg-primary) !important;
+        border: 1.5px solid var(--card-border) !important;
+        color: var(--text-primary) !important;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05) !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    input:focus, textarea:focus, select:focus {
+        border-color: rgba(59, 130, 246, 0.4) !important;
+        box-shadow: 
+            0 0 0 3px var(--focus-ring),
+            0 1px 2px rgba(16, 24, 40, 0.05) !important;
+        outline: none !important;
+    }
+    
+    /* Sophisticated gradients */
+    .bg-gradient-to-br {
+        background: linear-gradient(
+            135deg, 
+            #fefefe 0%, 
+            #f9fafb 50%, 
+            #f3f4f6 100%
+        ) !important;
+    }
+    
+    /* Professional shadow system */
+    .shadow-2xl {
+        box-shadow: 
+            0 25px 50px -12px rgba(16, 24, 40, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.5) !important;
+    }
+    
+    /* Message bubble with refined styling */
+    #messageBubble .bg-secondary\/95 {
+        background: rgba(255, 255, 255, 0.94) !important;
+        border: 1px solid var(--card-border) !important;
+        box-shadow: 
+            0 10px 25px rgba(16, 24, 40, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.8) !important;
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+    }
+    
+    /* Experience cards enhancement */
+    .experience-card:hover {
+        box-shadow: 
+            0 8px 25px rgba(16, 24, 40, 0.06),
+            0 0 0 1px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    /* Button states */
+    button:hover {
+        background: var(--button-hover) !important;
+    }
+    
+    /* Accent color refinements */
+    .text-accent {
+        color: #4f46e5 !important;
+    }
+    
+    .bg-accent\/10 {
+        background: rgba(79, 70, 229, 0.08) !important;
+    }
+    
+    .border-accent\/20 {
+        border-color: rgba(79, 70, 229, 0.16) !important;
+    }
+    
+    /* Status indicators */
+    .bg-green-500\/10 {
+        background: rgba(34, 197, 94, 0.08) !important;
+    }
+    
+    .border-green-500\/20 {
+        border-color: rgba(34, 197, 94, 0.16) !important;
+    }
+    
+    .text-green-400 {
+        color: #16a34a !important;
+    }
+    
+    /* Skill tags with professional styling */
+    .skill-tag {
+        background: rgba(99, 102, 241, 0.06) !important;
+        border: 1px solid rgba(99, 102, 241, 0.12) !important;
+        color: #6366f1 !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    .skill-tag:hover {
+        background: rgba(99, 102, 241, 0.1) !important;
+        border-color: rgba(99, 102, 241, 0.2) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 4px rgba(99, 102, 241, 0.1) !important;
+    }
+    
+    /* Technology badges refinement */
+    .px-3.py-1.rounded-full {
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+    }
+    
+    /* Blue tech tags */
+    .bg-blue-500\/10 {
+        background: rgba(59, 130, 246, 0.06) !important;
+        border-color: rgba(59, 130, 246, 0.12) !important;
+    }
+    .text-blue-400 {
+        color: #3b82f6 !important;
+    }
+    
+    /* Purple tech tags */
+    .bg-purple-500\/10 {
+        background: rgba(147, 51, 234, 0.06) !important;
+        border-color: rgba(147, 51, 234, 0.12) !important;
+    }
+    .text-purple-400 {
+        color: #9333ea !important;
+    }
+    
+    /* Green tech tags */
+    .bg-green-500\/10 {
+        background: rgba(34, 197, 94, 0.06) !important;
+        border-color: rgba(34, 197, 94, 0.12) !important;
+    }
+    
+    /* Yellow tech tags */
+    .bg-yellow-500\/10 {
+        background: rgba(245, 158, 11, 0.06) !important;
+        border-color: rgba(245, 158, 11, 0.12) !important;
+    }
+    .text-yellow-400 {
+        color: #f59e0b !important;
+    }
+    
+    /* Experience timeline dots */
+    .absolute.left-1\/2.transform {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+        box-shadow: 0 0 0 4px var(--bg-primary), 0 0 0 6px rgba(99, 102, 241, 0.2) !important;
+    }
+    
+    /* Scrollbar for light mode */
+    ::-webkit-scrollbar-track {
+        background: rgba(243, 244, 246, 0.8) !important;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.6) !important;
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(107, 114, 128, 0.8) !important;
+    }
+    
+    /* ===== TEXT COLORS OVERRIDE FOR LIGHT MODE ===== */
+    
+    /* Main headers and titles */
+    h1, h2, h3, h4, h5, h6,
+    .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Navigation text */
+    .nav-link,
+    .mobile-nav-link,
+    .logo {
+        color: var(--text-secondary) !important;
+    }
+    
+    .nav-link:hover,
+    .mobile-nav-link:hover,
+    .logo:hover {
+        color: var(--text-primary) !important;
+    }
+    
+    .nav-link.active {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Secondary text elements */
+    .text-textSecondary {
+        color: var(--text-secondary) !important;
+    }
+    
+    .text-textMuted,
+    .text-textSecondary {
+        color: var(--text-muted) !important;
+    }
+    
+    /* Specific elements that need dark text */
+    .text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl,
+    .text-xl, .text-2xl,
+    .font-bold, .font-semibold {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Experience card text */
+    .experience-card h3,
+    .experience-card h4,
+    .experience-card .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    .experience-card .text-textSecondary,
+    .experience-card p {
+        color: var(--text-secondary) !important;
+    }
+    
+    /* Skills section text */
+    .skill-item h3,
+    .skill-card h3,
+    .certification-badge h4 {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Contact section text */
+    .contact-card .text-white,
+    #contact h2,
+    #contact h3 {
+        color: var(--text-primary) !important;
+    }
+    
+    /* About section text */
+    #about h2,
+    #about .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Projects section text */
+    #projects h2,
+    #projects h3,
+    #projects .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Hero section text */
+    #home h1,
+    #home .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Form labels */
+    label,
+    .block.text-sm.font-medium.text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Footer text */
+    footer p,
+    footer .text-textSecondary {
+        color: var(--text-secondary) !important;
+    }
+    
+    /* Button text - keep some exceptions for accent buttons */
+    button.bg-accent .text-white {
+        color: #ffffff !important; /* Keep white text on accent buttons */
+    }
+    
+    /* Mobile menu text */
+    #mobile-menu .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    #mobile-menu .text-textSecondary {
+        color: var(--text-secondary) !important;
+    }
+    
+    /* Timeline and experience specific */
+    .timeline-item .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Message bubble text */
+    #messageBubble .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Skill bar text and numbers */
+    .text-2xl.font-bold.text-white,
+    .text-xl.font-bold.text-white,
+    .text-lg.font-semibold.text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Status and small text */
+    .text-xs.text-textSecondary,
+    .text-sm.text-textSecondary {
+        color: var(--text-muted) !important;
+    }
+    
+    /* Special cases for dark backgrounds in light mode */
+    .bg-primary\/50 .text-white,
+    .bg-secondary\/50 .text-white {
+        color: var(--text-primary) !important;
+    }
+    
+    /* ===== LINKS AND INTERACTIVE ELEMENTS ===== */
+    
+    /* Regular links */
+    a:not(.nav-link):not(.mobile-nav-link):not(.logo) {
+        color: var(--accent-blue) !important;
+    }
+    
+    a:not(.nav-link):not(.mobile-nav-link):not(.logo):hover {
+        color: var(--accent-blue-dark) !important;
+    }
+    
+    /* Company links in experience section */
+    .experience-card a {
+        color: var(--accent-blue) !important;
+    }
+    
+    .experience-card a:hover {
+        color: var(--accent-blue-dark) !important;
+    }
+    
+    /* ===== STATUS AND ACCENT COLORS ===== */
+    
+    /* Accent text that should stay blue */
+    .text-accent {
+        color: #4f46e5 !important;
+    }
+    
+    /* Status text (Available for opportunities) */
+    .text-green-400 {
+        color: #059669 !important;
+    }
+    
+    /* ===== PLACEHOLDER AND INPUT TEXT ===== */
+    
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--text-muted) !important;
+    }
+    
+    /* Select dropdown text */
+    select option {
+        color: var(--text-primary) !important;
+        background: var(--bg-primary) !important;
+    }
+    
+    /* ===== NOTIFICATION TEXT ===== */
+    
+    .notification .text-white {
+        color: #ffffff !important; /* Keep white on colored notification backgrounds */
+    }
+    
+    /* ===== HERO SECTION SPECIFIC ===== */
+    
+    /* Hero subtitle - the blue accent text */
+    .text-lg.text-accent,
+    .text-xl.text-accent,
+    .text-2xl.text-accent {
+        color: #4f46e5 !important;
+    }
+    
+    /* Hero description */
+    .text-base.text-textSecondary,
+    .text-lg.text-textSecondary {
+        color: var(--text-secondary) !important;
+    }
+    
+    /* ===== BUTTON TEXT REFINEMENTS ===== */
+    
+    /* Primary buttons keep white text */
+    .bg-accent,
+    .bg-accentDark,
+    .hover\\:bg-accentDark:hover {
+        color: #ffffff !important;
+    }
+    
+    /* Secondary/outline buttons */
+    .border-accent {
+        color: #4f46e5 !important;
+    }
+    
+    .border-accent:hover {
+        color: #4338ca !important;
+    }
+}
+
+/* Theme toggle button styles */
+#theme-toggle, #mobile-theme-toggle {
+    transition: all 0.3s ease;
+}
+
+#theme-toggle:hover, #mobile-theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Icon transition */
+.theme-icon {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
 /* ===== ACCESSIBILITY IMPROVEMENTS ===== */
 @media (prefers-reduced-motion: reduce) {
     .mobile-menu,
@@ -754,5 +1235,9 @@ button[onclick="toggleTimeline()"] .btn-icon {
     .contact-card {
         transition: none !important;
         animation: none !important;
+    }
+    
+    body {
+        transition: none !important;
     }
 } 
