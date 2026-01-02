@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery - Web Lab</title>
+  <link rel="stylesheet" href="../../assets/css/tailwind.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-indigo-600 text-white py-4 shadow-lg">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">🖼️ Gallery</h1>
+      <a href="../../index.html" class="text-indigo-200 hover:text-white transition-colors">
+        ← Back to Lab
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 py-8 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-2xl">
+      <div class="text-center">
+        <img 
+          id="galleryImage" 
+          src="https://picsum.photos/seed/1/600/400" 
+          alt="Gallery Image"
+          class="w-full h-64 object-cover rounded-lg mb-4"
+        >
+        <p id="caption" class="text-gray-600 mb-4">Image 1 of 5</p>
+        
+        <div class="flex justify-center gap-4">
+          <button 
+            id="prevBtn" 
+            class="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700 transition-colors font-semibold"
+          >
+            ← Previous
+          </button>
+          <button 
+            id="nextBtn" 
+            class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition-colors font-semibold"
+          >
+            Next →
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-400 py-4">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2026 Web Lab</p>
+    </div>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clock - Web Lab</title>
+  <link rel="stylesheet" href="../../assets/css/tailwind.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-indigo-600 text-white py-4 shadow-lg">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">⏰ Clock</h1>
+      <a href="../../index.html" class="text-indigo-200 hover:text-white transition-colors">
+        ← Back to Lab
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 py-8 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+      <p class="text-gray-600 mb-4">Current Time</p>
+      <div id="clock" class="text-5xl font-mono font-bold text-indigo-600">
+        --:--:--
+      </div>
+      <p id="date" class="text-gray-500 mt-4">Loading date...</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-400 py-4">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2026 Web Lab</p>
+    </div>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

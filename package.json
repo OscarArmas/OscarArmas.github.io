@@ -1,0 +1,20 @@
+{
+  "name": "web-lab",
+  "version": "1.0.0",
+  "description": "A hub page linking to multiple mini-projects, deployed to GitHub Pages",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/input.css -o ./lab/assets/css/tailwind.css --watch",
+    "build": "npx tailwindcss -i ./src/input.css -o ./lab/assets/css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  },
+  "keywords": [
+    "static-site",
+    "tailwindcss",
+    "github-pages",
+    "mini-projects"
+  ],
+  "author": "",
+  "license": "MIT"
+}
