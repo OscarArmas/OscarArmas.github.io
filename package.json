@@ -4,9 +4,11 @@
   "description": "A hub page linking to multiple mini-projects, deployed to GitHub Pages",
   "scripts": {
     "dev": "npx tailwindcss -i ./src/input.css -o ./lab/assets/css/tailwind.css --watch",
-    "build": "npx tailwindcss -i ./src/input.css -o ./lab/assets/css/tailwind.css --minify"
+    "build": "npx tailwindcss -i ./src/input.css -o ./lab/assets/css/tailwind.css --minify",
+    "start": "npm run build && serve ./lab -l 3000"
   },
   "devDependencies": {
+    "serve": "^14.2.5",
     "tailwindcss": "^3.4.1"
   },
   "keywords": [
