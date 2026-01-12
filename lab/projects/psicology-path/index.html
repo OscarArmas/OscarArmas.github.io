@@ -171,13 +171,22 @@
     <!-- ========================================
          BARRA DE PROGRESO
          ======================================== -->
-    <div id="progress-container" class="mb-8">
-      <div class="flex justify-between items-center mb-2">
-        <span class="text-xs font-medium text-muted uppercase tracking-wide">
-          Pregunta <span id="current-step">1</span> de 7
-        </span>
-        <span id="progress-percent" class="text-xs font-medium text-lavender-600">0%</span>
+    <div id="progress-container" class="mb-8 relative">
+      <div class="flex justify-between items-end mb-2">
+        <!-- Botón Volver (oculto inicialmente) -->
+        <button id="back-btn" class="text-xs font-medium text-muted hover:text-lavender-600 underline decoration-lavender-300 underline-offset-2 transition-colors opacity-0 pointer-events-none flex items-center gap-1" aria-label="Volver a la pregunta anterior">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Anterior
+        </button>
+        
+        <div class="flex flex-col items-end">
+          <span class="text-xs font-medium text-muted uppercase tracking-wide">
+            Pregunta <span id="current-step">1</span> de 7
+          </span>
+          <span id="progress-percent" class="text-xs font-medium text-lavender-600">0%</span>
+        </div>
       </div>
+      
       <div class="h-2 bg-lavender-100 rounded-full overflow-hidden mb-2">
         <div id="progress-bar" class="progress-fill h-full bg-gradient-to-r from-lavender-400 to-lavender-500 rounded-full" style="width: 0%"></div>
       </div>
@@ -246,13 +255,25 @@
           <!-- Puntajes renderizados -->
         </div>
         
-        <!-- Botón de reinicio -->
-        <button 
-          id="restart-btn"
-          class="w-full py-3 px-6 bg-gradient-to-r from-lavender-500 to-lavender-600 text-white font-display font-semibold rounded-xl hover:from-lavender-600 hover:to-lavender-700 transition-all duration-200 shadow-md hover:shadow-lg"
-        >
-          Volver a empezar
-        </button>
+        <!-- Botones de Acción -->
+        <div class="space-y-3">
+          <!-- Botón Copiar Resumen (Nuevo) -->
+          <button 
+            id="share-btn"
+            class="w-full py-3 px-6 bg-white border border-lavender-200 text-lavender-600 font-display font-semibold rounded-xl hover:bg-lavender-50 transition-all duration-200 flex items-center justify-center gap-2 group"
+          >
+            <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            Copiar resumen para mi terapeuta
+          </button>
+
+          <!-- Botón de reinicio -->
+          <button 
+            id="restart-btn"
+            class="w-full py-3 px-6 bg-gradient-to-r from-lavender-500 to-lavender-600 text-white font-display font-semibold rounded-xl hover:from-lavender-600 hover:to-lavender-700 transition-all duration-200 shadow-md hover:shadow-lg"
+          >
+            Volver a empezar
+          </button>
+        </div>
         
       </div>
       

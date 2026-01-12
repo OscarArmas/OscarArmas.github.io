@@ -1,14 +1,19 @@
 /**
  * =====================================================
- * BRÚJULA TERAPÉUTICA - Lógica del Cuestionario
+ * BRÚJULA TERAPÉUTICA - Lógica del Cuestionario (UX Enhanced)
  * =====================================================
  */
 
 (() => {
   // ====================================
+  // CONSTANTES & CONFIG
+  // ====================================
+  const STORAGE_KEY = 'brujula_terapeutica_state_v1';
+  
+  // ====================================
   // ESTADO DE LA APLICACIÓN
   // ====================================
-  const state = {
+  let state = {
     currentQuestion: 0,
     scores: {
       tcc: 0,    // Cognitivo-Conductual
@@ -16,7 +21,7 @@
       human: 0,  // Humanista/Gestalt
       sist: 0    // Sistémica
     },
-    answers: [], // Registro de respuestas seleccionadas
+    answers: [], // Registro de respuestas seleccionadas: { questionId, optionIndex, scoresDelta }
     isTransitioning: false
   };
 
@@ -265,7 +270,8 @@
     quizContainer: document.getElementById('quiz-container'),
     resultsScreen: document.getElementById('results-screen'),
     progressContainer: document.getElementById('progress-container'),
-    encouragementText: document.getElementById('encouragement-text'), // Nuevo elemento
+    encouragementText: document.getElementById('encouragement-text'),
+    backBtn: document.getElementById('back-btn'),
     // Elementos de resultados
     resultIcon: document.getElementById('result-icon'),
     resultTitle: document.getElementById('result-title'),
@@ -273,57 +279,99 @@
     resultDescText: document.getElementById('result-desc-text'),
     resultWhyText: document.getElementById('result-why-text'),
     scoresDisplay: document.getElementById('scores-display'),
-    restartBtn: document.getElementById('restart-btn')
+    restartBtn: document.getElementById('restart-btn'),
+    shareBtn: document.getElementById('share-btn')
   };
+
+  // ====================================
+  // PERSISTENCIA (UX Feature)
+  // ====================================
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) { console.error('Error saving state', e); }
+  }
+
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) { console.error('Error loading state', e); }
+    return null;
+  }
+
+  function clearState() {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) { console.error('Error clearing state', e); }
+  }
+
+  // ====================================
+  // FEEDBACK HÁPTICO (UX Feature)
+  // ====================================
+  function vibrate(pattern = 10) {
+    if (navigator.vibrate) {
+      navigator.vibrate(pattern);
+    }
+  }
 
   // ====================================
   // FUNCIONES DE RENDERIZADO
   // ====================================
 
-  /**
-   * Actualiza la barra de progreso visual
-   */
-  function updateProgress() {
+  function updateUIState() {
+    // 1. Barra de progreso
     const progress = (state.currentQuestion / questions.length) * 100;
     elements.progressBar.style.width = `${progress}%`;
     elements.progressPercent.textContent = `${Math.round(progress)}%`;
     elements.currentStep.textContent = state.currentQuestion + 1;
     
-    // Actualizar mensaje de ánimo si existe
-    if (elements.encouragementText && state.currentQuestion < motivationalMessages.length) {
-      elements.encouragementText.textContent = motivationalMessages[state.currentQuestion] || "";
-      elements.encouragementText.classList.remove('opacity-0');
-      elements.encouragementText.classList.add('opacity-100');
+    // 2. Mensaje de ánimo
+    if (elements.encouragementText) {
+      const msg = motivationalMessages[state.currentQuestion] || "";
+      if (msg) {
+        elements.encouragementText.textContent = msg;
+        elements.encouragementText.classList.remove('opacity-0');
+      } else {
+        elements.encouragementText.classList.add('opacity-0');
+      }
+    }
+
+    // 3. Botón Atrás
+    if (state.currentQuestion > 0) {
+      elements.backBtn.classList.remove('opacity-0', 'pointer-events-none');
+    } else {
+      elements.backBtn.classList.add('opacity-0', 'pointer-events-none');
     }
   }
 
-  /**
-   * Renderiza la pregunta actual con sus opciones
-   */
   function renderQuestion() {
     const q = questions[state.currentQuestion];
     
-    // Generar HTML de las opciones como tarjetas clicleables
+    // Generar HTML de las opciones
     const optionsHTML = q.options.map((opt, idx) => {
       const delayClass = `option-delay-${idx + 1}`;
       return `
         <button 
           class="option-card opacity-0 animate-fade-in-up ${delayClass} w-full text-left p-4 md:p-5 bg-white/80 border-2 border-transparent hover:border-lavender-300 rounded-xl shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-lavender-400 focus:ring-offset-2 transition-all duration-200 group relative overflow-hidden"
           data-option-index="${idx}"
+          role="radio"
+          aria-checked="false"
         >
           <div class="flex items-start gap-3 relative z-10">
             <span class="text-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-200">${opt.icon}</span>
             <span class="text-ink/90 text-sm md:text-base leading-relaxed">${opt.text}</span>
           </div>
-          <!-- Efecto ripple sutil en hover/active -->
           <div class="absolute inset-0 bg-lavender-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0"></div>
         </button>
       `;
     }).join('');
 
-    // Contenedor con animación de entrada
+    // Animación de entrada
     elements.questionArea.innerHTML = `
-      <div class="animate-fade-in-up">
+      <div class="animate-fade-in-up focus:outline-none" tabindex="-1" id="q-container">
         <div class="mb-6">
           <span class="inline-block px-3 py-1 bg-lavender-100 text-lavender-600 text-xs font-medium rounded-full uppercase tracking-wide mb-3">
             ${q.title}
@@ -332,55 +380,64 @@
             ${q.question}
           </h2>
         </div>
-        
-        <div class="space-y-3">
+        <div class="space-y-3" role="radiogroup" aria-label="${q.title}">
           ${optionsHTML}
         </div>
       </div>
     `;
 
-    // Agregar event listeners a las opciones
+    // Event listeners
     const optionButtons = elements.questionArea.querySelectorAll('.option-card');
     optionButtons.forEach((btn) => {
       btn.addEventListener('click', handleOptionClick);
+      // Accesibilidad teclado: Enter/Space ya activan click en botones por defecto
     });
 
-    updateProgress();
+    updateUIState();
     state.isTransitioning = false;
+    
+    // A11y: Poner foco en el título de la pregunta para lectores
+    setTimeout(() => {
+      const container = document.getElementById('q-container');
+      if(container) container.focus();
+    }, 100);
   }
 
-  /**
-   * Maneja el click en una opción
-   * @param {Event} e - Evento del click
-   */
   function handleOptionClick(e) {
-    if (state.isTransitioning) return; // Evitar doble click
+    if (state.isTransitioning) return;
     state.isTransitioning = true;
+    
+    // Feedback háptico
+    vibrate(15);
 
     const btn = e.currentTarget;
     const optionIndex = parseInt(btn.dataset.optionIndex, 10);
     const currentQ = questions[state.currentQuestion];
     const selectedOption = currentQ.options[optionIndex];
 
-    // Efecto visual de selección fuerte
+    // Feedback visual inmediato
+    btn.setAttribute('aria-checked', 'true');
     btn.classList.add('border-lavender-500', 'bg-lavender-100', 'ring-2', 'ring-lavender-200');
     btn.classList.remove('hover:border-lavender-300', 'bg-white/80');
 
-    // Registrar respuesta y sumar puntajes
+    // Guardar respuesta con delta para poder revertir
     state.answers.push({
       questionId: currentQ.id,
       optionIndex: optionIndex,
-      optionText: selectedOption.text
+      optionText: selectedOption.text,
+      scoresDelta: selectedOption.scores
     });
 
-    // Sumar los puntajes de esta opción
+    // Sumar puntajes
     for (const [key, value] of Object.entries(selectedOption.scores)) {
       state.scores[key] += value;
     }
+    
+    // Guardar progreso
+    saveState();
 
-    // Pausa para feedback visual, luego transición suave
+    // Transición
     setTimeout(() => {
-      // Animación de salida del contenedor actual
       const currentContent = elements.questionArea.firstElementChild;
       if (currentContent) {
         currentContent.classList.add('opacity-0', 'translate-y-[-10px]', 'transition-all', 'duration-300');
@@ -394,20 +451,36 @@
         } else {
           showResults();
         }
-      }, 300); // Esperar a que termine la animación de salida
-    }, 400); // Tiempo para ver la selección
+      }, 300);
+    }, 400);
   }
 
-  /**
-   * Determina el tipo de terapia ganador basado en los puntajes
-   * @returns {string} - Clave del tipo de terapia ('tcc', 'psico', 'human', 'sist')
-   */
+  function handleBackClick() {
+    if (state.currentQuestion === 0 || state.isTransitioning) return;
+    
+    vibrate(10);
+    
+    // Deshacer última respuesta
+    const lastAnswer = state.answers.pop();
+    if (lastAnswer) {
+      // Restar puntajes
+      for (const [key, value] of Object.entries(lastAnswer.scoresDelta)) {
+        state.scores[key] -= value;
+      }
+    }
+    
+    state.currentQuestion--;
+    saveState();
+    
+    // Transición inversa (simple re-render por ahora)
+    renderQuestion();
+  }
+
   function getWinningTherapy() {
     const scores = state.scores;
     let maxScore = -1;
-    let winner = 'tcc'; // Default
+    let winner = 'tcc'; 
 
-    // En caso de empate, el orden de iteración define (se podría randomizar)
     for (const [key, value] of Object.entries(scores)) {
       if (value > maxScore) {
         maxScore = value;
@@ -417,23 +490,34 @@
     return winner;
   }
 
-  /**
-   * Muestra la pantalla de resultados
-   */
+  function generateShareText(therapy) {
+    const date = new Date().toLocaleDateString();
+    return `
+Brújula Terapéutica — Resultado (${date})
+----------------------------------------
+Mi orientación sugerida: ${therapy.name}
+
+¿Por qué?
+${therapy.whyRecommended}
+
+Mis respuestas clave apuntaron a: ${therapy.subtitle}
+
+(Generado automáticamente en la web)
+    `.trim();
+  }
+
   function showResults() {
-    // Ocultar quiz y barra de progreso con fade
+    clearState(); // Limpiar estado al terminar
+
     elements.quizContainer.classList.add('hidden');
     elements.progressContainer.classList.add('hidden');
     
-    // Mostrar resultados
     elements.resultsScreen.classList.remove('hidden');
     elements.resultsScreen.classList.add('animate-fade-in-up');
 
-    // Obtener terapia ganadora
     const winnerKey = getWinningTherapy();
     const therapy = therapyInfo[winnerKey];
 
-    // Mapeo de colores para los estilos
     const colorClasses = {
       sky: 'bg-sky-100 text-sky-600 ring-sky-200',
       lavender: 'bg-lavender-100 text-lavender-600 ring-lavender-200',
@@ -441,7 +525,6 @@
       rose: 'bg-rose-100 text-rose-400 ring-rose-200'
     };
 
-    // Renderizar contenido
     elements.resultIcon.className = `w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center text-4xl shadow-inner ring-4 ${colorClasses[therapy.color]}`;
     elements.resultIcon.textContent = therapy.icon;
     
@@ -450,7 +533,25 @@
     elements.resultDescText.textContent = therapy.description;
     elements.resultWhyText.textContent = therapy.whyRecommended;
 
-    // Mostrar puntajes (transparencia para el usuario)
+    // Configurar botón compartir
+    if (elements.shareBtn) {
+      elements.shareBtn.onclick = async () => {
+        vibrate(20);
+        const text = generateShareText(therapy);
+        try {
+          await navigator.clipboard.writeText(text);
+          const originalText = elements.shareBtn.innerHTML;
+          elements.shareBtn.innerHTML = `<span class="text-mint-500 font-bold">¡Copiado! ✅</span>`;
+          setTimeout(() => {
+            elements.shareBtn.innerHTML = originalText;
+          }, 2000);
+        } catch (err) {
+          alert('No se pudo copiar automáticamente. Intenta captura de pantalla.');
+        }
+      };
+    }
+
+    // Mostrar puntajes
     const scoresHTML = Object.entries(state.scores).map(([key, value]) => {
       const info = therapyInfo[key];
       const isWinner = key === winnerKey;
@@ -466,36 +567,25 @@
     }).join('');
 
     elements.scoresDisplay.innerHTML = scoresHTML;
-
-    // Scroll al inicio de resultados
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  /**
-   * Reinicia el cuestionario a su estado inicial
-   */
   function restartQuiz() {
-    // Fade out resultados
+    clearState();
     elements.resultsScreen.classList.add('opacity-0');
     
     setTimeout(() => {
-      // Resetear estado
       state.currentQuestion = 0;
       state.scores = { tcc: 0, psico: 0, human: 0, sist: 0 };
       state.answers = [];
 
-      // Ocultar resultados y resetear opacidad
       elements.resultsScreen.classList.add('hidden');
       elements.resultsScreen.classList.remove('opacity-0');
       
-      // Mostrar quiz y progreso
       elements.quizContainer.classList.remove('hidden');
       elements.progressContainer.classList.remove('hidden');
 
-      // Renderizar primera pregunta
       renderQuestion();
-
-      // Scroll al inicio
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 300);
   }
@@ -504,16 +594,19 @@
   // INICIALIZACIÓN
   // ====================================
   function init() {
-    // Renderizar primera pregunta
+    // Intentar recuperar estado
+    const savedState = loadState();
+    if (savedState && savedState.currentQuestion > 0 && savedState.currentQuestion < questions.length) {
+      // Restaurar estado
+      state = savedState;
+    }
+
     renderQuestion();
 
-    // Event listener para reiniciar
-    if (elements.restartBtn) {
-      elements.restartBtn.addEventListener('click', restartQuiz);
-    }
+    if (elements.restartBtn) elements.restartBtn.addEventListener('click', restartQuiz);
+    if (elements.backBtn) elements.backBtn.addEventListener('click', handleBackClick);
   }
 
-  // Iniciar cuando el DOM esté listo
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
@@ -521,4 +614,3 @@
   }
 
 })();
-
