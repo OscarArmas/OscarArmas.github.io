@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brújula Terapéutica — Encuentra tu camino</title>
+  
+  <!-- Google Fonts: Nunito para títulos, Source Sans 3 para cuerpo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Nunito', 'system-ui', 'sans-serif'],
+            body: ['Source Sans 3', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            // Paleta pastel suave y terapéutica
+            lavender: {
+              50: '#faf8ff',
+              100: '#f3edff',
+              200: '#e9deff',
+              300: '#d4c4fc',
+              400: '#b99df7',
+              500: '#9d75f0',
+              600: '#8654e3',
+            },
+            mint: {
+              50: '#f0fdf6',
+              100: '#dcfce9',
+              200: '#bbf7d4',
+              300: '#86efb1',
+              400: '#4ade85',
+              500: '#22c55e',
+            },
+            sky: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+            },
+            rose: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              300: '#fda4af',
+            },
+            cream: '#FEFDFB',
+            ink: '#2D3142',
+            muted: '#7B8794',
+          },
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* ====================================
+       ESTILOS PERSONALIZADOS
+       ==================================== */
+    
+    /* Fondo con gradiente suave tipo "aurora" */
+    body {
+      background: 
+        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(186, 230, 253, 0.4), transparent 50%),
+        radial-gradient(ellipse 70% 50% at 90% 10%, rgba(233, 222, 255, 0.5), transparent 50%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(187, 247, 212, 0.3), transparent 50%),
+        linear-gradient(to bottom, #FEFDFB, #F8F6F3);
+      min-height: 100vh;
+    }
+    
+    /* Animación de entrada suave para las tarjetas */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fade-in-up {
+      animation: fadeInUp 0.4s ease-out forwards;
+    }
+    
+    /* Delay escalonado para las opciones */
+    .option-delay-1 { animation-delay: 0.05s; }
+    .option-delay-2 { animation-delay: 0.1s; }
+    .option-delay-3 { animation-delay: 0.15s; }
+    .option-delay-4 { animation-delay: 0.2s; }
+    
+    /* Transición suave para la barra de progreso */
+    .progress-fill {
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Pulso suave en hover de tarjetas */
+    .option-card {
+      transition: all 0.2s ease;
+    }
+    
+    .option-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(157, 117, 240, 0.15);
+    }
+    
+    .option-card:active {
+      transform: translateY(0);
+    }
+    
+    /* Icono de brújula animado */
+    @keyframes gentle-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .compass-icon {
+      animation: gentle-pulse 3s ease-in-out infinite;
+    }
+    
+    /* Estilos para la pantalla de resultados */
+    .result-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      backdrop-filter: blur(10px);
+    }
+    
+    /* Decoración de puntos */
+    .dots-pattern {
+      background-image: radial-gradient(circle, rgba(157, 117, 240, 0.15) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+  </style>
+</head>
+
+<body class="font-body text-ink min-h-screen">
+
+  <!-- ========================================
+       CONTENEDOR PRINCIPAL
+       ======================================== -->
+  <div class="max-w-2xl mx-auto px-5 py-8 md:py-12 min-h-screen flex flex-col">
+    
+    <!-- HEADER / BRANDING -->
+    <header class="text-center mb-8">
+      <div class="inline-flex items-center justify-center gap-2 mb-3">
+        <!-- Icono de brújula SVG -->
+        <svg class="compass-icon w-10 h-10 text-lavender-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <polygon points="12,2 14,10 12,12 10,10" fill="currentColor" opacity="0.3"/>
+          <polygon points="12,22 10,14 12,12 14,14" fill="currentColor"/>
+          <circle cx="12" cy="12" r="2" fill="currentColor"/>
+        </svg>
+        <h1 class="font-display text-2xl md:text-3xl font-bold text-ink">
+          Brújula Terapéutica
+        </h1>
+      </div>
+      <p class="text-muted text-sm md:text-base max-w-md mx-auto leading-relaxed">
+        Descubre qué tipo de terapia puede resonar mejor contigo a través de 7 preguntas reflexivas.
+      </p>
+    </header>
+
+    <!-- ========================================
+         BARRA DE PROGRESO
+         ======================================== -->
+    <div id="progress-container" class="mb-8">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-xs font-medium text-muted uppercase tracking-wide">
+          Pregunta <span id="current-step">1</span> de 7
+        </span>
+        <span id="progress-percent" class="text-xs font-medium text-lavender-600">0%</span>
+      </div>
+      <div class="h-2 bg-lavender-100 rounded-full overflow-hidden">
+        <div id="progress-bar" class="progress-fill h-full bg-gradient-to-r from-lavender-400 to-lavender-500 rounded-full" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- ========================================
+         CONTENEDOR DE PREGUNTAS (WIZARD)
+         ======================================== -->
+    <main id="quiz-container" class="flex-1 flex flex-col">
+      
+      <!-- Las preguntas se renderizan dinámicamente aquí -->
+      <div id="question-area" class="flex-1">
+        <!-- Renderizado por JavaScript -->
+      </div>
+
+    </main>
+
+    <!-- ========================================
+         PANTALLA DE RESULTADOS (oculta inicialmente)
+         ======================================== -->
+    <section id="results-screen" class="hidden flex-1 flex flex-col">
+      
+      <div class="result-card rounded-2xl border border-lavender-200/50 p-6 md:p-8 shadow-lg">
+        
+        <!-- Icono del resultado -->
+        <div id="result-icon" class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-3xl">
+          <!-- Ícono dinámico -->
+        </div>
+        
+        <!-- Título del resultado -->
+        <h2 id="result-title" class="font-display text-2xl md:text-3xl font-bold text-center text-ink mb-2">
+          <!-- Título dinámico -->
+        </h2>
+        
+        <!-- Subtítulo / Enfoque -->
+        <p id="result-subtitle" class="text-center text-lavender-600 font-medium text-sm uppercase tracking-wide mb-6">
+          <!-- Subtítulo dinámico -->
+        </p>
+        
+        <!-- Descripción de la terapia -->
+        <div id="result-description" class="bg-white/60 rounded-xl p-5 mb-5 border border-lavender-100">
+          <h3 class="font-display font-semibold text-ink mb-2 flex items-center gap-2">
+            <span class="text-lavender-500">◈</span> ¿En qué consiste?
+          </h3>
+          <p id="result-desc-text" class="text-muted leading-relaxed text-sm md:text-base">
+            <!-- Descripción dinámica -->
+          </p>
+        </div>
+        
+        <!-- Por qué te la recomendamos -->
+        <div id="result-why" class="bg-mint-50 rounded-xl p-5 mb-6 border border-mint-200/50">
+          <h3 class="font-display font-semibold text-ink mb-2 flex items-center gap-2">
+            <span class="text-mint-500">✦</span> ¿Por qué te la recomendamos?
+          </h3>
+          <p id="result-why-text" class="text-muted leading-relaxed text-sm md:text-base">
+            <!-- Razón dinámica -->
+          </p>
+        </div>
+        
+        <!-- Puntajes (debug / transparencia opcional) -->
+        <div id="scores-display" class="flex flex-wrap justify-center gap-2 mb-6">
+          <!-- Puntajes renderizados -->
+        </div>
+        
+        <!-- Botón de reinicio -->
+        <button 
+          id="restart-btn"
+          class="w-full py-3 px-6 bg-gradient-to-r from-lavender-500 to-lavender-600 text-white font-display font-semibold rounded-xl hover:from-lavender-600 hover:to-lavender-700 transition-all duration-200 shadow-md hover:shadow-lg"
+        >
+          Volver a empezar
+        </button>
+        
+      </div>
+      
+      <!-- Disclaimer Legal -->
+      <div class="mt-6 p-4 bg-rose-50 border border-rose-200/50 rounded-xl">
+        <p class="text-xs text-muted leading-relaxed text-center">
+          <strong class="text-rose-400">Aviso importante:</strong> Este test es solo orientación informativa y no sustituye el diagnóstico ni la recomendación de un profesional de la salud mental. Si estás pasando por un momento difícil, te recomendamos buscar ayuda profesional.
+        </p>
+      </div>
+      
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="mt-8 text-center">
+      <p class="text-xs text-muted/60">
+        Todo corre en tu navegador. No guardamos ningún dato.
+      </p>
+    </footer>
+
+  </div>
+
+<script>
+/**
+ * =====================================================
+ * BRÚJULA TERAPÉUTICA - Lógica del Cuestionario
+ * =====================================================
+ * Sistema de 7 preguntas para orientar al usuario hacia
+ * el tipo de terapia que mejor podría resonar con él/ella.
+ * 
+ * Variables de puntaje:
+ * - tcc: Terapia Cognitivo-Conductual
+ * - psico: Psicoanálisis
+ * - human: Humanista/Gestalt
+ * - sist: Terapia Sistémica
+ */
+
+(() => {
+  // ====================================
+  // ESTADO DE LA APLICACIÓN
+  // ====================================
+  const state = {
+    currentQuestion: 0,
+    scores: {
+      tcc: 0,    // Cognitivo-Conductual
+      psico: 0,  // Psicoanálisis
+      human: 0,  // Humanista/Gestalt
+      sist: 0    // Sistémica
+    },
+    answers: [] // Registro de respuestas seleccionadas
+  };
+
+  // ====================================
+  // DATOS: Las 7 preguntas del cuestionario
+  // ====================================
+  const questions = [
+    {
+      id: 1,
+      title: "El Foco",
+      question: "Si tuvieras que describir lo que más te urge resolver hoy, dirías que es...",
+      options: [
+        { 
+          text: "Un síntoma específico que me molesta (ansiedad, insomnio, fobia).", 
+          scores: { tcc: 2 },
+          icon: "🎯"
+        },
+        { 
+          text: "Entender por qué repito los mismos patrones desde mi infancia.", 
+          scores: { psico: 2 },
+          icon: "🔄"
+        },
+        { 
+          text: "Sentirme vacío, triste o sin un propósito claro.", 
+          scores: { human: 2 },
+          icon: "🌫️"
+        },
+        { 
+          text: "Problemas constantes con mi pareja o familia.", 
+          scores: { sist: 2 },
+          icon: "👥"
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: "La Estructura",
+      question: "¿Cómo te gustaría que fuera tu sesión ideal?",
+      options: [
+        { 
+          text: "Que me enseñen técnicas, me den tareas y herramientas prácticas.", 
+          scores: { tcc: 2 },
+          icon: "🛠️"
+        },
+        { 
+          text: "Hablar libremente de lo que se me ocurra, explorando mis sueños o recuerdos.", 
+          scores: { psico: 2 },
+          icon: "💭"
+        },
+        { 
+          text: "Sentirme escuchado y acompañado sin ser juzgado, en el \"aquí y ahora\".", 
+          scores: { human: 2 },
+          icon: "🤝"
+        },
+        { 
+          text: "Analizar cómo me comunico y relaciono con mi entorno.", 
+          scores: { sist: 2 },
+          icon: "🗣️"
+        }
+      ]
+    },
+    {
+      id: 3,
+      title: "Estilo de Pensamiento",
+      question: "Ante un problema, ¿qué buscas instintivamente?",
+      options: [
+        { 
+          text: "Una solución lógica y rápida.", 
+          scores: { tcc: 2 },
+          icon: "⚡"
+        },
+        { 
+          text: "El origen profundo y oculto del problema.", 
+          scores: { psico: 2 },
+          icon: "🔍"
+        },
+        { 
+          text: "Conectar con mis emociones y validarlas.", 
+          scores: { human: 2 },
+          icon: "💚"
+        }
+      ]
+    },
+    {
+      id: 4,
+      title: "La Causa",
+      question: "¿De dónde crees que vienen tus dificultades?",
+      options: [
+        { 
+          text: "De mis pensamientos negativos o malos hábitos actuales.", 
+          scores: { tcc: 2 },
+          icon: "🧠"
+        },
+        { 
+          text: "De traumas o vivencias del pasado no superadas.", 
+          scores: { psico: 2 },
+          icon: "📜"
+        },
+        { 
+          text: "De la dinámica con las personas con las que convivo.", 
+          scores: { sist: 2 },
+          icon: "🔗"
+        },
+        { 
+          text: "De no estar siendo fiel a mí mismo/a.", 
+          scores: { human: 2 },
+          icon: "🪞"
+        }
+      ]
+    },
+    {
+      id: 5,
+      title: "El Rol del Terapeuta",
+      question: "¿Cómo ves al psicólogo ideal?",
+      options: [
+        { 
+          text: "Como un entrenador que me da instrucciones.", 
+          scores: { tcc: 2 },
+          icon: "🏃"
+        },
+        { 
+          text: "Como un experto que interpreta mi inconsciente.", 
+          scores: { psico: 2 },
+          icon: "🎭"
+        },
+        { 
+          text: "Como un compañero empático que facilita mi crecimiento.", 
+          scores: { human: 2 },
+          icon: "🌱"
+        },
+        { 
+          text: "Como un mediador que ayuda a organizar mis relaciones.", 
+          scores: { sist: 2 },
+          icon: "⚖️"
+        }
+      ]
+    },
+    {
+      id: 6,
+      title: "Duración",
+      question: "¿Qué esperas en cuanto a tiempo?",
+      options: [
+        { 
+          text: "Resultados rápidos y concretos (pocas sesiones).", 
+          scores: { tcc: 2 },
+          icon: "🚀"
+        },
+        { 
+          text: "No tengo prisa, busco autoconocimiento profundo.", 
+          scores: { psico: 1, human: 1 },
+          icon: "🌊"
+        },
+        { 
+          text: "Lo necesario para arreglar la convivencia con mi entorno.", 
+          scores: { sist: 2 },
+          icon: "🏠"
+        }
+      ]
+    },
+    {
+      id: 7,
+      title: "La Varita Mágica",
+      question: "Si pudieras pedir un deseo sobre tu salud mental...",
+      options: [
+        { 
+          text: "Que desaparezca el síntoma ya.", 
+          scores: { tcc: 1 },
+          icon: "✨"
+        },
+        { 
+          text: "Saber quién soy realmente.", 
+          scores: { human: 1, psico: 1 },
+          icon: "🔮"
+        },
+        { 
+          text: "Que mi familia/pareja y yo nos entendamos.", 
+          scores: { sist: 2 },
+          icon: "💫"
+        }
+      ]
+    }
+  ];
+
+  // ====================================
+  // DATOS: Información de cada tipo de terapia
+  // ====================================
+  const therapyInfo = {
+    tcc: {
+      name: "Terapia Cognitivo-Conductual (TCC)",
+      shortName: "Cognitivo-Conductual",
+      subtitle: "Enfocada en soluciones prácticas",
+      icon: "🎯",
+      color: "sky",
+      description: "La TCC es una terapia estructurada y orientada a metas que se centra en identificar y modificar patrones de pensamiento negativos y comportamientos disfuncionales. Es como tener un \"manual de instrucciones\" para tu mente: aprenderás técnicas concretas, harás ejercicios prácticos y verás resultados medibles en tiempos relativamente cortos.",
+      whyRecommended: "Tus respuestas muestran que valoras la eficiencia, buscas soluciones prácticas y quieres abordar síntomas específicos. Te gusta tener herramientas claras y ver progreso tangible. La TCC te dará exactamente eso: estrategias basadas en evidencia para manejar lo que te aflige."
+    },
+    psico: {
+      name: "Psicoanálisis / Terapia Psicodinámica",
+      shortName: "Psicoanálisis",
+      subtitle: "Explorando las profundidades",
+      icon: "🔍",
+      color: "lavender",
+      description: "El psicoanálisis te invita a un viaje hacia tu mundo interior. A través de la palabra libre, la exploración de sueños, recuerdos y patrones inconscientes, irás descubriendo las raíces profundas de tu malestar. Es un proceso de autoconocimiento que va más allá del síntoma, buscando transformaciones duraderas en tu forma de relacionarte contigo y con el mundo.",
+      whyRecommended: "Tus respuestas revelan una mente curiosa que quiere entender el \"por qué\" detrás de todo. Sientes que tu historia pasada tiene peso en tu presente y estás dispuesto/a a explorar territorios profundos. El psicoanálisis te acompañará en ese viaje de descubrimiento personal."
+    },
+    human: {
+      name: "Terapia Humanista / Gestalt",
+      shortName: "Humanista-Gestalt",
+      subtitle: "El aquí y ahora",
+      icon: "🌱",
+      color: "mint",
+      description: "La terapia humanista pone el foco en tu experiencia presente, tus emociones y tu potencial de crecimiento. Aquí no se trata de \"arreglarte\", sino de acompañarte a reconectar con tu autenticidad. El terapeuta será un espejo empático que te ayudará a integrar todas las partes de ti mismo/a, sin juicio, en un espacio seguro donde puedas simplemente ser.",
+      whyRecommended: "Tus respuestas muestran que buscas conexión emocional, autenticidad y un espacio donde sentirte verdaderamente escuchado/a. Valoras el proceso sobre los resultados rápidos y quieres encontrar tu propio camino. La terapia humanista honrará exactamente eso."
+    },
+    sist: {
+      name: "Terapia Sistémica / Familiar",
+      shortName: "Sistémica",
+      subtitle: "Sanando en conexión",
+      icon: "🔗",
+      color: "rose",
+      description: "La terapia sistémica entiende que no somos islas: nuestro bienestar está entrelazado con nuestras relaciones. Ya sea en pareja, familia o cualquier sistema de relaciones importantes, este enfoque ayuda a identificar patrones de comunicación disfuncionales, roles rígidos y dinámicas que perpetúan el conflicto. El cambio en uno transforma a todos.",
+      whyRecommended: "Tus respuestas indican que muchas de tus dificultades están conectadas con tus relaciones cercanas. Sientes que resolver \"lo tuyo\" implica también trabajar en \"lo de ustedes\". La terapia sistémica te ayudará a ver el panorama completo y a mejorar la manera en que te conectas con quienes te importan."
+    }
+  };
+
+  // ====================================
+  // ELEMENTOS DEL DOM
+  // ====================================
+  const elements = {
+    progressBar: document.getElementById('progress-bar'),
+    progressPercent: document.getElementById('progress-percent'),
+    currentStep: document.getElementById('current-step'),
+    questionArea: document.getElementById('question-area'),
+    quizContainer: document.getElementById('quiz-container'),
+    resultsScreen: document.getElementById('results-screen'),
+    progressContainer: document.getElementById('progress-container'),
+    // Elementos de resultados
+    resultIcon: document.getElementById('result-icon'),
+    resultTitle: document.getElementById('result-title'),
+    resultSubtitle: document.getElementById('result-subtitle'),
+    resultDescText: document.getElementById('result-desc-text'),
+    resultWhyText: document.getElementById('result-why-text'),
+    scoresDisplay: document.getElementById('scores-display'),
+    restartBtn: document.getElementById('restart-btn')
+  };
+
+  // ====================================
+  // FUNCIONES DE RENDERIZADO
+  // ====================================
+
+  /**
+   * Actualiza la barra de progreso visual
+   */
+  function updateProgress() {
+    const progress = (state.currentQuestion / questions.length) * 100;
+    elements.progressBar.style.width = `${progress}%`;
+    elements.progressPercent.textContent = `${Math.round(progress)}%`;
+    elements.currentStep.textContent = state.currentQuestion + 1;
+  }
+
+  /**
+   * Renderiza la pregunta actual con sus opciones
+   */
+  function renderQuestion() {
+    const q = questions[state.currentQuestion];
+    
+    // Generar HTML de las opciones como tarjetas clicleables
+    const optionsHTML = q.options.map((opt, idx) => {
+      const delayClass = `option-delay-${idx + 1}`;
+      return `
+        <button 
+          class="option-card opacity-0 animate-fade-in-up ${delayClass} w-full text-left p-4 md:p-5 bg-white/80 border-2 border-transparent hover:border-lavender-300 rounded-xl shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-lavender-400 focus:ring-offset-2 transition-all duration-200 group"
+          data-option-index="${idx}"
+        >
+          <div class="flex items-start gap-3">
+            <span class="text-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-200">${opt.icon}</span>
+            <span class="text-ink/90 text-sm md:text-base leading-relaxed">${opt.text}</span>
+          </div>
+        </button>
+      `;
+    }).join('');
+
+    // Renderizar pregunta completa
+    elements.questionArea.innerHTML = `
+      <div class="mb-6">
+        <span class="inline-block px-3 py-1 bg-lavender-100 text-lavender-600 text-xs font-medium rounded-full uppercase tracking-wide mb-3">
+          ${q.title}
+        </span>
+        <h2 class="font-display text-xl md:text-2xl font-bold text-ink leading-snug">
+          ${q.question}
+        </h2>
+      </div>
+      
+      <div class="space-y-3">
+        ${optionsHTML}
+      </div>
+    `;
+
+    // Agregar event listeners a las opciones
+    const optionButtons = elements.questionArea.querySelectorAll('.option-card');
+    optionButtons.forEach((btn) => {
+      btn.addEventListener('click', handleOptionClick);
+    });
+
+    updateProgress();
+  }
+
+  /**
+   * Maneja el click en una opción
+   * @param {Event} e - Evento del click
+   */
+  function handleOptionClick(e) {
+    const btn = e.currentTarget;
+    const optionIndex = parseInt(btn.dataset.optionIndex, 10);
+    const currentQ = questions[state.currentQuestion];
+    const selectedOption = currentQ.options[optionIndex];
+
+    // Efecto visual de selección
+    btn.classList.add('border-lavender-400', 'bg-lavender-50');
+
+    // Registrar respuesta y sumar puntajes
+    state.answers.push({
+      questionId: currentQ.id,
+      optionIndex: optionIndex,
+      optionText: selectedOption.text
+    });
+
+    // Sumar los puntajes de esta opción
+    for (const [key, value] of Object.entries(selectedOption.scores)) {
+      state.scores[key] += value;
+    }
+
+    // Pequeña pausa para feedback visual, luego avanzar
+    setTimeout(() => {
+      state.currentQuestion++;
+      
+      if (state.currentQuestion < questions.length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }, 300);
+  }
+
+  /**
+   * Determina el tipo de terapia ganador basado en los puntajes
+   * @returns {string} - Clave del tipo de terapia ('tcc', 'psico', 'human', 'sist')
+   */
+  function getWinningTherapy() {
+    const scores = state.scores;
+    let maxScore = -1;
+    let winner = 'tcc'; // Default
+
+    for (const [key, value] of Object.entries(scores)) {
+      if (value > maxScore) {
+        maxScore = value;
+        winner = key;
+      }
+    }
+
+    return winner;
+  }
+
+  /**
+   * Muestra la pantalla de resultados
+   */
+  function showResults() {
+    // Ocultar quiz y barra de progreso
+    elements.quizContainer.classList.add('hidden');
+    elements.progressContainer.classList.add('hidden');
+    
+    // Mostrar resultados
+    elements.resultsScreen.classList.remove('hidden');
+
+    // Obtener terapia ganadora
+    const winnerKey = getWinningTherapy();
+    const therapy = therapyInfo[winnerKey];
+
+    // Mapeo de colores para los estilos
+    const colorClasses = {
+      sky: 'bg-sky-100 text-sky-600',
+      lavender: 'bg-lavender-100 text-lavender-600',
+      mint: 'bg-mint-100 text-mint-600',
+      rose: 'bg-rose-100 text-rose-400'
+    };
+
+    // Renderizar contenido
+    elements.resultIcon.className = `w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-3xl ${colorClasses[therapy.color]}`;
+    elements.resultIcon.textContent = therapy.icon;
+    
+    elements.resultTitle.textContent = therapy.shortName;
+    elements.resultSubtitle.textContent = therapy.subtitle;
+    elements.resultDescText.textContent = therapy.description;
+    elements.resultWhyText.textContent = therapy.whyRecommended;
+
+    // Mostrar puntajes (transparencia para el usuario)
+    const scoresHTML = Object.entries(state.scores).map(([key, value]) => {
+      const info = therapyInfo[key];
+      const isWinner = key === winnerKey;
+      const baseClass = isWinner 
+        ? 'bg-lavender-500 text-white' 
+        : 'bg-white/60 text-muted border border-lavender-200/50';
+      
+      return `
+        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${baseClass}">
+          ${info.icon} ${info.shortName}: ${value}
+        </span>
+      `;
+    }).join('');
+
+    elements.scoresDisplay.innerHTML = scoresHTML;
+
+    // Scroll al inicio de resultados
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /**
+   * Reinicia el cuestionario a su estado inicial
+   */
+  function restartQuiz() {
+    // Resetear estado
+    state.currentQuestion = 0;
+    state.scores = { tcc: 0, psico: 0, human: 0, sist: 0 };
+    state.answers = [];
+
+    // Ocultar resultados
+    elements.resultsScreen.classList.add('hidden');
+    
+    // Mostrar quiz y progreso
+    elements.quizContainer.classList.remove('hidden');
+    elements.progressContainer.classList.remove('hidden');
+
+    // Renderizar primera pregunta
+    renderQuestion();
+
+    // Scroll al inicio
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ====================================
+  // INICIALIZACIÓN
+  // ====================================
+  function init() {
+    // Renderizar primera pregunta
+    renderQuestion();
+
+    // Event listener para reiniciar
+    elements.restartBtn.addEventListener('click', restartQuiz);
+  }
+
+  // Iniciar cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+
+</body>
+</html>
+
