@@ -1,11 +1,9 @@
 /**
  * =====================================================
- * BRÚJULA TERAPÉUTICA - Lógica del Cuestionario (v3.1)
+ * BRÚJULA TERAPÉUTICA - Lógica del Cuestionario (v3.2)
  * =====================================================
  * Sistema de orientación terapéutica con UX profesional.
- * Incluye: resultados expandidos, percentiles, señales de match,
- * preguntas para terapeuta, qué esperar en primeras sesiones
- * Y GENERACIÓN DE PDF.
+ * INCLUYE: LÓGICA PONDERADA (Evidence-Based Weights).
  */
 
 (() => {
@@ -13,8 +11,7 @@
   // CONSTANTES
   // ====================================
   const STORAGE_KEY = 'brujula_terapeutica_state_v3';
-  const MAX_POSSIBLE_SCORE = 14; 
-
+  
   // ====================================
   // ESTADO DE LA APLICACIÓN
   // ====================================
@@ -38,81 +35,88 @@
   ];
 
   // ====================================
-  // PREGUNTAS DEL CUESTIONARIO
+  // PREGUNTAS DEL CUESTIONARIO CON PESOS (WEIGHTS)
   // ====================================
   const questions = [
     {
       id: 1,
       title: "El Foco",
+      weight: 3.0, // ALTO IMPACTO: Motivo de consulta
       question: "Si tuvieras que describir lo que más te urge resolver hoy, dirías que es...",
       options: [
-        { text: "Un síntoma específico que me molesta (ansiedad, insomnio, fobia).", scores: { tcc: 2 }, icon: "🎯" },
-        { text: "Entender por qué repito los mismos patrones desde mi infancia.", scores: { psico: 2 }, icon: "🔄" },
-        { text: "Sentirme vacío, triste o sin un propósito claro.", scores: { human: 2 }, icon: "🌫️" },
-        { text: "Problemas constantes con mi pareja o familia.", scores: { sist: 2 }, icon: "👥" }
+        { text: "Un síntoma específico que me molesta (ansiedad, insomnio, fobia).", scores: { tcc: 1 }, icon: "🎯" },
+        { text: "Entender por qué repito los mismos patrones desde mi infancia.", scores: { psico: 1 }, icon: "🔄" },
+        { text: "Sentirme vacío, triste o sin un propósito claro.", scores: { human: 1 }, icon: "🌫️" },
+        { text: "Problemas constantes con mi pareja o familia.", scores: { sist: 1 }, icon: "👥" }
       ]
     },
     {
       id: 2,
       title: "La Estructura",
+      weight: 1.5, // MEDIO IMPACTO: Preferencia de formato
       question: "¿Cómo te gustaría que fuera tu sesión ideal?",
       options: [
-        { text: "Que me enseñen técnicas, me den tareas y herramientas prácticas.", scores: { tcc: 2 }, icon: "🛠️" },
-        { text: "Hablar libremente de lo que se me ocurra, explorando mis sueños o recuerdos.", scores: { psico: 2 }, icon: "💭" },
-        { text: "Sentirme escuchado y acompañado sin ser juzgado, en el \"aquí y ahora\".", scores: { human: 2 }, icon: "🤝" },
-        { text: "Analizar cómo me comunico y relaciono con mi entorno.", scores: { sist: 2 }, icon: "🗣️" }
+        { text: "Que me enseñen técnicas, me den tareas y herramientas prácticas.", scores: { tcc: 1 }, icon: "🛠️" },
+        { text: "Hablar libremente de lo que se me ocurra, explorando mis sueños o recuerdos.", scores: { psico: 1 }, icon: "💭" },
+        { text: "Sentirme escuchado y acompañado sin ser juzgado, en el \"aquí y ahora\".", scores: { human: 1 }, icon: "🤝" },
+        { text: "Analizar cómo me comunico y relaciono con mi entorno.", scores: { sist: 1 }, icon: "🗣️" }
       ]
     },
     {
       id: 3,
       title: "Estilo de Pensamiento",
+      weight: 2.0, // ALTO IMPACTO: Procesamiento cognitivo
       question: "Ante un problema, ¿qué buscas instintivamente?",
       options: [
-        { text: "Una solución lógica y rápida.", scores: { tcc: 2 }, icon: "⚡" },
-        { text: "El origen profundo y oculto del problema.", scores: { psico: 2 }, icon: "🔍" },
-        { text: "Conectar con mis emociones y validarlas.", scores: { human: 2 }, icon: "💚" }
+        { text: "Una solución lógica y rápida.", scores: { tcc: 1 }, icon: "⚡" },
+        { text: "El origen profundo y oculto del problema.", scores: { psico: 1 }, icon: "🔍" },
+        { text: "Conectar con mis emociones y validarlas.", scores: { human: 1 }, icon: "💚" }
       ]
     },
     {
       id: 4,
       title: "La Causa",
+      weight: 2.0, // ALTO IMPACTO: Atribución causal
       question: "¿De dónde crees que vienen tus dificultades?",
       options: [
-        { text: "De mis pensamientos negativos o malos hábitos actuales.", scores: { tcc: 2 }, icon: "🧠" },
-        { text: "De traumas o vivencias del pasado no superadas.", scores: { psico: 2 }, icon: "📜" },
-        { text: "De la dinámica con las personas con las que convivo.", scores: { sist: 2 }, icon: "🔗" },
-        { text: "De no estar siendo fiel a mí mismo/a.", scores: { human: 2 }, icon: "🪞" }
+        { text: "De mis pensamientos negativos o malos hábitos actuales.", scores: { tcc: 1 }, icon: "🧠" },
+        { text: "De traumas o vivencias del pasado no superadas.", scores: { psico: 1 }, icon: "📜" },
+        { text: "De la dinámica con las personas con las que convivo.", scores: { sist: 1 }, icon: "🔗" },
+        { text: "De no estar siendo fiel a mí mismo/a.", scores: { human: 1 }, icon: "🪞" }
       ]
     },
     {
       id: 5,
       title: "El Rol del Terapeuta",
+      weight: 1.5, // MEDIO IMPACTO: Transferencia inicial
       question: "¿Cómo ves al psicólogo ideal?",
       options: [
-        { text: "Como un entrenador que me da instrucciones.", scores: { tcc: 2 }, icon: "🏃" },
-        { text: "Como un experto que interpreta mi inconsciente.", scores: { psico: 2 }, icon: "🎭" },
-        { text: "Como un compañero empático que facilita mi crecimiento.", scores: { human: 2 }, icon: "🌱" },
-        { text: "Como un mediador que ayuda a organizar mis relaciones.", scores: { sist: 2 }, icon: "⚖️" }
+        { text: "Como un entrenador que me da instrucciones.", scores: { tcc: 1 }, icon: "🏃" },
+        { text: "Como un experto que interpreta mi inconsciente.", scores: { psico: 1 }, icon: "🎭" },
+        { text: "Como un compañero empático que facilita mi crecimiento.", scores: { human: 1 }, icon: "🌱" },
+        { text: "Como un mediador que ayuda a organizar mis relaciones.", scores: { sist: 1 }, icon: "⚖️" }
       ]
     },
     {
       id: 6,
       title: "Duración",
+      weight: 1.0, // BAJO IMPACTO: Logística
       question: "¿Qué esperas en cuanto a tiempo?",
       options: [
-        { text: "Resultados rápidos y concretos (pocas sesiones).", scores: { tcc: 2 }, icon: "🚀" },
-        { text: "No tengo prisa, busco autoconocimiento profundo.", scores: { psico: 1, human: 1 }, icon: "🌊" },
-        { text: "Lo necesario para arreglar la convivencia con mi entorno.", scores: { sist: 2 }, icon: "🏠" }
+        { text: "Resultados rápidos y concretos (pocas sesiones).", scores: { tcc: 1 }, icon: "🚀" },
+        { text: "No tengo prisa, busco autoconocimiento profundo.", scores: { psico: 0.5, human: 0.5 }, icon: "🌊" },
+        { text: "Lo necesario para arreglar la convivencia con mi entorno.", scores: { sist: 1 }, icon: "🏠" }
       ]
     },
     {
       id: 7,
       title: "La Varita Mágica",
+      weight: 1.0, // BAJO IMPACTO: Fantasía de curación
       question: "Si pudieras pedir un deseo sobre tu salud mental...",
       options: [
         { text: "Que desaparezca el síntoma ya.", scores: { tcc: 1 }, icon: "✨" },
-        { text: "Saber quién soy realmente.", scores: { human: 1, psico: 1 }, icon: "🔮" },
-        { text: "Que mi familia/pareja y yo nos entendamos.", scores: { sist: 2 }, icon: "💫" }
+        { text: "Saber quién soy realmente.", scores: { human: 0.5, psico: 0.5 }, icon: "🔮" },
+        { text: "Que mi familia/pareja y yo nos entendamos.", scores: { sist: 1 }, icon: "💫" }
       ]
     }
   ];
@@ -505,12 +509,24 @@
     const idx = parseInt(btn.dataset.optionIndex);
     const q = questions[state.currentQuestion];
     const opt = q.options[idx];
+    const weight = q.weight || 1; // Ponderación
 
     btn.setAttribute('aria-checked', 'true');
     btn.classList.add('border-lavender-500', 'bg-lavender-100', 'ring-2', 'ring-lavender-200');
 
-    state.answers.push({ qId: q.id, optIdx: idx, scores: opt.scores });
-    for (const [k, v] of Object.entries(opt.scores)) state.scores[k] += v;
+    // Calcular puntos ponderados
+    const weightedScores = {};
+    for (const [k, v] of Object.entries(opt.scores)) {
+      weightedScores[k] = v * weight;
+    }
+
+    state.answers.push({ qId: q.id, optIdx: idx, scores: weightedScores });
+    
+    // Sumar
+    for (const [k, v] of Object.entries(weightedScores)) {
+      state.scores[k] = (state.scores[k] || 0) + v;
+    }
+    
     saveState();
 
     setTimeout(() => {
@@ -527,6 +543,7 @@
     if (state.currentQuestion === 0 || state.isTransitioning) return;
     vibrate(10);
     const last = state.answers.pop();
+    // Restar puntos ponderados
     if (last) for (const [k, v] of Object.entries(last.scores)) state.scores[k] -= v;
     state.currentQuestion--;
     saveState();
