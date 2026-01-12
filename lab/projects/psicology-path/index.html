@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Brújula Terapéutica — Encuentra tu camino</title>
+  <title>Brújula Terapéutica — Descubre qué tipo de terapia resonará contigo</title>
   
-  <!-- Google Fonts: Nunito para títulos, Source Sans 3 para cuerpo -->
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Test gratuito de 7 preguntas para descubrir qué tipo de terapia psicológica (TCC, Psicoanálisis, Humanista, Sistémica) puede funcionar mejor para ti. 100% privado, sin registro.">
+  <meta name="keywords" content="test psicológico, tipo de terapia, orientación psicológica, TCC, psicoanálisis, terapia humanista, terapia sistémica, salud mental">
+  <meta name="author" content="Brújula Terapéutica">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph (para compartir en redes) -->
+  <meta property="og:title" content="Brújula Terapéutica — ¿Qué tipo de terapia es para ti?">
+  <meta property="og:description" content="Responde 7 preguntas y descubre qué enfoque terapéutico podría resonar mejor contigo. Gratis, privado, sin registro.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_MX">
+  
+  <!-- Favicon (emoji como data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,7 +36,6 @@
             body: ['Source Sans 3', 'system-ui', 'sans-serif'],
           },
           colors: {
-            // Paleta pastel suave y terapéutica
             lavender: {
               50: '#faf8ff',
               100: '#f3edff',
@@ -52,6 +66,7 @@
               100: '#ffe4e6',
               200: '#fecdd3',
               300: '#fda4af',
+              400: '#fb7185',
             },
             cream: '#FEFDFB',
             ink: '#2D3142',
@@ -63,11 +78,7 @@
   </script>
   
   <style>
-    /* ====================================
-       ESTILOS PERSONALIZADOS
-       ==================================== */
-    
-    /* Fondo con gradiente suave tipo "aurora" */
+    /* Fondo aurora */
     body {
       background: 
         radial-gradient(ellipse 80% 60% at 10% 0%, rgba(186, 230, 253, 0.4), transparent 50%),
@@ -77,83 +88,75 @@
       min-height: 100vh;
     }
     
-    /* Animación de entrada suave para las tarjetas */
+    /* Animaciones */
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(16px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
+    
+    /* Respetar preferencias de movimiento reducido */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-in-up,
+      .option-card,
+      .compass-icon,
+      * {
+        animation: none !important;
+        transition: none !important;
       }
     }
     
-    .animate-fade-in-up {
-      animation: fadeInUp 0.4s ease-out forwards;
-    }
-    
-    /* Delay escalonado para las opciones */
     .option-delay-1 { animation-delay: 0.05s; }
     .option-delay-2 { animation-delay: 0.1s; }
     .option-delay-3 { animation-delay: 0.15s; }
     .option-delay-4 { animation-delay: 0.2s; }
     
-    /* Transición suave para la barra de progreso */
-    .progress-fill {
-      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    .progress-fill { transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
     
-    /* Pulso suave en hover de tarjetas */
     .option-card {
       transition: all 0.2s ease;
     }
-    
     .option-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 30px rgba(157, 117, 240, 0.15);
     }
+    .option-card:active { transform: translateY(0); }
     
-    .option-card:active {
-      transform: translateY(0);
-    }
-    
-    /* Icono de brújula animado */
     @keyframes gentle-pulse {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.05); }
     }
+    .compass-icon { animation: gentle-pulse 3s ease-in-out infinite; }
     
-    .compass-icon {
-      animation: gentle-pulse 3s ease-in-out infinite;
-    }
-    
-    /* Estilos para la pantalla de resultados */
     .result-card {
       background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
       backdrop-filter: blur(10px);
     }
     
-    /* Decoración de puntos */
-    .dots-pattern {
-      background-image: radial-gradient(circle, rgba(157, 117, 240, 0.15) 1px, transparent 1px);
-      background-size: 20px 20px;
+    /* Foco visible para accesibilidad */
+    .focus-ring:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(157, 117, 240, 0.5);
     }
+    
+    /* FAQ accordion */
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] .faq-arrow { transform: rotate(180deg); }
   </style>
 </head>
 
 <body class="font-body text-ink min-h-screen">
 
-  <!-- ========================================
-       CONTENEDOR PRINCIPAL
-       ======================================== -->
   <div class="max-w-2xl mx-auto px-5 py-8 md:py-12 min-h-screen flex flex-col">
     
-    <!-- HEADER / BRANDING -->
-    <header class="text-center mb-8">
-      <div class="inline-flex items-center justify-center gap-2 mb-3">
-        <!-- Icono de brújula SVG -->
-        <svg class="compass-icon w-10 h-10 text-lavender-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    <!-- ========================================
+         HEADER (siempre visible)
+         ======================================== -->
+    <header class="text-center mb-6">
+      <div class="inline-flex items-center justify-center gap-2 mb-2">
+        <svg class="compass-icon w-9 h-9 text-lavender-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="12" cy="12" r="10"/>
           <polygon points="12,2 14,10 12,12 10,10" fill="currentColor" opacity="0.3"/>
           <polygon points="12,22 10,14 12,12 14,14" fill="currentColor"/>
@@ -163,139 +166,373 @@
           Brújula Terapéutica
         </h1>
       </div>
-      <p class="text-muted text-sm md:text-base max-w-md mx-auto leading-relaxed">
-        Descubre qué tipo de terapia puede resonar mejor contigo a través de 7 preguntas reflexivas.
-      </p>
     </header>
 
     <!-- ========================================
-         BARRA DE PROGRESO
+         PANTALLA 1: BIENVENIDA / INICIO
          ======================================== -->
-    <div id="progress-container" class="mb-8 relative">
-      <div class="flex justify-between items-end mb-2">
-        <!-- Botón Volver (oculto inicialmente) -->
-        <button id="back-btn" class="text-xs font-medium text-muted hover:text-lavender-600 underline decoration-lavender-300 underline-offset-2 transition-colors opacity-0 pointer-events-none flex items-center gap-1" aria-label="Volver a la pregunta anterior">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          Anterior
-        </button>
-        
-        <div class="flex flex-col items-end">
-          <span class="text-xs font-medium text-muted uppercase tracking-wide">
-            Pregunta <span id="current-step">1</span> de 7
-          </span>
-          <span id="progress-percent" class="text-xs font-medium text-lavender-600">0%</span>
-        </div>
-      </div>
+    <section id="welcome-screen" class="flex-1 flex flex-col">
       
-      <div class="h-2 bg-lavender-100 rounded-full overflow-hidden mb-2">
-        <div id="progress-bar" class="progress-fill h-full bg-gradient-to-r from-lavender-400 to-lavender-500 rounded-full" style="width: 0%"></div>
-      </div>
-      <!-- Nuevo texto de ánimo dinámico -->
-      <p id="encouragement-text" class="text-center text-xs text-lavender-500 italic h-4 transition-opacity duration-500 opacity-0">
-        <!-- Texto dinámico -->
-      </p>
-    </div>
-
-    <!-- ========================================
-         CONTENEDOR DE PREGUNTAS (WIZARD)
-         ======================================== -->
-    <main id="quiz-container" class="flex-1 flex flex-col">
-      
-      <!-- Las preguntas se renderizan dinámicamente aquí -->
-      <div id="question-area" class="flex-1">
-        <!-- Renderizado por JavaScript -->
-      </div>
-
-    </main>
-
-    <!-- ========================================
-         PANTALLA DE RESULTADOS (oculta inicialmente)
-         ======================================== -->
-    <section id="results-screen" class="hidden flex-1 flex flex-col">
-      
-      <div class="result-card rounded-2xl border border-lavender-200/50 p-6 md:p-8 shadow-lg">
-        
-        <!-- Icono del resultado -->
-        <div id="result-icon" class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-3xl">
-          <!-- Ícono dinámico -->
-        </div>
-        
-        <!-- Título del resultado -->
-        <h2 id="result-title" class="font-display text-2xl md:text-3xl font-bold text-center text-ink mb-2">
-          <!-- Título dinámico -->
-        </h2>
-        
-        <!-- Subtítulo / Enfoque -->
-        <p id="result-subtitle" class="text-center text-lavender-600 font-medium text-sm uppercase tracking-wide mb-6">
-          <!-- Subtítulo dinámico -->
+      <!-- Intro -->
+      <div class="text-center mb-8">
+        <p class="text-muted text-base md:text-lg max-w-md mx-auto leading-relaxed mb-4">
+          Descubre qué tipo de terapia podría resonar mejor contigo con solo <strong>7 preguntas</strong>.
         </p>
+        <p class="text-xs text-muted/70 italic">
+          🔒 100% privado. Todo corre en tu navegador. No guardamos ni enviamos datos.
+        </p>
+      </div>
+      
+      <!-- Cómo funciona (3 pasos) -->
+      <div class="bg-white/70 rounded-2xl border border-lavender-100 p-5 mb-6">
+        <h2 class="font-display font-bold text-ink text-lg mb-4 flex items-center gap-2">
+          <span class="text-lavender-500">✨</span> Cómo funciona
+        </h2>
+        <ol class="space-y-3">
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-lavender-100 text-lavender-600 font-bold text-sm flex items-center justify-center">1</span>
+            <div>
+              <p class="font-medium text-ink">Responde 7 preguntas</p>
+              <p class="text-sm text-muted">Sin respuestas correctas ni incorrectas. Solo lo que sientes.</p>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-lavender-100 text-lavender-600 font-bold text-sm flex items-center justify-center">2</span>
+            <div>
+              <p class="font-medium text-ink">Recibe tu orientación</p>
+              <p class="text-sm text-muted">Descubrirás cuál de 4 enfoques terapéuticos podría funcionarte mejor.</p>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-lavender-100 text-lavender-600 font-bold text-sm flex items-center justify-center">3</span>
+            <div>
+              <p class="font-medium text-ink">Lleva tu resumen al terapeuta</p>
+              <p class="text-sm text-muted">Podrás copiar un resumen para compartir en tu primera sesión.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      
+      <!-- Qué terapias incluye -->
+      <div class="mb-6">
+        <h2 class="font-display font-bold text-ink text-lg mb-3 flex items-center gap-2">
+          <span class="text-mint-500">◈</span> Enfoques que exploramos
+        </h2>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-sky-50 border border-sky-200/50 rounded-xl p-3">
+            <div class="text-xl mb-1">🎯</div>
+            <p class="font-display font-semibold text-sm text-ink">Cognitivo-Conductual</p>
+            <p class="text-xs text-muted">Técnicas prácticas, resultados rápidos.</p>
+          </div>
+          <div class="bg-lavender-50 border border-lavender-200/50 rounded-xl p-3">
+            <div class="text-xl mb-1">🔍</div>
+            <p class="font-display font-semibold text-sm text-ink">Psicoanálisis</p>
+            <p class="text-xs text-muted">Explora tu historia profunda.</p>
+          </div>
+          <div class="bg-mint-50 border border-mint-200/50 rounded-xl p-3">
+            <div class="text-xl mb-1">🌱</div>
+            <p class="font-display font-semibold text-sm text-ink">Humanista/Gestalt</p>
+            <p class="text-xs text-muted">El aquí y ahora, sin juicio.</p>
+          </div>
+          <div class="bg-rose-50 border border-rose-200/50 rounded-xl p-3">
+            <div class="text-xl mb-1">🔗</div>
+            <p class="font-display font-semibold text-sm text-ink">Sistémica</p>
+            <p class="text-xs text-muted">Mejora tus relaciones clave.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Botón Comenzar -->
+      <button 
+        id="start-btn"
+        class="focus-ring w-full py-4 px-6 bg-gradient-to-r from-lavender-500 to-lavender-600 text-white font-display font-bold text-lg rounded-xl hover:from-lavender-600 hover:to-lavender-700 transition-all duration-200 shadow-lg hover:shadow-xl mb-6"
+      >
+        Comenzar el test →
+      </button>
+      
+      <!-- FAQ -->
+      <div class="bg-white/50 rounded-2xl border border-lavender-100 p-5 mb-6">
+        <h2 class="font-display font-bold text-ink text-lg mb-4">Preguntas frecuentes</h2>
         
-        <!-- Descripción de la terapia -->
-        <div id="result-description" class="bg-white/60 rounded-xl p-5 mb-5 border border-lavender-100">
+        <details class="border-b border-lavender-100 pb-3 mb-3">
+          <summary class="flex justify-between items-center py-2 font-medium text-ink text-sm">
+            ¿Esto es un diagnóstico?
+            <span class="faq-arrow text-lavender-400 transition-transform">▼</span>
+          </summary>
+          <p class="text-sm text-muted pt-2 leading-relaxed">
+            <strong>No.</strong> Este test es solo orientación informativa. No sustituye la evaluación de un profesional de salud mental. Úsalo como punto de partida para una conversación con tu terapeuta.
+          </p>
+        </details>
+        
+        <details class="border-b border-lavender-100 pb-3 mb-3">
+          <summary class="flex justify-between items-center py-2 font-medium text-ink text-sm">
+            ¿Cuánto tiempo toma?
+            <span class="faq-arrow text-lavender-400 transition-transform">▼</span>
+          </summary>
+          <p class="text-sm text-muted pt-2 leading-relaxed">
+            Menos de <strong>3 minutos</strong>. Son solo 7 preguntas sin límite de tiempo.
+          </p>
+        </details>
+        
+        <details class="border-b border-lavender-100 pb-3 mb-3">
+          <summary class="flex justify-between items-center py-2 font-medium text-ink text-sm">
+            ¿Y si me sale un enfoque que no conozco?
+            <span class="faq-arrow text-lavender-400 transition-transform">▼</span>
+          </summary>
+          <p class="text-sm text-muted pt-2 leading-relaxed">
+            Al final recibirás una explicación detallada del enfoque sugerido, qué buscar en un terapeuta de ese tipo, y alternativas cercanas a tu perfil.
+          </p>
+        </details>
+        
+        <details class="pb-1">
+          <summary class="flex justify-between items-center py-2 font-medium text-ink text-sm">
+            ¿Guardan mis respuestas?
+            <span class="faq-arrow text-lavender-400 transition-transform">▼</span>
+          </summary>
+          <p class="text-sm text-muted pt-2 leading-relaxed">
+            <strong>No.</strong> Todo se procesa localmente en tu dispositivo. No hay servidores, no hay bases de datos, no hay cookies de rastreo. Al cerrar la página, todo desaparece.
+          </p>
+        </details>
+      </div>
+      
+      <!-- Recursos de Crisis -->
+      <aside class="bg-rose-50 border border-rose-200/50 rounded-xl p-4 mb-4" role="complementary" aria-label="Recursos de crisis">
+        <h3 class="font-display font-bold text-rose-600 text-sm mb-2 flex items-center gap-2">
+          <span>🆘</span> ¿Estás en crisis ahora?
+        </h3>
+        <p class="text-xs text-muted mb-3">
+          Si sientes que necesitas ayuda urgente, estos recursos están disponibles 24/7:
+        </p>
+        <ul class="space-y-1 text-xs">
+          <li class="flex items-start gap-2">
+            <span class="text-rose-400">•</span>
+            <span><strong>Línea de la Vida:</strong> <a href="tel:8009112000" class="text-rose-600 underline">800 911 2000</a> (México, 24/7 gratis)</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-rose-400">•</span>
+            <span><strong>SAPTEL:</strong> <a href="tel:5552598121" class="text-rose-600 underline">55 5259 8121</a> (apoyo emocional gratuito)</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-rose-400">•</span>
+            <span><strong>CDMX LOCATEL:</strong> <a href="tel:5556581111" class="text-rose-600 underline">55 5658 1111</a> o *0311</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-rose-400">•</span>
+            <span><strong>Emergencia:</strong> <a href="tel:911" class="text-rose-600 underline">911</a></span>
+          </li>
+        </ul>
+      </aside>
+      
+    </section>
+
+    <!-- ========================================
+         PANTALLA 2: BARRA DE PROGRESO + QUIZ
+         ======================================== -->
+    <section id="quiz-screen" class="hidden flex-1 flex flex-col" aria-label="Cuestionario">
+      
+      <!-- Barra de progreso -->
+      <nav id="progress-container" class="mb-8 relative" aria-label="Progreso del cuestionario">
+        <div class="flex justify-between items-end mb-2">
+          <button 
+            id="back-btn" 
+            class="focus-ring text-xs font-medium text-muted hover:text-lavender-600 underline decoration-lavender-300 underline-offset-2 transition-colors opacity-0 pointer-events-none flex items-center gap-1 rounded" 
+            aria-label="Volver a la pregunta anterior"
+          >
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Anterior
+          </button>
+          
+          <div class="flex flex-col items-end">
+            <span class="text-xs font-medium text-muted uppercase tracking-wide">
+              Pregunta <span id="current-step" aria-live="polite">1</span> de 7
+            </span>
+            <span id="progress-percent" class="text-xs font-medium text-lavender-600" aria-live="polite">0%</span>
+          </div>
+        </div>
+        
+        <div class="h-2 bg-lavender-100 rounded-full overflow-hidden mb-2" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <div id="progress-bar" class="progress-fill h-full bg-gradient-to-r from-lavender-400 to-lavender-500 rounded-full" style="width: 0%"></div>
+        </div>
+        
+        <p id="encouragement-text" class="text-center text-xs text-lavender-500 italic h-4 transition-opacity duration-500 opacity-0" aria-live="polite"></p>
+      </nav>
+
+      <!-- Área de preguntas -->
+      <main id="question-area" class="flex-1" role="main">
+        <!-- Renderizado por JavaScript -->
+      </main>
+
+    </section>
+
+    <!-- ========================================
+         PANTALLA 3: RESULTADOS
+         ======================================== -->
+    <section id="results-screen" class="hidden flex-1 flex flex-col" aria-label="Resultados del test">
+      
+      <article class="result-card rounded-2xl border border-lavender-200/50 p-6 md:p-8 shadow-lg mb-6">
+        
+        <!-- Icono y título -->
+        <div id="result-icon" class="w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center text-4xl"></div>
+        <h2 id="result-title" class="font-display text-2xl md:text-3xl font-bold text-center text-ink mb-2"></h2>
+        <p id="result-subtitle" class="text-center text-lavender-600 font-medium text-sm uppercase tracking-wide mb-6"></p>
+        
+        <!-- ¿En qué consiste? -->
+        <div class="bg-white/60 rounded-xl p-5 mb-5 border border-lavender-100">
           <h3 class="font-display font-semibold text-ink mb-2 flex items-center gap-2">
             <span class="text-lavender-500">◈</span> ¿En qué consiste?
           </h3>
-          <p id="result-desc-text" class="text-muted leading-relaxed text-sm md:text-base">
-            <!-- Descripción dinámica -->
-          </p>
+          <p id="result-desc-text" class="text-muted leading-relaxed text-sm md:text-base"></p>
         </div>
         
-        <!-- Por qué te la recomendamos -->
-        <div id="result-why" class="bg-mint-50 rounded-xl p-5 mb-6 border border-mint-200/50">
+        <!-- ¿Por qué te la recomendamos? -->
+        <div class="bg-mint-50 rounded-xl p-5 mb-5 border border-mint-200/50">
           <h3 class="font-display font-semibold text-ink mb-2 flex items-center gap-2">
             <span class="text-mint-500">✦</span> ¿Por qué te la recomendamos?
           </h3>
-          <p id="result-why-text" class="text-muted leading-relaxed text-sm md:text-base">
-            <!-- Razón dinámica -->
-          </p>
+          <p id="result-why-text" class="text-muted leading-relaxed text-sm md:text-base"></p>
         </div>
         
-        <!-- Puntajes (debug / transparencia opcional) -->
-        <div id="scores-display" class="flex flex-wrap justify-center gap-2 mb-6">
-          <!-- Puntajes renderizados -->
+        <!-- Para quién funciona / Cuándo podría no ser ideal -->
+        <div class="grid md:grid-cols-2 gap-4 mb-5">
+          <div class="bg-sky-50 rounded-xl p-4 border border-sky-200/50">
+            <h4 class="font-display font-semibold text-ink text-sm mb-2 flex items-center gap-2">
+              <span class="text-sky-500">✓</span> Suele funcionar para...
+            </h4>
+            <ul id="result-works-for" class="text-xs text-muted space-y-1"></ul>
+          </div>
+          <div class="bg-rose-50 rounded-xl p-4 border border-rose-200/50">
+            <h4 class="font-display font-semibold text-ink text-sm mb-2 flex items-center gap-2">
+              <span class="text-rose-400">⚠</span> Podría no ser ideal si...
+            </h4>
+            <ul id="result-not-ideal" class="text-xs text-muted space-y-1"></ul>
+          </div>
+        </div>
+        
+        <!-- Qué esperar en las primeras sesiones -->
+        <div class="bg-sky-50/70 rounded-xl p-5 mb-5 border border-sky-200/50">
+          <h3 class="font-display font-semibold text-ink mb-3 flex items-center gap-2">
+            <span class="text-sky-500">📅</span> Qué esperar en las primeras 3-5 sesiones
+          </h3>
+          <ul id="result-first-sessions" class="text-sm text-muted space-y-2"></ul>
+        </div>
+        
+        <!-- Qué buscar en un terapeuta -->
+        <div class="bg-lavender-50 rounded-xl p-5 mb-5 border border-lavender-200/50">
+          <h3 class="font-display font-semibold text-ink mb-3 flex items-center gap-2">
+            <span class="text-lavender-500">🔎</span> Qué buscar en un terapeuta de este enfoque
+          </h3>
+          <ul id="result-look-for" class="text-sm text-muted space-y-2"></ul>
+        </div>
+        
+        <!-- Señales de buen match -->
+        <div class="bg-mint-50/70 rounded-xl p-5 mb-5 border border-mint-200/50">
+          <h3 class="font-display font-semibold text-ink mb-3 flex items-center gap-2">
+            <span class="text-mint-500">💚</span> Señales de que es un buen match
+          </h3>
+          <ul id="result-good-match" class="text-sm text-muted space-y-2"></ul>
+        </div>
+        
+        <!-- Preguntas para tu terapeuta -->
+        <div class="bg-white/70 rounded-xl p-5 mb-5 border border-lavender-100">
+          <h3 class="font-display font-semibold text-ink mb-3 flex items-center gap-2">
+            <span class="text-lavender-400">💬</span> Preguntas para hacerle a tu terapeuta
+          </h3>
+          <ul id="result-questions" class="text-sm text-muted space-y-2"></ul>
+        </div>
+        
+        <!-- Resultados #2 y #3 con percentiles -->
+        <div class="bg-white/60 rounded-xl p-5 mb-5 border border-lavender-100">
+          <h3 class="font-display font-semibold text-ink mb-3 flex items-center gap-2">
+            <span class="text-muted">🔀</span> Tus resultados secundarios
+          </h3>
+          <p class="text-xs text-muted mb-4">Si tu primera opción no encaja, estas alternativas también resonaron contigo:</p>
+          <div id="result-alternatives" class="space-y-3"></div>
+        </div>
+        
+        <!-- Puntajes con barras visuales -->
+        <div class="bg-lavender-50/50 rounded-xl p-5 mb-6 border border-lavender-100">
+          <h3 class="font-display font-semibold text-ink mb-3 flex items-center gap-2">
+            <span class="text-lavender-400">📊</span> Tu perfil completo
+          </h3>
+          <div id="scores-display" class="space-y-3"></div>
         </div>
         
         <!-- Botones de Acción -->
         <div class="space-y-3">
-          <!-- Botón Copiar Resumen (Nuevo) -->
           <button 
             id="share-btn"
-            class="w-full py-3 px-6 bg-white border border-lavender-200 text-lavender-600 font-display font-semibold rounded-xl hover:bg-lavender-50 transition-all duration-200 flex items-center justify-center gap-2 group"
+            class="focus-ring w-full py-3 px-6 bg-white border border-lavender-200 text-lavender-600 font-display font-semibold rounded-xl hover:bg-lavender-50 transition-all duration-200 flex items-center justify-center gap-2 group"
           >
-            <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
             Copiar resumen para mi terapeuta
           </button>
 
-          <!-- Botón de reinicio -->
           <button 
             id="restart-btn"
-            class="w-full py-3 px-6 bg-gradient-to-r from-lavender-500 to-lavender-600 text-white font-display font-semibold rounded-xl hover:from-lavender-600 hover:to-lavender-700 transition-all duration-200 shadow-md hover:shadow-lg"
+            class="focus-ring w-full py-3 px-6 bg-gradient-to-r from-lavender-500 to-lavender-600 text-white font-display font-semibold rounded-xl hover:from-lavender-600 hover:to-lavender-700 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             Volver a empezar
           </button>
         </div>
         
+      </article>
+      
+      <!-- Siguientes pasos -->
+      <div class="bg-white/70 rounded-2xl border border-lavender-100 p-5 mb-6">
+        <h3 class="font-display font-bold text-ink text-lg mb-4 flex items-center gap-2">
+          <span class="text-mint-500">🚀</span> ¿Qué hacer ahora?
+        </h3>
+        <ol class="space-y-3 text-sm text-muted">
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-mint-100 text-mint-600 font-bold text-xs flex items-center justify-center">1</span>
+            <div>
+              <p class="font-medium text-ink">Busca un terapeuta del enfoque sugerido</p>
+              <p class="text-xs">Puedes buscar en directorios como FENAPSIME, Doctoralia, o pedir referencias.</p>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-mint-100 text-mint-600 font-bold text-xs flex items-center justify-center">2</span>
+            <div>
+              <p class="font-medium text-ink">Agenda una primera sesión exploratoria</p>
+              <p class="text-xs">Muchos terapeutas ofrecen una sesión inicial para conocerse. No te comprometes a nada.</p>
+            </div>
+          </li>
+          <li class="flex gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-mint-100 text-mint-600 font-bold text-xs flex items-center justify-center">3</span>
+            <div>
+              <p class="font-medium text-ink">Lleva tu resumen y haz preguntas</p>
+              <p class="text-xs">Comparte el resultado de este test y pregunta: "¿Cómo trabajarías conmigo?"</p>
+            </div>
+          </li>
+        </ol>
       </div>
       
-      <!-- Disclaimer Legal -->
-      <div class="mt-6 p-4 bg-rose-50 border border-rose-200/50 rounded-xl">
+      <!-- Disclaimer -->
+      <aside class="p-4 bg-rose-50 border border-rose-200/50 rounded-xl mb-4">
         <p class="text-xs text-muted leading-relaxed text-center">
-          <strong class="text-rose-400">Aviso importante:</strong> Este test es solo orientación informativa y no sustituye el diagnóstico ni la recomendación de un profesional de la salud mental. Si estás pasando por un momento difícil, te recomendamos buscar ayuda profesional.
+          <strong class="text-rose-400">Aviso importante:</strong> Este test es solo orientación informativa y no sustituye el diagnóstico ni la recomendación de un profesional de salud mental. Si estás pasando por un momento difícil, busca ayuda profesional.
         </p>
-      </div>
+      </aside>
+      
+      <!-- Recursos de Crisis (también en resultados) -->
+      <aside class="bg-rose-50/50 border border-rose-200/30 rounded-xl p-4 text-center">
+        <p class="text-xs text-muted">
+          <strong>¿Necesitas ayuda ahora?</strong> 
+          <a href="tel:8009112000" class="text-rose-600 underline">Línea de la Vida: 800 911 2000</a> (24/7 gratis en México)
+        </p>
+      </aside>
       
     </section>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer class="mt-8 text-center">
       <p class="text-xs text-muted/60">
-        Todo corre en tu navegador. No guardamos ningún dato.
+        🔒 Todo corre en tu navegador. No guardamos ni enviamos datos.
       </p>
     </footer>
 
   </div>
 
-<!-- Lógica de la aplicación -->
 <script src="app.js"></script>
 
 </body>
