@@ -3,75 +3,562 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Web Lab</title>
-  <link rel="stylesheet" href="./assets/css/tailwind.css">
+  <title>MiniLabs — Pieces</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans: ['IBM Plex Sans', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            cream: '#F6F1E8',
+            ink: '#151515',
+            accent: '#1E2A44',
+            muted: '#9B9385',
+          },
+          letterSpacing: {
+            'extra-wide': '0.15em',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* Subtle custom styles */
+    [data-card]:hover .card-link { text-decoration: underline; text-underline-offset: 3px; }
+    
+    /* Rotating asterisk animation */
+    @keyframes slow-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .spin-slow { animation: slow-spin 20s linear infinite; }
+    
+    /* Card index numbers */
+    .card-index {
+      font-feature-settings: 'tnum' 1;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-  <!-- Header -->
-  <header class="bg-indigo-600 text-white py-6 shadow-lg">
-    <div class="container mx-auto px-4">
-      <h1 class="text-3xl font-bold text-center">🧪 Web Lab</h1>
-      <p class="text-center text-indigo-200 mt-2">A collection of mini-projects to explore and learn</p>
-    </div>
-  </header>
 
-  <!-- Main Content -->
-  <main class="flex-grow container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<body class="bg-cream text-ink font-sans min-h-screen overflow-y-auto md:h-screen md:overflow-hidden">
+
+  <!-- Main Container -->
+  <div class="max-w-[860px] mx-auto px-6 py-8 md:py-0 md:h-full md:flex md:flex-col md:justify-between">
+
+    <!-- Masthead -->
+    <header class="pt-4 md:pt-10">
+      <!-- Title with decorative asterisk -->
+      <div class="flex items-baseline gap-3">
+        <h1 class="font-serif text-5xl md:text-6xl font-medium tracking-tight text-ink">Iberia</h1>
+        <span class="spin-slow inline-block text-accent text-2xl select-none" aria-hidden="true">✦</span>
+    </div>
       
-      <!-- Clock Project -->
-      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">⏰ Clock</h2>
-        <p class="text-gray-600 mb-4">A live digital clock that displays the current time and updates every second.</p>
-        <a href="./projects/clock/" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors">
-          Open Project
-        </a>
+      <!-- Thin editorial rule -->
+      <div class="w-16 h-px bg-ink/20 mt-4"></div>
+      
+      <p class="font-serif text-xl md:text-2xl italic text-ink/75 mt-4 leading-relaxed">
+        "Games, websites, and rare cards. Made for fun."
+      </p>
+      <p class="text-sm text-ink/55 mt-3 max-w-sm leading-relaxed tracking-wide">
+        5–10 mini pieces. Some are tender. Others are silly. Some bite.
+      </p>
+      
+      <!-- CTAs with refined styling -->
+      <div class="flex flex-wrap items-center gap-6 mt-6">
+        <button 
+          id="surprise-btn"
+          class="text-sm tracking-wide text-accent hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream transition-colors duration-200 group"
+        >
+          <span class="border-b border-accent/30 group-hover:border-ink pb-0.5">Surprise me</span>
+          <span class="ml-1 inline-block group-hover:translate-x-0.5 transition-transform">→</span>
+        </button>
+        <span class="text-ink/20 select-none">/</span>
+        <button 
+          id="all-projects-btn"
+          class="text-sm tracking-wide text-accent hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream transition-colors duration-200 group"
+        >
+          <span class="border-b border-accent/30 group-hover:border-ink pb-0.5">All projects</span>
+          <span class="text-ink/40 ml-1">(5–10)</span>
+          <span class="ml-1 inline-block group-hover:translate-x-0.5 transition-transform">→</span>
+        </button>
       </div>
 
-      <!-- Calculator Project -->
-      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">🧮 Calculator</h2>
-        <p class="text-gray-600 mb-4">A simple calculator that adds two numbers together and displays the result.</p>
-        <a href="./projects/calculator/" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors">
-          Open Project
-        </a>
+      <p class="text-xs text-muted mt-4 italic tracking-wide">
+        New every now and then. If you like something, steal it with care.
+      </p>
+    </header>
+
+    <!-- Category Tabs -->
+    <nav class="mt-8 md:mt-6" aria-label="Project categories">
+      <ul class="flex flex-wrap gap-3 text-sm" role="tablist">
+        <li>
+          <button 
+            role="tab" 
+            aria-selected="true" 
+            data-filter="all"
+            class="filter-tab px-3 py-1 text-xs uppercase tracking-extra-wide border-b-2 border-ink text-ink transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+          >
+            All
+          </button>
+        </li>
+        <li>
+          <button 
+            role="tab" 
+            aria-selected="false" 
+            data-filter="love"
+            class="filter-tab px-3 py-1 text-xs uppercase tracking-extra-wide border-b-2 border-transparent text-ink/50 hover:text-ink hover:border-ink/30 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+          >
+            Love
+          </button>
+        </li>
+        <li>
+          <button 
+            role="tab" 
+            aria-selected="false" 
+            data-filter="play"
+            class="filter-tab px-3 py-1 text-xs uppercase tracking-extra-wide border-b-2 border-transparent text-ink/50 hover:text-ink hover:border-ink/30 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+          >
+            Play
+          </button>
+        </li>
+        <li>
+          <button 
+            role="tab" 
+            aria-selected="false" 
+            data-filter="think"
+            class="filter-tab px-3 py-1 text-xs uppercase tracking-extra-wide border-b-2 border-transparent text-ink/50 hover:text-ink hover:border-ink/30 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+          >
+            Think
+          </button>
+        </li>
+        <li>
+          <button 
+            role="tab" 
+            aria-selected="false" 
+            data-filter="dark"
+            class="filter-tab px-3 py-1 text-xs uppercase tracking-extra-wide border-b-2 border-transparent text-ink/50 hover:text-ink hover:border-ink/30 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+          >
+            Dark
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Featured Projects Grid -->
+    <main class="mt-6 md:mt-4 md:flex-1 md:flex md:items-start">
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+        
+        <!-- Card 1: Cat Game City (Play) -->
+        <article 
+          data-card 
+          data-category="play" 
+          data-featured="true"
+          class="project-card group relative border border-ink/10 rounded-xl p-5 bg-transparent hover:border-ink/25 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+        >
+          <!-- Card index number -->
+          <span class="card-index absolute -top-2 -left-1 text-[10px] text-muted font-serif italic select-none">01</span>
+          
+          <a href="./projects/game/" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream rounded-lg">
+            <h2 class="font-serif text-xl font-medium text-ink group-hover:text-accent transition-colors duration-200">
+              Cat Game City
+            </h2>
+            <p class="text-[11px] uppercase tracking-extra-wide text-muted mt-1.5">Play · 3–5 min</p>
+            <p class="text-sm text-ink/65 mt-2.5 leading-relaxed">
+              A mini city game with cats. Fast, silly, addictive.
+            </p>
+            <span class="card-link inline-block text-sm text-accent mt-3 group-hover:underline">Open →</span>
+          </a>
+        </article>
+
+        <!-- Card 2: Fake Guru (Think) -->
+        <article 
+          data-card 
+          data-category="think" 
+          data-featured="true"
+          class="project-card group relative border border-ink/10 rounded-xl p-5 bg-transparent hover:border-ink/25 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+        >
+          <span class="card-index absolute -top-2 -left-1 text-[10px] text-muted font-serif italic select-none">02</span>
+          
+          <a href="./projects/notes/" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream rounded-lg">
+            <h2 class="font-serif text-xl font-medium text-ink group-hover:text-accent transition-colors duration-200">
+              Fake Guru
+            </h2>
+            <p class="text-[11px] uppercase tracking-extra-wide text-muted mt-1.5">Think · 2 min</p>
+            <p class="text-sm text-ink/65 mt-2.5 leading-relaxed">
+              A fake guru that spouts 'truths'. Sometimes hits too hard.
+            </p>
+            <span class="card-link inline-block text-sm text-accent mt-3 group-hover:underline">Open →</span>
+          </a>
+        </article>
+
+        <!-- Card 3: Galaxy Love (Love) -->
+        <article 
+          data-card 
+          data-category="love" 
+          data-featured="true"
+          class="project-card group relative border border-ink/10 rounded-xl p-5 bg-transparent hover:border-ink/25 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+        >
+          <span class="card-index absolute -top-2 -left-1 text-[10px] text-muted font-serif italic select-none">03</span>
+          
+          <a href="./projects/gallery/" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream rounded-lg">
+            <h2 class="font-serif text-xl font-medium text-ink group-hover:text-accent transition-colors duration-200">
+              Galaxy Love
+            </h2>
+            <p class="text-[11px] uppercase tracking-extra-wide text-muted mt-1.5">Love · 1–2 min</p>
+            <p class="text-sm text-ink/65 mt-2.5 leading-relaxed">
+              A space card. Minimal and cheesy in a good way.
+            </p>
+            <span class="card-link inline-block text-sm text-accent mt-3 group-hover:underline">Open →</span>
+          </a>
+        </article>
+
+        <!-- Card 4: Memento Mori (Dark) -->
+        <article 
+          data-card 
+          data-category="dark" 
+          data-featured="true"
+          class="project-card group relative border border-ink/10 rounded-xl p-5 bg-transparent hover:border-ink/25 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+        >
+          <span class="card-index absolute -top-2 -left-1 text-[10px] text-muted font-serif italic select-none">04</span>
+          
+          <a href="./projects/clock/" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream rounded-lg">
+            <h2 class="font-serif text-xl font-medium text-ink group-hover:text-accent transition-colors duration-200">
+              Memento Mori
+            </h2>
+            <p class="text-[11px] uppercase tracking-extra-wide text-muted mt-1.5">Dark · 1–2 min</p>
+            <p class="text-sm text-ink/65 mt-2.5 leading-relaxed">
+              An elegant reminder of finite time. Simple, cold, effective.
+            </p>
+            <span class="card-link inline-block text-sm text-accent mt-3 group-hover:underline">Open →</span>
+          </a>
+        </article>
+
+        <!-- Card 6: Therapy Compass (Think) -->
+        <article 
+          data-card 
+          data-category="think" 
+          data-featured="true"
+          class="project-card group relative border border-ink/10 rounded-xl p-5 bg-transparent hover:border-ink/25 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+        >
+          <span class="card-index absolute -top-2 -left-1 text-[10px] text-muted font-serif italic select-none">06</span>
+          
+          <a href="./projects/psicology-path/" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream rounded-lg">
+            <h2 class="font-serif text-xl font-medium text-ink group-hover:text-accent transition-colors duration-200">
+              Therapy Compass
+            </h2>
+            <p class="text-[11px] uppercase tracking-extra-wide text-muted mt-1.5">Think · 3 min</p>
+            <p class="text-sm text-ink/65 mt-2.5 leading-relaxed">
+              Find the therapy style that resonates with you. A gentle guide.
+            </p>
+            <span class="card-link inline-block text-sm text-accent mt-3 group-hover:underline">Open →</span>
+          </a>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 md:py-4 flex items-center justify-center gap-2">
+      <span class="text-muted text-lg select-none" aria-hidden="true">◈</span>
+      <p class="text-xs text-ink/30 tracking-widest uppercase">mmxxvi</p>
+    </footer>
+
+  </div>
+
+  <!-- Modal Overlay -->
+  <div 
+    id="modal-overlay" 
+    class="fixed inset-0 bg-ink/50 z-40 hidden opacity-0 transition-opacity duration-200"
+    aria-hidden="true"
+  ></div>
+
+  <!-- All Projects Modal -->
+  <div 
+    id="modal" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="modal-title"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+  >
+    <div class="bg-cream border border-ink/10 rounded-xl w-full max-w-lg max-h-[80vh] overflow-hidden flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-ink/10">
+        <div class="flex items-center gap-2">
+          <span class="text-muted text-sm select-none" aria-hidden="true">◈</span>
+          <h2 id="modal-title" class="font-serif text-2xl font-medium">All Projects</h2>
+        </div>
+        <button 
+          id="modal-close" 
+          class="text-ink/40 hover:text-ink transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-cream rounded p-1"
+          aria-label="Close modal"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
 
-      <!-- Gallery Project -->
-      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">🖼️ Gallery</h2>
-        <p class="text-gray-600 mb-4">An image gallery with next/previous navigation and captions.</p>
-        <a href="./projects/gallery/" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors">
-          Open Project
-        </a>
+      <!-- Modal Content (scrollable) -->
+      <div class="overflow-y-auto flex-1 px-6 py-4">
+        <ul class="space-y-3" id="modal-list">
+          
+          <!-- Project 1 -->
+          <li class="group">
+            <a href="./projects/game/" class="flex items-start gap-3 p-3 rounded-lg hover:bg-ink/[0.03] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <span class="text-[10px] text-muted font-serif italic pt-1 select-none">01</span>
+              <div class="flex-1">
+                <h3 class="font-serif text-lg font-medium group-hover:text-accent transition-colors">Cat Game City</h3>
+                <p class="text-[10px] uppercase tracking-extra-wide text-muted mt-0.5">Play · 3–5 min</p>
+                <p class="text-sm text-ink/60 mt-1 leading-relaxed">A mini city game with cats. Fast, silly, addictive.</p>
+              </div>
+            </a>
+          </li>
+          
+          <!-- Project 2 -->
+          <li class="group">
+            <a href="./projects/notes/" class="flex items-start gap-3 p-3 rounded-lg hover:bg-ink/[0.03] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <span class="text-[10px] text-muted font-serif italic pt-1 select-none">02</span>
+              <div class="flex-1">
+                <h3 class="font-serif text-lg font-medium group-hover:text-accent transition-colors">Fake Guru</h3>
+                <p class="text-[10px] uppercase tracking-extra-wide text-muted mt-0.5">Think · 2 min</p>
+                <p class="text-sm text-ink/60 mt-1 leading-relaxed">A fake guru that spouts 'truths'. Sometimes hits too hard.</p>
+              </div>
+            </a>
+          </li>
+          
+          <!-- Project 3 -->
+          <li class="group">
+            <a href="./projects/gallery/" class="flex items-start gap-3 p-3 rounded-lg hover:bg-ink/[0.03] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <span class="text-[10px] text-muted font-serif italic pt-1 select-none">03</span>
+              <div class="flex-1">
+                <h3 class="font-serif text-lg font-medium group-hover:text-accent transition-colors">Galaxy Love</h3>
+                <p class="text-[10px] uppercase tracking-extra-wide text-muted mt-0.5">Love · 1–2 min</p>
+                <p class="text-sm text-ink/60 mt-1 leading-relaxed">A space card. Minimal and cheesy in a good way.</p>
+              </div>
+            </a>
+          </li>
+          
+          <!-- Project 4 -->
+          <li class="group">
+            <a href="./projects/clock/" class="flex items-start gap-3 p-3 rounded-lg hover:bg-ink/[0.03] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <span class="text-[10px] text-muted font-serif italic pt-1 select-none">04</span>
+              <div class="flex-1">
+                <h3 class="font-serif text-lg font-medium group-hover:text-accent transition-colors">Memento Mori</h3>
+                <p class="text-[10px] uppercase tracking-extra-wide text-muted mt-0.5">Dark · 1–2 min</p>
+                <p class="text-sm text-ink/60 mt-1 leading-relaxed">An elegant reminder of finite time. Simple, cold, effective.</p>
       </div>
-
-      <!-- Notes Project -->
-      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">📝 Notes</h2>
-        <p class="text-gray-600 mb-4">A simple notes app that saves your text to localStorage for persistence.</p>
-        <a href="./projects/notes/" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors">
-          Open Project
-        </a>
-      </div>
-
-      <!-- Game Project -->
-      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">🎮 Game</h2>
-        <p class="text-gray-600 mb-4">A "Guess the Number" game where you try to find a random number between 1 and 20.</p>
-        <a href="./projects/game/" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors">
-          Open Project
-        </a>
+            </a>
+          </li>
+          
+          <!-- Project 5 -->
+          <li class="group">
+            <a href="./projects/calculator/" class="flex items-start gap-3 p-3 rounded-lg hover:bg-ink/[0.03] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <span class="text-[10px] text-muted font-serif italic pt-1 select-none">05</span>
+              <div class="flex-1">
+                <h3 class="font-serif text-lg font-medium group-hover:text-accent transition-colors">Ari, Love</h3>
+                <p class="text-[10px] uppercase tracking-extra-wide text-muted mt-0.5">Love · 1 min</p>
+                <p class="text-sm text-ink/60 mt-1 leading-relaxed">A direct message. Intimate, unadorned, without explanations.</p>
+              </div>
+            </a>
+          </li>
+          
+          <!-- Project 6 -->
+          <li class="group">
+            <a href="./projects/psicology-path/" class="flex items-start gap-3 p-3 rounded-lg hover:bg-ink/[0.03] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <span class="text-[10px] text-muted font-serif italic pt-1 select-none">06</span>
+              <div class="flex-1">
+                <h3 class="font-serif text-lg font-medium group-hover:text-accent transition-colors">Therapy Compass</h3>
+                <p class="text-[10px] uppercase tracking-extra-wide text-muted mt-0.5">Think · 3 min</p>
+                <p class="text-sm text-ink/60 mt-1 leading-relaxed">Find the therapy style that resonates with you. A gentle guide.</p>
+              </div>
+            </a>
+          </li>
+          
+        </ul>
       </div>
 
     </div>
-  </main>
+  </div>
 
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-gray-400 py-4">
-    <div class="container mx-auto px-4 text-center">
-      <p>&copy; 2026 Web Lab. Built with Tailwind CSS.</p>
-    </div>
-  </footer>
+  <script>
+    /**
+     * IBERIA Landing — Interactive Logic
+     * Handles: category filtering, surprise button, modal dialog
+     */
+
+    // ==========================================
+    // DATA: All projects with metadata
+    // ==========================================
+    const allProjects = [
+      { id: 1, title: 'Cat Game City', category: 'play', duration: '3–5 min', synopsis: 'A mini city game with cats. Fast, silly, addictive.', link: './projects/game/', featured: true },
+      { id: 2, title: 'Fake Guru', category: 'think', duration: '2 min', synopsis: "A fake guru that spouts 'truths'. Sometimes hits too hard.", link: './projects/notes/', featured: true },
+      { id: 3, title: 'Galaxy Love', category: 'love', duration: '1–2 min', synopsis: 'A space card. Minimal and cheesy in a good way.', link: './projects/gallery/', featured: true },
+      { id: 4, title: 'Memento Mori', category: 'dark', duration: '1–2 min', synopsis: 'An elegant reminder of finite time. Simple, cold, effective.', link: './projects/clock/', featured: true },
+      { id: 5, title: 'Ari, Love', category: 'love', duration: '1 min', synopsis: 'A direct message. Intimate, unadorned, without explanations.', link: './projects/calculator/', featured: false },
+      { id: 6, title: 'Therapy Compass', category: 'think', duration: '3 min', synopsis: 'Find the therapy style that resonates with you. A gentle guide.', link: './projects/psicology-path/', featured: true },
+    ];
+
+    // ==========================================
+    // DOM ELEMENTS
+    // ==========================================
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const projectCards = document.querySelectorAll('.project-card');
+    const surpriseBtn = document.getElementById('surprise-btn');
+    const allProjectsBtn = document.getElementById('all-projects-btn');
+    const modal = document.getElementById('modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalClose = document.getElementById('modal-close');
+
+    let currentFilter = 'all';
+    let lastFocusedElement = null;
+
+    // ==========================================
+    // FILTER FUNCTIONALITY
+    // ==========================================
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const filter = tab.dataset.filter;
+        currentFilter = filter;
+
+        // Update tab styles (underline-based)
+        filterTabs.forEach(t => {
+          const isActive = t.dataset.filter === filter;
+          t.setAttribute('aria-selected', isActive);
+          if (isActive) {
+            t.classList.add('border-ink', 'text-ink');
+            t.classList.remove('border-transparent', 'text-ink/50');
+          } else {
+            t.classList.remove('border-ink', 'text-ink');
+            t.classList.add('border-transparent', 'text-ink/50');
+          }
+        });
+
+        // Filter cards
+        projectCards.forEach(card => {
+          const category = card.dataset.category;
+          const shouldShow = filter === 'all' || category === filter;
+          card.classList.toggle('hidden', !shouldShow);
+        });
+      });
+    });
+
+    // ==========================================
+    // SURPRISE ME FUNCTIONALITY
+    // ==========================================
+    surpriseBtn.addEventListener('click', () => {
+      // Get visible projects based on current filter
+      let visibleProjects = allProjects.filter(p => p.featured);
+      
+      if (currentFilter !== 'all') {
+        visibleProjects = visibleProjects.filter(p => p.category === currentFilter);
+      }
+
+      // If no projects in current filter, fallback to all
+      if (visibleProjects.length === 0) {
+        visibleProjects = allProjects.filter(p => p.featured);
+        // Reset filter to "all"
+        filterTabs.forEach(t => {
+          const isAll = t.dataset.filter === 'all';
+          t.setAttribute('aria-selected', isAll);
+          if (isAll) {
+            t.classList.add('border-ink', 'text-ink');
+            t.classList.remove('border-transparent', 'text-ink/50');
+          } else {
+            t.classList.remove('border-ink', 'text-ink');
+            t.classList.add('border-transparent', 'text-ink/50');
+          }
+        });
+        projectCards.forEach(card => card.classList.remove('hidden'));
+        currentFilter = 'all';
+      }
+
+      // Pick random project and navigate
+      const randomProject = visibleProjects[Math.floor(Math.random() * visibleProjects.length)];
+      if (randomProject) {
+        window.location.href = randomProject.link;
+      }
+    });
+
+    // ==========================================
+    // MODAL FUNCTIONALITY
+    // ==========================================
+    function openModal() {
+      lastFocusedElement = document.activeElement;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      modalOverlay.classList.remove('hidden');
+      
+      // Animate in
+      requestAnimationFrame(() => {
+        modalOverlay.classList.remove('opacity-0');
+      });
+
+      // Set focus to close button
+      modalClose.focus();
+
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.add('opacity-0');
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modalOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+        
+        // Return focus
+        if (lastFocusedElement) {
+          lastFocusedElement.focus();
+        }
+      }, 200);
+    }
+
+    allProjectsBtn.addEventListener('click', openModal);
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Basic focus trap for modal
+    modal.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+
+      const focusableElements = modal.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    });
+  </script>
+
 </body>
 </html>
