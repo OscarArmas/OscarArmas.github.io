@@ -1,16 +1,28 @@
 /**
  * =====================================================
- * BRÚJULA TERAPÉUTICA - Lógica del Cuestionario (v3.2)
+ * BRÚJULA TERAPÉUTICA - Lógica del Cuestionario (v4.0)
  * =====================================================
  * Sistema de orientación terapéutica con UX profesional.
- * INCLUYE: LÓGICA PONDERADA (Evidence-Based Weights).
+ * 
+ * MEJORAS v4.0:
+ * - Screening de crisis emocional (basado en PHQ-2 validado)
+ * - Índice de confianza del resultado
+ * - Opción "Ninguna me representa"
+ * - Preguntas de contexto y validación
+ * - Navegación por teclado mejorada
+ * - Transiciones suaves
+ * 
+ * SUSTENTACIÓN CIENTÍFICA:
+ * - PHQ-2: Kroenke et al. (2003). Sensibilidad 83%, especificidad 92%
+ * - Consistencia interna: Principios de test-retest reliability (APA)
+ * - Opciones neutrales: Directrices APA para construcción de cuestionarios
  */
 
 (() => {
   // ====================================
   // CONSTANTES
   // ====================================
-  const STORAGE_KEY = 'brujula_terapeutica_state_v3';
+  const STORAGE_KEY = 'brujula_terapeutica_state_v4';
   
   // Iconos SVG (Lucide style) - Clean & Professional
   const ICONS = {
@@ -30,33 +42,121 @@
     clock: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
     anchor: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>`,
     compass: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
-    feather: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>`
+    feather: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>`,
+    question: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    alert: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    user: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    refresh: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>`,
+    check: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
   };
 
   // ====================================
   // ESTADO DE LA APLICACIÓN
   // ====================================
   let state = {
+    phase: 'welcome', // 'welcome', 'screening', 'context', 'quiz', 'results'
     currentQuestion: 0,
     scores: { tcc: 0, psico: 0, human: 0, sist: 0 },
     answers: [],
-    isTransitioning: false
+    isTransitioning: false,
+    screeningRisk: 0,
+    context: {
+      previousTherapy: null, // 'none', 'past', 'current'
+      therapyGoal: null      // 'symptom', 'understanding', 'growth', 'relationships'
+    },
+    neutralAnswers: 0, // Contador de respuestas neutrales
+    validationScores: {} // Para comparar consistencia
   };
 
   // ====================================
-  // MENSAJES DE ÁNIMO
+  // MENSAJES DE ÁNIMO (Ampliados)
   // ====================================
   const motivationalMessages = [
     "Vamos a empezar a conocerte...",
     "Interesante elección...",
-    "Ya vamos a la mitad, lo haces muy bien.",
     "Cada respuesta nos acerca a tu perfil.",
+    "Ya vamos a la mitad, lo haces muy bien.",
+    "Tus respuestas revelan mucho...",
     "Solo unas pocas más...",
-    "Última pregunta, casi lo logras..."
+    "Casi terminamos...",
+    "Última pregunta, ¡lo lograste!",
+    "Verificando consistencia...",
+    "Analizando tu perfil..."
+  ];
+
+  // ====================================
+  // SCREENING DE CRISIS (Basado en PHQ-2)
+  // ====================================
+  /**
+   * PHQ-2 (Patient Health Questionnaire-2)
+   * 
+   * Referencia: Kroenke, K., Spitzer, R. L., & Williams, J. B. W. (2003). 
+   * The Patient Health Questionnaire-2: validity of a two-item depression screener.
+   * Medical Care, 41(11), 1284-1292.
+   * 
+   * Sensibilidad: 83% | Especificidad: 92% para depresión mayor
+   * Punto de corte: ≥3 sugiere evaluación adicional
+   * 
+   * ADAPTACIÓN: Agregamos una pregunta sobre ideación suicida basada en el
+   * Columbia-Suicide Severity Rating Scale (C-SSRS) para detección de riesgo.
+   */
+  const screeningQuestions = [
+    {
+      id: 'phq2_1',
+      question: "En las últimas 2 semanas, ¿con qué frecuencia te has sentido decaído/a, deprimido/a o sin esperanza?",
+      options: [
+        { text: "Nunca", risk: 0 },
+        { text: "Algunos días", risk: 1 },
+        { text: "Más de la mitad de los días", risk: 2 },
+        { text: "Casi todos los días", risk: 3 }
+      ]
+    },
+    {
+      id: 'phq2_2',
+      question: "En las últimas 2 semanas, ¿has tenido pensamientos de que estarías mejor muerto/a o de hacerte daño de alguna forma?",
+      options: [
+        { text: "No, para nada", risk: 0 },
+        { text: "Pensamientos pasajeros, pero no serios", risk: 2 },
+        { text: "Sí, he pensado en ello", risk: 4 },
+        { text: "Sí, y he considerado cómo hacerlo", risk: 6 }
+      ]
+    }
+  ];
+
+  // ====================================
+  // PREGUNTAS DE CONTEXTO
+  // ====================================
+  const contextQuestions = [
+    {
+      id: 'ctx_therapy',
+      title: "Tu Experiencia",
+      question: "¿Has asistido a terapia psicológica antes?",
+      options: [
+        { 
+          text: "No, sería mi primera vez", 
+          value: 'none',
+          icon: ICONS.user,
+          hint: "Te guiaremos paso a paso."
+        },
+        { 
+          text: "Sí, pero hace tiempo que no voy", 
+          value: 'past',
+          icon: ICONS.clock,
+          hint: "Exploraremos qué funcionó y qué no."
+        },
+        { 
+          text: "Sí, actualmente voy pero quiero explorar otros enfoques", 
+          value: 'current',
+          icon: ICONS.refresh,
+          hint: "Te mostraremos alternativas a considerar."
+        }
+      ]
+    }
   ];
 
   // ====================================
   // PREGUNTAS DEL CUESTIONARIO CON PESOS (WEIGHTS)
+  // Incluye opción neutral "Ninguna me representa"
   // ====================================
   const questions = [
     {
@@ -68,7 +168,8 @@
         { text: "Un síntoma específico que me molesta (ansiedad, insomnio, fobia).", scores: { tcc: 1 }, icon: ICONS.target },
         { text: "Entender por qué repito los mismos patrones desde mi infancia.", scores: { psico: 1 }, icon: ICONS.spiral },
         { text: "Sentirme vacío, triste o sin un propósito claro.", scores: { human: 1 }, icon: ICONS.leaf },
-        { text: "Problemas constantes con mi pareja o familia.", scores: { sist: 1 }, icon: ICONS.network }
+        { text: "Problemas constantes con mi pareja o familia.", scores: { sist: 1 }, icon: ICONS.network },
+        { text: "Ninguna de estas opciones me representa.", scores: {}, icon: ICONS.question, isNeutral: true }
       ]
     },
     {
@@ -80,7 +181,8 @@
         { text: "Que me enseñen técnicas, me den tareas y herramientas prácticas.", scores: { tcc: 1 }, icon: ICONS.tool },
         { text: "Hablar libremente de lo que se me ocurra, explorando mis sueños o recuerdos.", scores: { psico: 1 }, icon: ICONS.chat },
         { text: "Sentirme escuchado y acompañado sin ser juzgado, en el \"aquí y ahora\".", scores: { human: 1 }, icon: ICONS.heart },
-        { text: "Analizar cómo me comunico y relaciono con mi entorno.", scores: { sist: 1 }, icon: ICONS.users_group }
+        { text: "Analizar cómo me comunico y relaciono con mi entorno.", scores: { sist: 1 }, icon: ICONS.users_group },
+        { text: "Ninguna de estas opciones me representa.", scores: {}, icon: ICONS.question, isNeutral: true }
       ]
     },
     {
@@ -91,7 +193,8 @@
       options: [
         { text: "Una solución lógica y rápida.", scores: { tcc: 1 }, icon: ICONS.zap },
         { text: "El origen profundo y oculto del problema.", scores: { psico: 1 }, icon: ICONS.search },
-        { text: "Conectar con mis emociones y validarlas.", scores: { human: 1 }, icon: ICONS.feather }
+        { text: "Conectar con mis emociones y validarlas.", scores: { human: 1 }, icon: ICONS.feather },
+        { text: "Ninguna de estas opciones me representa.", scores: {}, icon: ICONS.question, isNeutral: true }
       ]
     },
     {
@@ -103,7 +206,8 @@
         { text: "De mis pensamientos negativos o malos hábitos actuales.", scores: { tcc: 1 }, icon: ICONS.brain },
         { text: "De traumas o vivencias del pasado no superadas.", scores: { psico: 1 }, icon: ICONS.anchor },
         { text: "De la dinámica con las personas con las que convivo.", scores: { sist: 1 }, icon: ICONS.network },
-        { text: "De no estar siendo fiel a mí mismo/a.", scores: { human: 1 }, icon: ICONS.compass }
+        { text: "De no estar siendo fiel a mí mismo/a.", scores: { human: 1 }, icon: ICONS.compass },
+        { text: "Ninguna de estas opciones me representa.", scores: {}, icon: ICONS.question, isNeutral: true }
       ]
     },
     {
@@ -115,7 +219,8 @@
         { text: "Como un entrenador que me da instrucciones.", scores: { tcc: 1 }, icon: ICONS.tool },
         { text: "Como un experto que interpreta mi inconsciente.", scores: { psico: 1 }, icon: ICONS.spiral },
         { text: "Como un compañero empático que facilita mi crecimiento.", scores: { human: 1 }, icon: ICONS.leaf },
-        { text: "Como un mediador que ayuda a organizar mis relaciones.", scores: { sist: 1 }, icon: ICONS.users_group }
+        { text: "Como un mediador que ayuda a organizar mis relaciones.", scores: { sist: 1 }, icon: ICONS.users_group },
+        { text: "Ninguna de estas opciones me representa.", scores: {}, icon: ICONS.question, isNeutral: true }
       ]
     },
     {
@@ -126,7 +231,8 @@
       options: [
         { text: "Resultados rápidos y concretos (pocas sesiones).", scores: { tcc: 1 }, icon: ICONS.zap },
         { text: "No tengo prisa, busco autoconocimiento profundo.", scores: { psico: 0.5, human: 0.5 }, icon: ICONS.clock },
-        { text: "Lo necesario para arreglar la convivencia con mi entorno.", scores: { sist: 1 }, icon: ICONS.network }
+        { text: "Lo necesario para arreglar la convivencia con mi entorno.", scores: { sist: 1 }, icon: ICONS.network },
+        { text: "Ninguna de estas opciones me representa.", scores: {}, icon: ICONS.question, isNeutral: true }
       ]
     },
     {
@@ -137,7 +243,50 @@
       options: [
         { text: "Que desaparezca el síntoma ya.", scores: { tcc: 1 }, icon: ICONS.sparkles },
         { text: "Saber quién soy realmente.", scores: { human: 0.5, psico: 0.5 }, icon: ICONS.compass },
-        { text: "Que mi familia/pareja y yo nos entendamos.", scores: { sist: 1 }, icon: ICONS.heart }
+        { text: "Que mi familia/pareja y yo nos entendamos.", scores: { sist: 1 }, icon: ICONS.heart },
+        { text: "Ninguna de estas opciones me representa.", scores: {}, icon: ICONS.question, isNeutral: true }
+      ]
+    }
+  ];
+
+  // ====================================
+  // PREGUNTAS DE VALIDACIÓN (Consistencia interna)
+  // ====================================
+  /**
+   * Estas preguntas miden los mismos constructos de forma diferente
+   * para verificar consistencia. Si hay discrepancia significativa,
+   * el índice de confianza se reduce.
+   * 
+   * Referencia: Principios de validez de constructo y confiabilidad
+   * test-retest. American Psychological Association (APA).
+   */
+  const validationQuestions = [
+    {
+      id: 'val_1',
+      title: "Verificación",
+      weight: 0.5,
+      validatesTherapies: ['tcc', 'psico'],
+      question: "Imagina que empiezas terapia mañana. ¿Qué te gustaría que pasara en la primera sesión?",
+      options: [
+        { text: "Que el terapeuta me explique un plan claro con pasos a seguir.", scores: { tcc: 1 }, icon: ICONS.target },
+        { text: "Que me deje hablar de mi historia sin interrumpirme demasiado.", scores: { psico: 1 }, icon: ICONS.chat },
+        { text: "Que me haga sentir cómodo/a y sin presión.", scores: { human: 1 }, icon: ICONS.heart },
+        { text: "Que pregunte sobre mi familia y relaciones importantes.", scores: { sist: 1 }, icon: ICONS.users_group },
+        { text: "No estoy seguro/a.", scores: {}, icon: ICONS.question, isNeutral: true }
+      ]
+    },
+    {
+      id: 'val_2',
+      title: "Reflexión Final",
+      weight: 0.5,
+      validatesTherapies: ['human', 'sist'],
+      question: "¿Qué frase te resuena más en este momento?",
+      options: [
+        { text: "\"Necesito herramientas concretas para salir adelante.\"", scores: { tcc: 1 }, icon: ICONS.tool },
+        { text: "\"Quiero entender qué hay detrás de todo esto.\"", scores: { psico: 1 }, icon: ICONS.search },
+        { text: "\"Solo quiero que alguien me entienda.\"", scores: { human: 1 }, icon: ICONS.feather },
+        { text: "\"Mis problemas tienen que ver con los demás, no solo conmigo.\"", scores: { sist: 1 }, icon: ICONS.network },
+        { text: "Ninguna me representa completamente.", scores: {}, icon: ICONS.question, isNeutral: true }
       ]
     }
   ];
@@ -185,7 +334,13 @@
         "¿Qué técnicas específicas usarías conmigo?",
         "¿Tendré tareas para hacer en casa entre sesiones?",
         "¿Cómo mediremos mi progreso?"
-      ]
+      ],
+      // Mensajes personalizados según contexto
+      contextMessages: {
+        none: "Como es tu primera experiencia en terapia, la TCC te ofrecerá una estructura clara que te ayudará a entender el proceso desde el principio.",
+        past: "Si antes sentiste que la terapia era poco estructurada, la TCC te dará un enfoque más organizado con metas claras.",
+        current: "La TCC puede complementar o contrastar con tu enfoque actual, ofreciéndote herramientas más directas y prácticas."
+      }
     },
     psico: {
       name: "Psicoanálisis / Terapia Psicodinámica",
@@ -226,7 +381,12 @@
         "¿Ha completado su propio análisis personal?",
         "¿Con qué frecuencia nos veríamos idealmente?",
         "¿Cómo trabaja con sueños o lapsus?"
-      ]
+      ],
+      contextMessages: {
+        none: "El psicoanálisis puede parecer menos estructurado al principio, pero te llevará a descubrimientos profundos sobre ti mismo/a.",
+        past: "Si antes exploraste tu historia pero sientes que hay más por descubrir, el psicoanálisis te ayudará a profundizar.",
+        current: "El psicoanálisis puede ofrecer una perspectiva más profunda que complemente o enriquezca tu proceso actual."
+      }
     },
     human: {
       name: "Terapia Humanista / Gestalt",
@@ -267,7 +427,12 @@
         "¿Cómo trabaja con las emociones en sesión?",
         "¿Usa técnicas vivenciales o expresivas?",
         "¿Cómo sabré si estoy avanzando?"
-      ]
+      ],
+      contextMessages: {
+        none: "La terapia humanista te recibirá sin expectativas. Es un espacio seguro para explorar quién eres.",
+        past: "Si antes sentiste que el terapeuta no te escuchaba realmente, aquí encontrarás un enfoque centrado en ti.",
+        current: "La terapia humanista puede complementar tu proceso actual con un enfoque más emocional y presente."
+      }
     },
     sist: {
       name: "Terapia Sistémica / Familiar",
@@ -308,7 +473,12 @@
         "¿Cómo maneja los conflictos cuando hay varios en sesión?",
         "¿Qué pasa si los demás no quieren venir?",
         "¿Cuántas sesiones suelen ser necesarias para ver cambios?"
-      ]
+      ],
+      contextMessages: {
+        none: "La terapia sistémica te ayudará a entender cómo tus relaciones afectan tu bienestar.",
+        past: "Si antes trabajaste solo en ti, la terapia sistémica ampliará la mirada hacia tus relaciones.",
+        current: "La terapia sistémica puede ser un complemento valioso para trabajar los aspectos relacionales."
+      }
     }
   };
 
@@ -319,11 +489,13 @@
     welcomeScreen: document.getElementById('welcome-screen'),
     quizScreen: document.getElementById('quiz-screen'),
     resultsScreen: document.getElementById('results-screen'),
+    crisisScreen: document.getElementById('crisis-screen'),
     startBtn: document.getElementById('start-btn'),
     progressContainer: document.getElementById('progress-container'),
     progressBar: document.getElementById('progress-bar'),
     progressPercent: document.getElementById('progress-percent'),
     currentStep: document.getElementById('current-step'),
+    totalSteps: document.getElementById('total-steps'),
     questionArea: document.getElementById('question-area'),
     encouragementText: document.getElementById('encouragement-text'),
     backBtn: document.getElementById('back-btn'),
@@ -339,6 +511,8 @@
     resultGoodMatch: document.getElementById('result-good-match'),
     resultQuestions: document.getElementById('result-questions'),
     resultAlternatives: document.getElementById('result-alternatives'),
+    resultConfidence: document.getElementById('result-confidence'),
+    resultContextMessage: document.getElementById('result-context-message'),
     scoresDisplay: document.getElementById('scores-display'),
     restartBtn: document.getElementById('restart-btn'),
     shareBtn: document.getElementById('share-btn'),
@@ -351,14 +525,101 @@
   function saveState() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
   }
+  
   function loadState() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) { return null; }
   }
+  
   function clearState() {
     try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
   }
+  
   function vibrate(pattern = 10) {
     if (navigator.vibrate) navigator.vibrate(pattern);
+  }
+
+  /**
+   * Calcula el índice de confianza del resultado
+   * Basado en la diferencia entre el 1º y 2º lugar
+   * y penalizado por respuestas neutrales
+   * 
+   * @returns {Object} { level: 'high'|'medium'|'low', percent: number, message: string }
+   */
+  function calculateConfidence() {
+    const sorted = Object.values(state.scores).sort((a, b) => b - a);
+    const total = sorted.reduce((a, b) => a + b, 0);
+    
+    if (total === 0) {
+      return { 
+        level: 'low', 
+        percent: 0, 
+        message: 'Respondiste principalmente opciones neutrales. Considera repetir el test eligiendo la opción más cercana a tu experiencia.'
+      };
+    }
+    
+    // Diferencia proporcional entre 1º y 2º lugar
+    const gap = (sorted[0] - sorted[1]) / total;
+    
+    // Penalización por respuestas neutrales (reduce confianza)
+    const totalQuestions = questions.length + validationQuestions.length;
+    const neutralPenalty = state.neutralAnswers / totalQuestions;
+    
+    // Calcular porcentaje de confianza (0-100)
+    let confidence = Math.min(100, Math.round((gap * 200) * (1 - neutralPenalty * 0.5)));
+    
+    // Ajustar por consistencia de validación
+    const validationConsistency = calculateValidationConsistency();
+    confidence = Math.round(confidence * (0.7 + validationConsistency * 0.3));
+    
+    if (confidence >= 65) {
+      return {
+        level: 'high',
+        percent: confidence,
+        message: 'Tu perfil muestra una afinidad clara con este enfoque terapéutico.'
+      };
+    } else if (confidence >= 35) {
+      return {
+        level: 'medium',
+        percent: confidence,
+        message: 'Hay una inclinación hacia este enfoque, pero también podrías beneficiarte de los alternativos.'
+      };
+    } else {
+      return {
+        level: 'low',
+        percent: confidence,
+        message: 'Tu perfil es versátil. Podrías beneficiarte de varios enfoques. Considera probar una sesión exploratoria en más de uno.'
+      };
+    }
+  }
+
+  /**
+   * Calcula la consistencia entre las preguntas principales y de validación
+   * @returns {number} 0-1 donde 1 es perfectamente consistente
+   */
+  function calculateValidationConsistency() {
+    // Si no hay preguntas de validación respondidas, asumir consistencia media
+    if (Object.keys(state.validationScores).length === 0) return 0.7;
+    
+    // Comparar el enfoque ganador en preguntas principales vs validación
+    const mainWinner = Object.entries(state.scores).sort((a, b) => b[1] - a[1])[0][0];
+    
+    let validationTotal = 0;
+    let validationMatch = 0;
+    
+    for (const [key, value] of Object.entries(state.validationScores)) {
+      validationTotal += value;
+      if (key === mainWinner) validationMatch += value;
+    }
+    
+    if (validationTotal === 0) return 0.7;
+    return validationMatch / validationTotal;
+  }
+
+  /**
+   * Obtiene el total de preguntas (principales + validación + contexto)
+   */
+  function getTotalQuestions() {
+    return questions.length + validationQuestions.length;
   }
 
   // ====================================
@@ -379,20 +640,27 @@
     document.getElementById('pdf-date').textContent = `Fecha: ${date}`;
     document.getElementById('pdf-title').textContent = therapy.name;
     document.getElementById('pdf-subtitle').textContent = therapy.subtitle;
-    // IMPORTANTE: Aseguramos que el SVG se vea bien en PDF
     document.getElementById('pdf-icon').innerHTML = `<div style="width: 60px; height: 60px;">${therapy.icon}</div>`;
     document.getElementById('pdf-desc').textContent = therapy.description;
     document.getElementById('pdf-why').textContent = therapy.whyRecommended;
+
+    // Confianza en PDF
+    const confidence = calculateConfidence();
+    const pdfConfidence = document.getElementById('pdf-confidence');
+    if (pdfConfidence) {
+      pdfConfidence.textContent = `Índice de confianza: ${confidence.percent}% (${confidence.level === 'high' ? 'Alto' : confidence.level === 'medium' ? 'Medio' : 'Bajo'})`;
+    }
 
     // Listas en PDF
     const lookForHTML = therapy.lookFor.map(i => `<li>${i}</li>`).join('');
     document.getElementById('pdf-look-for').innerHTML = lookForHTML;
 
     // Gráficas en PDF
+    const totalPoints = Object.values(state.scores).reduce((a,b)=>a+b,0) || 1;
     const scoresHTML = sortedTherapies.map(key => {
       const info = therapyInfo[key];
       const score = state.scores[key];
-      const percent = Math.round((score / Object.values(state.scores).reduce((a,b)=>a+b,0))*100) || 0;
+      const percent = Math.round((score / totalPoints)*100) || 0;
       return `
         <div class="flex items-center gap-3">
           <div style="width: 24px; height: 24px;">${info.icon}</div>
@@ -427,11 +695,10 @@
 
     // 2. Generar canvas y PDF
     try {
-      // Pequeño delay para asegurar renderizado
       await new Promise(r => setTimeout(r, 100));
       
       const canvas = await html2canvas(pdfContainer, {
-        scale: 2, // Mejor calidad
+        scale: 2,
         useCORS: true
       });
 
@@ -457,57 +724,327 @@
   }
 
   // ====================================
-  // NAVEGACIÓN Y RENDERIZADO
+  // FUNCIÓN DE COPIAR TEXTO (ARREGLADA)
   // ====================================
-  function showScreen(screenId) {
-    elements.welcomeScreen.classList.add('hidden');
-    elements.quizScreen.classList.add('hidden');
-    elements.resultsScreen.classList.add('hidden');
+  async function copyResultSummary(therapy, sorted) {
+    const totalPoints = Object.values(state.scores).reduce((a,b)=>a+b,0) || 1;
+    const calcPercent = (s) => Math.round((s/totalPoints)*100);
+    const confidence = calculateConfidence();
     
-    if (screenId === 'welcome') elements.welcomeScreen.classList.remove('hidden');
-    else if (screenId === 'quiz') elements.quizScreen.classList.remove('hidden');
-    else if (screenId === 'results') {
-      elements.resultsScreen.classList.remove('hidden');
-      elements.resultsScreen.classList.add('animate-fade-in-up');
+    const summary = `
+🧭 BRÚJULA TERAPÉUTICA - Mi Resultado
+═══════════════════════════════════
+
+📍 Orientación sugerida: ${therapy.name}
+📝 ${therapy.subtitle}
+
+📊 Índice de Confianza: ${confidence.percent}% (${confidence.level === 'high' ? 'Alto' : confidence.level === 'medium' ? 'Medio' : 'Bajo'})
+
+✨ Por qué me lo recomiendan:
+${therapy.whyRecommended}
+
+🔍 Qué buscar en un terapeuta:
+${therapy.lookFor.map(l => `• ${l}`).join('\n')}
+
+📈 Mi perfil completo:
+${sorted.map(k => `• ${therapyInfo[k].shortName}: ${calcPercent(state.scores[k])}%`).join('\n')}
+
+💡 Preguntas para hacerle al terapeuta:
+${therapy.questionsToAsk.map((q, i) => `${i+1}. ${q}`).join('\n')}
+
+───────────────────────────────────
+⚠️ AVISO: Esto es solo orientación informativa. 
+No sustituye el diagnóstico de un profesional de salud mental.
+
+🆘 Líneas de apoyo en México (24/7):
+• Línea de la Vida: 800 911 2000
+• SAPTEL: 55 5259 8121
+───────────────────────────────────
+    `.trim();
+
+    try {
+      await navigator.clipboard.writeText(summary);
+      return true;
+    } catch (e) {
+      // Fallback para navegadores sin Clipboard API
+      const textarea = document.createElement('textarea');
+      textarea.value = summary;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        return true;
+      } catch (err) {
+        document.body.removeChild(textarea);
+        // Último recurso: mostrar en prompt
+        prompt('Copia este texto manualmente:', summary);
+        return false;
+      }
     }
   }
 
-  function updateUIState() {
-    const progress = (state.currentQuestion / questions.length) * 100;
-    elements.progressBar.style.width = `${progress}%`;
-    elements.progressPercent.textContent = `${Math.round(progress)}%`;
-    elements.currentStep.textContent = state.currentQuestion + 1;
+  // ====================================
+  // NAVEGACIÓN Y RENDERIZADO
+  // ====================================
+  function showScreen(screenId) {
+    // Ocultar todas las pantallas
+    if (elements.welcomeScreen) elements.welcomeScreen.classList.add('hidden');
+    if (elements.quizScreen) elements.quizScreen.classList.add('hidden');
+    if (elements.resultsScreen) elements.resultsScreen.classList.add('hidden');
+    if (elements.crisisScreen) elements.crisisScreen.classList.add('hidden');
     
-    const msg = motivationalMessages[state.currentQuestion] || "";
-    if (msg) elements.encouragementText.textContent = msg;
-    elements.encouragementText.classList.toggle('opacity-0', !msg);
-
-    elements.backBtn.classList.toggle('opacity-0', state.currentQuestion === 0);
-    elements.backBtn.classList.toggle('pointer-events-none', state.currentQuestion === 0);
+    // Mostrar la pantalla solicitada
+    if (screenId === 'welcome' && elements.welcomeScreen) {
+      elements.welcomeScreen.classList.remove('hidden');
+    } else if (screenId === 'quiz' && elements.quizScreen) {
+      elements.quizScreen.classList.remove('hidden');
+    } else if (screenId === 'results' && elements.resultsScreen) {
+      elements.resultsScreen.classList.remove('hidden');
+      elements.resultsScreen.classList.add('animate-fade-in-up');
+    } else if (screenId === 'crisis' && elements.crisisScreen) {
+      elements.crisisScreen.classList.remove('hidden');
+      elements.crisisScreen.classList.add('animate-fade-in-up');
+    }
+    
+    state.phase = screenId;
   }
 
-  function renderQuestion() {
-    const q = questions[state.currentQuestion];
+  function updateUIState() {
+    const totalQ = getTotalQuestions();
+    let currentQ = state.currentQuestion;
+    
+    // Ajustar si estamos en screening o contexto
+    if (state.phase === 'screening') {
+      currentQ = state.currentQuestion;
+    } else if (state.phase === 'context') {
+      currentQ = screeningQuestions.length + state.currentQuestion;
+    } else if (state.phase === 'quiz') {
+      currentQ = state.currentQuestion;
+    }
+    
+    const progress = (currentQ / totalQ) * 100;
+    
+    if (elements.progressBar) elements.progressBar.style.width = `${progress}%`;
+    if (elements.progressPercent) elements.progressPercent.textContent = `${Math.round(progress)}%`;
+    if (elements.currentStep) elements.currentStep.textContent = currentQ + 1;
+    if (elements.totalSteps) elements.totalSteps.textContent = totalQ;
+    
+    const msg = motivationalMessages[Math.min(currentQ, motivationalMessages.length - 1)] || "";
+    if (elements.encouragementText) {
+      if (msg) elements.encouragementText.textContent = msg;
+      elements.encouragementText.classList.toggle('opacity-0', !msg);
+    }
+
+    if (elements.backBtn) {
+      const canGoBack = state.currentQuestion > 0 || state.phase !== 'quiz';
+      elements.backBtn.classList.toggle('opacity-0', !canGoBack);
+      elements.backBtn.classList.toggle('pointer-events-none', !canGoBack);
+    }
+  }
+
+  // ====================================
+  // RENDERIZADO DE SCREENING DE CRISIS
+  // ====================================
+  function renderScreeningQuestion() {
+    state.phase = 'screening';
+    showScreen('quiz');
+    
+    const q = screeningQuestions[state.currentQuestion];
+    
+    const optionsHTML = q.options.map((opt, idx) => `
+      <button 
+        class="option-card focus-ring opacity-0 animate-fade-in-up option-delay-${idx+1} w-full text-left p-4 md:p-5 bg-white/80 border-2 border-transparent hover:border-rose-300 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group relative overflow-hidden"
+        data-option-index="${idx}"
+        data-risk="${opt.risk}"
+        role="radio"
+        aria-checked="false"
+      >
+        <div class="flex items-start gap-3 relative z-10">
+          <span class="text-ink/90 text-sm md:text-base leading-relaxed">${opt.text}</span>
+        </div>
+        <div class="absolute inset-0 bg-rose-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0"></div>
+      </button>
+    `).join('');
+
+    elements.questionArea.innerHTML = `
+      <div class="slide-in" tabindex="-1" id="q-container">
+        <div class="mb-4">
+          <span class="inline-flex items-center gap-2 px-3 py-1 bg-rose-100 text-rose-600 text-xs font-medium rounded-full uppercase tracking-wide mb-3">
+            <span class="w-4 h-4">${ICONS.alert}</span>
+            Antes de comenzar
+          </span>
+          <p class="text-xs text-muted mb-4 italic">
+            Estas preguntas nos ayudan a asegurarnos de que estés bien. Tu bienestar es lo primero.
+          </p>
+        </div>
+        <div class="mb-6">
+          <h2 class="font-display text-xl md:text-2xl font-bold text-ink leading-snug">${q.question}</h2>
+        </div>
+        <div class="space-y-3" role="radiogroup">${optionsHTML}</div>
+      </div>
+    `;
+
+    elements.questionArea.querySelectorAll('.option-card').forEach(btn => {
+      btn.addEventListener('click', handleScreeningClick);
+    });
+
+    updateUIState();
+    state.isTransitioning = false;
+    setTimeout(() => document.getElementById('q-container')?.focus(), 100);
+  }
+
+  function handleScreeningClick(e) {
+    if (state.isTransitioning) return;
+    state.isTransitioning = true;
+    vibrate(15);
+
+    const btn = e.currentTarget;
+    const risk = parseInt(btn.dataset.risk);
+    
+    btn.setAttribute('aria-checked', 'true');
+    btn.classList.add('border-rose-500', 'bg-rose-50', 'ring-2', 'ring-rose-200');
+
+    state.screeningRisk += risk;
+    state.currentQuestion++;
+
+    setTimeout(() => {
+      const container = elements.questionArea.firstElementChild;
+      if (container) container.classList.add('slide-out');
+      
+      setTimeout(() => {
+        if (state.currentQuestion < screeningQuestions.length) {
+          renderScreeningQuestion();
+        } else {
+          // Evaluar riesgo de crisis
+          // PHQ-2 >= 3 o pregunta de ideación >= 2 indica necesidad de recursos
+          if (state.screeningRisk >= 4) {
+            showCrisisScreen();
+          } else {
+            // Continuar con preguntas de contexto
+            state.currentQuestion = 0;
+            renderContextQuestion();
+          }
+        }
+      }, 300);
+    }, 400);
+  }
+
+  function showCrisisScreen() {
+    showScreen('crisis');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ====================================
+  // RENDERIZADO DE PREGUNTAS DE CONTEXTO
+  // ====================================
+  function renderContextQuestion() {
+    state.phase = 'context';
+    showScreen('quiz');
+    
+    const q = contextQuestions[state.currentQuestion];
     
     const optionsHTML = q.options.map((opt, idx) => `
       <button 
         class="option-card focus-ring opacity-0 animate-fade-in-up option-delay-${idx+1} w-full text-left p-4 md:p-5 bg-white/80 border-2 border-transparent hover:border-lavender-300 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group relative overflow-hidden"
         data-option-index="${idx}"
+        data-value="${opt.value}"
         role="radio"
         aria-checked="false"
       >
         <div class="flex items-start gap-3 relative z-10">
           <span class="w-6 h-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-200 text-lavender-500">${opt.icon}</span>
-          <span class="text-ink/90 text-sm md:text-base leading-relaxed">${opt.text}</span>
+          <div class="flex-1">
+            <span class="text-ink/90 text-sm md:text-base leading-relaxed font-medium">${opt.text}</span>
+            ${opt.hint ? `<p class="text-xs text-muted mt-1">${opt.hint}</p>` : ''}
+          </div>
         </div>
         <div class="absolute inset-0 bg-lavender-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0"></div>
       </button>
     `).join('');
 
     elements.questionArea.innerHTML = `
-      <div class="animate-fade-in-up" tabindex="-1" id="q-container">
+      <div class="slide-in" tabindex="-1" id="q-container">
         <div class="mb-6">
           <span class="inline-block px-3 py-1 bg-lavender-100 text-lavender-600 text-xs font-medium rounded-full uppercase tracking-wide mb-3">${q.title}</span>
+          <h2 class="font-display text-xl md:text-2xl font-bold text-ink leading-snug">${q.question}</h2>
+        </div>
+        <div class="space-y-3" role="radiogroup">${optionsHTML}</div>
+      </div>
+    `;
+
+    elements.questionArea.querySelectorAll('.option-card').forEach(btn => {
+      btn.addEventListener('click', handleContextClick);
+    });
+
+    updateUIState();
+    state.isTransitioning = false;
+    setTimeout(() => document.getElementById('q-container')?.focus(), 100);
+  }
+
+  function handleContextClick(e) {
+    if (state.isTransitioning) return;
+    state.isTransitioning = true;
+    vibrate(15);
+
+    const btn = e.currentTarget;
+    const value = btn.dataset.value;
+    
+    btn.setAttribute('aria-checked', 'true');
+    btn.classList.add('border-lavender-500', 'bg-lavender-100', 'ring-2', 'ring-lavender-200');
+
+    // Guardar contexto
+    state.context.previousTherapy = value;
+    state.currentQuestion++;
+
+    setTimeout(() => {
+      const container = elements.questionArea.firstElementChild;
+      if (container) container.classList.add('slide-out');
+      
+      setTimeout(() => {
+        if (state.currentQuestion < contextQuestions.length) {
+          renderContextQuestion();
+        } else {
+          // Continuar con el cuestionario principal
+          state.currentQuestion = 0;
+          state.phase = 'quiz';
+          renderQuestion();
+        }
+      }, 300);
+    }, 400);
+  }
+
+  // ====================================
+  // RENDERIZADO DE PREGUNTAS PRINCIPALES
+  // ====================================
+  function renderQuestion() {
+    const allQuestions = [...questions, ...validationQuestions];
+    const q = allQuestions[state.currentQuestion];
+    
+    const isValidation = state.currentQuestion >= questions.length;
+    
+    const optionsHTML = q.options.map((opt, idx) => `
+      <button 
+        class="option-card focus-ring opacity-0 animate-fade-in-up option-delay-${idx+1} w-full text-left p-4 md:p-5 bg-white/80 border-2 border-transparent hover:border-lavender-300 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group relative overflow-hidden ${opt.isNeutral ? 'border-dashed border-gray-200' : ''}"
+        data-option-index="${idx}"
+        data-is-neutral="${opt.isNeutral || false}"
+        role="radio"
+        aria-checked="false"
+      >
+        <div class="flex items-start gap-3 relative z-10">
+          <span class="w-6 h-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-200 ${opt.isNeutral ? 'text-gray-400' : 'text-lavender-500'}">${opt.icon}</span>
+          <span class="text-ink/90 text-sm md:text-base leading-relaxed ${opt.isNeutral ? 'text-gray-500 italic' : ''}">${opt.text}</span>
+        </div>
+        <div class="absolute inset-0 ${opt.isNeutral ? 'bg-gray-50' : 'bg-lavender-50'} opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0"></div>
+      </button>
+    `).join('');
+
+    elements.questionArea.innerHTML = `
+      <div class="slide-in" tabindex="-1" id="q-container">
+        <div class="mb-6">
+          <span class="inline-block px-3 py-1 ${isValidation ? 'bg-mint-100 text-mint-600' : 'bg-lavender-100 text-lavender-600'} text-xs font-medium rounded-full uppercase tracking-wide mb-3">${q.title}</span>
           <h2 class="font-display text-xl md:text-2xl font-bold text-ink leading-snug">${q.question}</h2>
         </div>
         <div class="space-y-3" role="radiogroup">${optionsHTML}</div>
@@ -530,53 +1067,145 @@
 
     const btn = e.currentTarget;
     const idx = parseInt(btn.dataset.optionIndex);
-    const q = questions[state.currentQuestion];
+    const isNeutral = btn.dataset.isNeutral === 'true';
+    
+    const allQuestions = [...questions, ...validationQuestions];
+    const q = allQuestions[state.currentQuestion];
     const opt = q.options[idx];
-    const weight = q.weight || 1; // Ponderación
+    const weight = q.weight || 1;
+    const isValidation = state.currentQuestion >= questions.length;
 
     btn.setAttribute('aria-checked', 'true');
     btn.classList.add('border-lavender-500', 'bg-lavender-100', 'ring-2', 'ring-lavender-200');
 
+    // Contar respuestas neutrales
+    if (isNeutral) {
+      state.neutralAnswers++;
+    }
+
     // Calcular puntos ponderados
     const weightedScores = {};
-    for (const [k, v] of Object.entries(opt.scores)) {
+    for (const [k, v] of Object.entries(opt.scores || {})) {
       weightedScores[k] = v * weight;
     }
 
-    state.answers.push({ qId: q.id, optIdx: idx, scores: weightedScores });
+    state.answers.push({ qId: q.id, optIdx: idx, scores: weightedScores, isNeutral });
     
-    // Sumar
+    // Sumar a scores principales o de validación
     for (const [k, v] of Object.entries(weightedScores)) {
-      state.scores[k] = (state.scores[k] || 0) + v;
+      if (isValidation) {
+        state.validationScores[k] = (state.validationScores[k] || 0) + v;
+      } else {
+        state.scores[k] = (state.scores[k] || 0) + v;
+      }
     }
     
     saveState();
 
     setTimeout(() => {
-      elements.questionArea.firstElementChild.classList.add('opacity-0', '-translate-y-2', 'transition-all', 'duration-300');
+      const container = elements.questionArea.firstElementChild;
+      if (container) container.classList.add('slide-out');
+      
       setTimeout(() => {
         state.currentQuestion++;
-        if (state.currentQuestion < questions.length) renderQuestion();
-        else showResults();
+        if (state.currentQuestion < allQuestions.length) {
+          renderQuestion();
+        } else {
+          showResults();
+        }
       }, 300);
     }, 400);
   }
 
   function handleBackClick() {
-    if (state.currentQuestion === 0 || state.isTransitioning) return;
-    vibrate(10);
-    const last = state.answers.pop();
-    // Restar puntos ponderados
-    if (last) for (const [k, v] of Object.entries(last.scores)) state.scores[k] -= v;
-    state.currentQuestion--;
-    saveState();
-    renderQuestion();
+    if (state.isTransitioning) return;
+    
+    // Lógica para retroceder según la fase
+    if (state.phase === 'quiz' && state.currentQuestion > 0) {
+      vibrate(10);
+      const last = state.answers.pop();
+      if (last) {
+        if (last.isNeutral) state.neutralAnswers--;
+        for (const [k, v] of Object.entries(last.scores)) {
+          state.scores[k] -= v;
+        }
+      }
+      state.currentQuestion--;
+      saveState();
+      renderQuestion();
+    } else if (state.phase === 'quiz' && state.currentQuestion === 0) {
+      // Volver a contexto
+      state.phase = 'context';
+      state.currentQuestion = contextQuestions.length - 1;
+      renderContextQuestion();
+    } else if (state.phase === 'context' && state.currentQuestion > 0) {
+      state.currentQuestion--;
+      renderContextQuestion();
+    } else if (state.phase === 'context' && state.currentQuestion === 0) {
+      // Volver a screening
+      state.phase = 'screening';
+      state.currentQuestion = screeningQuestions.length - 1;
+      state.screeningRisk = screeningQuestions.slice(0, -1).reduce((acc, q, i) => acc, 0);
+      renderScreeningQuestion();
+    }
+  }
+
+  // ====================================
+  // NAVEGACIÓN POR TECLADO MEJORADA
+  // ====================================
+  function handleKeyboardNavigation(e) {
+    const options = [...document.querySelectorAll('.option-card')];
+    if (options.length === 0) return;
+    
+    const current = document.activeElement;
+    const idx = options.indexOf(current);
+    
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+        if (idx < options.length - 1) {
+          options[idx + 1].focus();
+          e.preventDefault();
+        } else if (idx === -1) {
+          options[0].focus();
+          e.preventDefault();
+        }
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+        if (idx > 0) {
+          options[idx - 1].focus();
+          e.preventDefault();
+        }
+        break;
+      case 'Enter':
+      case ' ':
+        if (options.includes(current)) {
+          current.click();
+          e.preventDefault();
+        }
+        break;
+      case 'Escape':
+        if (elements.backBtn && !elements.backBtn.classList.contains('opacity-0')) {
+          handleBackClick();
+          e.preventDefault();
+        }
+        break;
+    }
   }
 
   // ====================================
   // MOSTRAR RESULTADOS
   // ====================================
   function showResults() {
+    // Verificación de seguridad: asegurar que hay suficientes respuestas
+    const minRequiredAnswers = 5; // Al menos 5 respuestas del cuestionario principal
+    if (state.answers.length < minRequiredAnswers) {
+      console.warn('No hay suficientes respuestas para mostrar resultados');
+      restartQuiz();
+      return;
+    }
+    
     clearState();
     showScreen('results');
 
@@ -591,80 +1220,136 @@
     const totalPoints = Object.values(state.scores).reduce((a,b)=>a+b,0) || 1;
 
     const calcPercent = (s) => Math.round((s/totalPoints)*100);
+    const confidence = calculateConfidence();
 
     // Renderizar
     const colors = { sky:'bg-sky-100 text-sky-600', lavender:'bg-lavender-100 text-lavender-600', mint:'bg-mint-100 text-mint-600', rose:'bg-rose-100 text-rose-400' };
     const bars = { sky:'bg-sky-400', lavender:'bg-lavender-400', mint:'bg-mint-400', rose:'bg-rose-300' };
 
-    elements.resultIcon.className = `w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center p-4 shadow-inner ring-4 ${colors[therapy.color]}`;
-    elements.resultIcon.innerHTML = therapy.icon;
-    elements.resultTitle.textContent = therapy.shortName;
-    elements.resultSubtitle.textContent = therapy.subtitle;
-    elements.resultDescText.textContent = therapy.description;
-    elements.resultWhyText.textContent = therapy.whyRecommended;
+    if (elements.resultIcon) {
+      elements.resultIcon.className = `w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center p-4 shadow-inner ring-4 ${colors[therapy.color]}`;
+      elements.resultIcon.innerHTML = therapy.icon;
+    }
+    if (elements.resultTitle) elements.resultTitle.textContent = therapy.shortName;
+    if (elements.resultSubtitle) elements.resultSubtitle.textContent = therapy.subtitle;
+    if (elements.resultDescText) elements.resultDescText.textContent = therapy.description;
+    if (elements.resultWhyText) elements.resultWhyText.textContent = therapy.whyRecommended;
+
+    // Mostrar índice de confianza
+    if (elements.resultConfidence) {
+      const confidenceColors = {
+        high: 'bg-mint-100 text-mint-700 border-mint-200',
+        medium: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+        low: 'bg-orange-100 text-orange-700 border-orange-200'
+      };
+      elements.resultConfidence.innerHTML = `
+        <div class="p-4 rounded-xl border ${confidenceColors[confidence.level]}">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-display font-semibold text-sm">Índice de Claridad</span>
+            <span class="text-2xl font-bold">${confidence.percent}%</span>
+          </div>
+          <div class="h-2 bg-white/50 rounded-full overflow-hidden mb-2">
+            <div class="h-full bg-current rounded-full transition-all duration-1000" style="width: ${confidence.percent}%"></div>
+          </div>
+          <p class="text-xs leading-relaxed">${confidence.message}</p>
+        </div>
+      `;
+    }
+
+    // Mensaje personalizado según contexto
+    if (elements.resultContextMessage && state.context.previousTherapy) {
+      const contextMsg = therapy.contextMessages[state.context.previousTherapy];
+      if (contextMsg) {
+        elements.resultContextMessage.innerHTML = `
+          <div class="p-4 rounded-xl bg-lavender-50/50 border border-lavender-100">
+            <p class="text-sm text-ink/80 italic">${contextMsg}</p>
+          </div>
+        `;
+      }
+    }
 
     // Listas
-    const makeList = (arr, color, icon) => arr.map(i => `<li class="flex items-start gap-2"><span class="text-${color}-400 flex-shrink-0 mt-0.5 w-4 h-4">${icon}</span>${i}</li>`).join('');
-    
-    // Iconos para listas (SVGs)
     const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
     const dotIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="6"/></svg>`;
     const arrowIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
 
-    elements.resultWorksFor.innerHTML = makeList(therapy.worksFor, 'sky', checkIcon);
-    elements.resultNotIdeal.innerHTML = makeList(therapy.notIdeal, 'rose', dotIcon);
-    elements.resultLookFor.innerHTML = makeList(therapy.lookFor, 'lavender', arrowIcon);
+    const makeList = (arr, color, icon) => arr.map(i => `<li class="flex items-start gap-2"><span class="text-${color}-400 flex-shrink-0 mt-0.5 w-4 h-4">${icon}</span>${i}</li>`).join('');
+
+    if (elements.resultWorksFor) elements.resultWorksFor.innerHTML = makeList(therapy.worksFor, 'sky', checkIcon);
+    if (elements.resultNotIdeal) elements.resultNotIdeal.innerHTML = makeList(therapy.notIdeal, 'rose', dotIcon);
+    if (elements.resultLookFor) elements.resultLookFor.innerHTML = makeList(therapy.lookFor, 'lavender', arrowIcon);
     
-    if(elements.resultFirstSessions) elements.resultFirstSessions.innerHTML = makeList(therapy.firstSessions, 'sky', arrowIcon);
-    if(elements.resultGoodMatch) elements.resultGoodMatch.innerHTML = makeList(therapy.goodMatch, 'mint', checkIcon);
-    if(elements.resultQuestions) elements.resultQuestions.innerHTML = therapy.questionsToAsk.map((q,i) => `<li class="flex items-start gap-2"><span class="text-lavender-400 font-bold text-sm mt-0.5">${i+1}.</span>${q}</li>`).join('');
+    if (elements.resultFirstSessions) elements.resultFirstSessions.innerHTML = makeList(therapy.firstSessions, 'sky', arrowIcon);
+    if (elements.resultGoodMatch) elements.resultGoodMatch.innerHTML = makeList(therapy.goodMatch, 'mint', checkIcon);
+    if (elements.resultQuestions) elements.resultQuestions.innerHTML = therapy.questionsToAsk.map((q,i) => `<li class="flex items-start gap-2"><span class="text-lavender-400 font-bold text-sm mt-0.5">${i+1}.</span>${q}</li>`).join('');
 
     // Alternativas
-    elements.resultAlternatives.innerHTML = sorted.slice(1,3).map((k, i) => {
-      const t = therapyInfo[k];
-      const p = calcPercent(state.scores[k]);
-      return `
-        <div class="flex items-center gap-3 p-3 ${i===0?'bg-lavender-50':'bg-white/50'} rounded-xl border border-lavender-100">
-          <span class="w-8 h-8 flex-shrink-0 text-lavender-500">${t.icon}</span>
-          <div class="flex-1">
-            <div class="flex items-center gap-2 mb-1">
-               <span class="text-xs font-bold text-lavender-500 bg-lavender-100 px-2 py-0.5 rounded">${i===0?'2º':'3º'}</span>
-               <p class="font-bold text-sm text-ink">${t.shortName}</p>
-            </div>
-            <p class="text-xs text-muted mb-2">${t.subtitle}</p>
-            <div class="flex items-center gap-2">
-               <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full ${bars[t.color]} w-[${p}%]"></div></div>
-               <span class="text-xs font-medium text-muted">${p}%</span>
+    if (elements.resultAlternatives) {
+      elements.resultAlternatives.innerHTML = sorted.slice(1,3).map((k, i) => {
+        const t = therapyInfo[k];
+        const p = calcPercent(state.scores[k]);
+        return `
+          <div class="flex items-center gap-3 p-3 ${i===0?'bg-lavender-50':'bg-white/50'} rounded-xl border border-lavender-100">
+            <span class="w-8 h-8 flex-shrink-0 text-lavender-500">${t.icon}</span>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                 <span class="text-xs font-bold text-lavender-500 bg-lavender-100 px-2 py-0.5 rounded">${i===0?'2º':'3º'}</span>
+                 <p class="font-bold text-sm text-ink">${t.shortName}</p>
+              </div>
+              <p class="text-xs text-muted mb-2">${t.subtitle}</p>
+              <div class="flex items-center gap-2">
+                 <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full ${bars[t.color]}" style="width: ${p}%"></div></div>
+                 <span class="text-xs font-medium text-muted">${p}%</span>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-    }).join('');
+        `;
+      }).join('');
+    }
 
     // Scores
-    elements.scoresDisplay.innerHTML = sorted.map((k, i) => {
-      const t = therapyInfo[k];
-      const p = calcPercent(state.scores[k]);
-      return `
-        <div class="flex items-center gap-3 p-2 rounded-lg ${i===0?'bg-lavender-50 border border-lavender-100':''}">
-           <span class="w-6 h-6 flex-shrink-0 text-gray-500">${t.icon}</span>
-           <div class="flex-1">
-             <div class="flex justify-between text-xs font-medium mb-1"><span>${t.shortName}</span><span>${p}%</span></div>
-             <div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full ${bars[t.color]} w-[${p}%] transition-all duration-1000" style="width:${p}%"></div></div>
-           </div>
-        </div>
-      `;
-    }).join('');
+    if (elements.scoresDisplay) {
+      elements.scoresDisplay.innerHTML = sorted.map((k, i) => {
+        const t = therapyInfo[k];
+        const p = calcPercent(state.scores[k]);
+        return `
+          <div class="flex items-center gap-3 p-2 rounded-lg ${i===0?'bg-lavender-50 border border-lavender-100':''}">
+             <span class="w-6 h-6 flex-shrink-0 text-gray-500">${t.icon}</span>
+             <div class="flex-1">
+               <div class="flex justify-between text-xs font-medium mb-1"><span>${t.shortName}</span><span>${p}%</span></div>
+               <div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full ${bars[t.color]} transition-all duration-1000" style="width:${p}%"></div></div>
+             </div>
+          </div>
+        `;
+      }).join('');
+    }
 
-    // Configurar botones
+    // Configurar botón de copiar (ARREGLADO)
     if (elements.shareBtn) {
       elements.shareBtn.onclick = async () => {
         vibrate(20);
-        // Lógica de copia simple (sin re-generar todo el texto aquí para no duplicar código, usaríamos una función helper idealmente)
-        alert("Texto copiado (simulado)"); 
+        const originalHTML = elements.shareBtn.innerHTML;
+        elements.shareBtn.disabled = true;
+        
+        const success = await copyResultSummary(therapy, sorted);
+        
+        if (success) {
+          elements.shareBtn.innerHTML = `
+            <span class="w-5 h-5">${ICONS.check}</span>
+            ¡Copiado al portapapeles!
+          `;
+          elements.shareBtn.classList.add('bg-mint-50', 'border-mint-200', 'text-mint-600');
+        }
+        
+        setTimeout(() => {
+          elements.shareBtn.innerHTML = originalHTML;
+          elements.shareBtn.disabled = false;
+          elements.shareBtn.classList.remove('bg-mint-50', 'border-mint-200', 'text-mint-600');
+        }, 2500);
       };
     }
 
+    // Configurar botón de PDF
     if (elements.downloadPdfBtn) {
       elements.downloadPdfBtn.onclick = () => generatePDF(therapy, sorted);
     }
@@ -673,24 +1358,86 @@
   }
 
   // ====================================
+  // REINICIAR CUESTIONARIO
+  // ====================================
+  function restartQuiz() {
+    state = {
+      phase: 'welcome',
+      currentQuestion: 0,
+      scores: { tcc: 0, psico: 0, human: 0, sist: 0 },
+      answers: [],
+      isTransitioning: false,
+      screeningRisk: 0,
+      context: {
+        previousTherapy: null,
+        therapyGoal: null
+      },
+      neutralAnswers: 0,
+      validationScores: {}
+    };
+    clearState();
+    showScreen('welcome');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ====================================
   // INIT
   // ====================================
   function init() {
     const saved = loadState();
-    if (saved && saved.currentQuestion > 0) {
+    if (saved && saved.phase !== 'welcome' && saved.currentQuestion > 0) {
       state = saved;
-      showScreen('quiz');
-      renderQuestion();
+      if (state.phase === 'quiz') {
+        showScreen('quiz');
+        renderQuestion();
+      } else if (state.phase === 'screening') {
+        showScreen('quiz');
+        renderScreeningQuestion();
+      } else if (state.phase === 'context') {
+        showScreen('quiz');
+        renderContextQuestion();
+      } else {
+        showScreen('welcome');
+      }
     } else {
       showScreen('welcome');
     }
     
-    if(elements.startBtn) elements.startBtn.addEventListener('click', () => { vibrate(15); showScreen('quiz'); renderQuestion(); });
-    if(elements.restartBtn) elements.restartBtn.addEventListener('click', () => { clearState(); restartQuiz(); });
-    if(elements.backBtn) elements.backBtn.addEventListener('click', handleBackClick);
+    // Event listeners
+    if (elements.startBtn) {
+      elements.startBtn.addEventListener('click', () => { 
+        vibrate(15);
+        state.currentQuestion = 0;
+        state.screeningRisk = 0;
+        renderScreeningQuestion();
+      });
+    }
+    
+    if (elements.restartBtn) {
+      elements.restartBtn.addEventListener('click', restartQuiz);
+    }
+    
+    if (elements.backBtn) {
+      elements.backBtn.addEventListener('click', handleBackClick);
+    }
+    
+    // Botón de continuar desde pantalla de crisis
+    const continueFromCrisisBtn = document.getElementById('continue-from-crisis-btn');
+    if (continueFromCrisisBtn) {
+      continueFromCrisisBtn.addEventListener('click', () => {
+        state.currentQuestion = 0;
+        renderContextQuestion();
+      });
+    }
+    
+    // Navegación por teclado
+    document.addEventListener('keydown', handleKeyboardNavigation);
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();

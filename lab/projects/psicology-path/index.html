@@ -6,14 +6,14 @@
   <title>Therapy Compass — Descubre qué tipo de terapia resonará contigo</title>
   
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Test gratuito de 7 preguntas para descubrir qué tipo de terapia psicológica (TCC, Psicoanálisis, Humanista, Sistémica) puede funcionar mejor para ti. 100% privado, sin registro.">
+  <meta name="description" content="Test gratuito de orientación terapéutica para descubrir qué tipo de terapia psicológica (TCC, Psicoanálisis, Humanista, Sistémica) puede funcionar mejor para ti. 100% privado, sin registro.">
   <meta name="keywords" content="test psicológico, tipo de terapia, orientación psicológica, TCC, psicoanálisis, terapia humanista, terapia sistémica, salud mental">
   <meta name="author" content="Brújula Terapéutica">
   <meta name="robots" content="index, follow">
   
   <!-- Open Graph (para compartir en redes) -->
   <meta property="og:title" content="Brújula Terapéutica — ¿Qué tipo de terapia es para ti?">
-  <meta property="og:description" content="Responde 7 preguntas y descubre qué enfoque terapéutico podría resonar mejor contigo. Gratis, privado, sin registro.">
+  <meta property="og:description" content="Responde unas preguntas y descubre qué enfoque terapéutico podría resonar mejor contigo. Gratis, privado, sin registro.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_MX">
   
@@ -57,6 +57,8 @@
               300: '#86efb1',
               400: '#4ade85',
               500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
             },
             sky: {
               50: '#f0f9ff',
@@ -72,6 +74,8 @@
               200: '#fecdd3',
               300: '#fda4af',
               400: '#fb7185',
+              500: '#f43f5e',
+              600: '#e11d48',
             },
             cream: '#FEFDFB',
             ink: '#2D3142',
@@ -99,11 +103,25 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
+    @keyframes slideOutLeft {
+      from { opacity: 1; transform: translateX(0); }
+      to { opacity: 0; transform: translateX(-30px); }
+    }
+    
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
     .animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
+    .slide-out { animation: slideOutLeft 0.3s ease-in forwards; }
+    .slide-in { animation: slideInRight 0.35s ease-out forwards; }
     
     /* Respetar preferencias de movimiento reducido */
     @media (prefers-reduced-motion: reduce) {
       .animate-fade-in-up,
+      .slide-out,
+      .slide-in,
       .option-card,
       .compass-icon,
       * {
@@ -116,6 +134,7 @@
     .option-delay-2 { animation-delay: 0.1s; }
     .option-delay-3 { animation-delay: 0.15s; }
     .option-delay-4 { animation-delay: 0.2s; }
+    .option-delay-5 { animation-delay: 0.25s; }
     
     .progress-fill { transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
     
@@ -149,6 +168,13 @@
     details summary { cursor: pointer; list-style: none; }
     details summary::-webkit-details-marker { display: none; }
     details[open] .faq-arrow { transform: rotate(180deg); }
+    
+    /* Animación de pulso para crisis */
+    @keyframes crisis-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+      50% { box-shadow: 0 0 0 15px rgba(244, 63, 94, 0); }
+    }
+    .crisis-pulse { animation: crisis-pulse 2s ease-in-out infinite; }
   </style>
 </head>
 
@@ -181,7 +207,7 @@
       <!-- Intro -->
       <div class="text-center mb-8">
         <p class="text-muted text-base md:text-lg max-w-md mx-auto leading-relaxed mb-4">
-          Descubre qué tipo de terapia podría resonar mejor contigo con solo <strong>7 preguntas</strong>.
+          Descubre qué tipo de terapia podría resonar mejor contigo con un cuestionario personalizado.
         </p>
         <p class="text-xs text-muted/70 italic">
           🔒 100% privado. Todo corre en tu navegador. No guardamos ni enviamos datos.
@@ -197,22 +223,22 @@
           <li class="flex gap-3">
             <span class="flex-shrink-0 w-7 h-7 rounded-full bg-lavender-100 text-lavender-600 font-bold text-sm flex items-center justify-center">1</span>
             <div>
-              <p class="font-medium text-ink">Responde 7 preguntas</p>
-              <p class="text-sm text-muted">Sin respuestas correctas ni incorrectas. Solo lo que sientes.</p>
+              <p class="font-medium text-ink">Verificación de bienestar</p>
+              <p class="text-sm text-muted">Primero nos aseguramos de que estés en un buen momento para hacer el test.</p>
             </div>
           </li>
           <li class="flex gap-3">
             <span class="flex-shrink-0 w-7 h-7 rounded-full bg-lavender-100 text-lavender-600 font-bold text-sm flex items-center justify-center">2</span>
             <div>
-              <p class="font-medium text-ink">Recibe tu orientación</p>
-              <p class="text-sm text-muted">Descubrirás cuál de 4 enfoques terapéuticos podría funcionarte mejor.</p>
+              <p class="font-medium text-ink">Responde las preguntas</p>
+              <p class="text-sm text-muted">Sin respuestas correctas ni incorrectas. Solo lo que sientes.</p>
             </div>
           </li>
           <li class="flex gap-3">
             <span class="flex-shrink-0 w-7 h-7 rounded-full bg-lavender-100 text-lavender-600 font-bold text-sm flex items-center justify-center">3</span>
             <div>
-              <p class="font-medium text-ink">Lleva tu resumen al terapeuta</p>
-              <p class="text-sm text-muted">Podrás copiar un resumen para compartir en tu primera sesión.</p>
+              <p class="font-medium text-ink">Recibe orientación personalizada</p>
+              <p class="text-sm text-muted">Descubrirás cuál de 4 enfoques terapéuticos podría funcionarte, con un índice de confianza.</p>
             </div>
           </li>
         </ol>
@@ -283,17 +309,17 @@
             <span class="faq-arrow text-lavender-400 transition-transform">▼</span>
           </summary>
           <p class="text-sm text-muted pt-2 leading-relaxed">
-            Menos de <strong>3 minutos</strong>. Son solo 7 preguntas sin límite de tiempo.
+            Aproximadamente <strong>3-5 minutos</strong>. Incluye preguntas de bienestar, contexto y orientación sin límite de tiempo.
           </p>
         </details>
         
         <details class="border-b border-lavender-100 pb-3 mb-3">
           <summary class="flex justify-between items-center py-2 font-medium text-ink text-sm">
-            ¿Y si me sale un enfoque que no conozco?
+            ¿Qué es el índice de confianza?
             <span class="faq-arrow text-lavender-400 transition-transform">▼</span>
           </summary>
           <p class="text-sm text-muted pt-2 leading-relaxed">
-            Al final recibirás una explicación detallada del enfoque sugerido, qué buscar en un terapeuta de ese tipo, y alternativas cercanas a tu perfil.
+            Es una medida de qué tan clara es tu afinidad con un enfoque. Un índice alto significa que tus respuestas apuntan consistentemente a un tipo de terapia. Un índice bajo indica que podrías beneficiarte de varios enfoques.
           </p>
         </details>
         
@@ -340,6 +366,84 @@
     </section>
 
     <!-- ========================================
+         PANTALLA DE CRISIS
+         ======================================== -->
+    <section id="crisis-screen" class="hidden flex-1 flex flex-col" aria-label="Recursos de apoyo">
+      
+      <div class="flex-1 flex flex-col items-center justify-center text-center px-4">
+        
+        <!-- Icono de alerta con animación -->
+        <div class="w-24 h-24 mb-6 rounded-full bg-rose-100 flex items-center justify-center crisis-pulse">
+          <svg class="w-12 h-12 text-rose-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+          </svg>
+        </div>
+        
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-ink mb-4">
+          Tu bienestar es lo primero
+        </h2>
+        
+        <p class="text-muted text-base md:text-lg max-w-md mx-auto leading-relaxed mb-6">
+          Notamos que podrías estar pasando por un momento difícil. Antes de continuar, queremos asegurarnos de que tengas acceso a apoyo profesional inmediato.
+        </p>
+        
+        <!-- Recursos de crisis destacados -->
+        <div class="w-full max-w-md bg-white rounded-2xl border-2 border-rose-200 p-6 mb-6 shadow-lg">
+          <h3 class="font-display font-bold text-rose-600 text-lg mb-4 flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Líneas de Apoyo 24/7 (México)
+          </h3>
+          
+          <div class="space-y-4">
+            <a href="tel:8009112000" class="block p-4 bg-rose-50 hover:bg-rose-100 rounded-xl transition-colors group">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-bold text-ink group-hover:text-rose-600">Línea de la Vida</p>
+                  <p class="text-sm text-muted">Apoyo en crisis, gratuito, confidencial</p>
+                </div>
+                <span class="text-rose-500 font-bold text-lg">800 911 2000</span>
+              </div>
+            </a>
+            
+            <a href="tel:5552598121" class="block p-4 bg-rose-50 hover:bg-rose-100 rounded-xl transition-colors group">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-bold text-ink group-hover:text-rose-600">SAPTEL</p>
+                  <p class="text-sm text-muted">Atención emocional telefónica</p>
+                </div>
+                <span class="text-rose-500 font-bold text-lg">55 5259 8121</span>
+              </div>
+            </a>
+            
+            <a href="tel:911" class="block p-4 bg-red-100 hover:bg-red-200 rounded-xl transition-colors group border border-red-200">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-bold text-red-700">Emergencias</p>
+                  <p class="text-sm text-red-600">Si estás en peligro inmediato</p>
+                </div>
+                <span class="text-red-600 font-bold text-2xl">911</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <p class="text-sm text-muted mb-6 max-w-md">
+          <strong>No tienes que pasar por esto solo/a.</strong> Hablar con alguien puede ayudar. Si prefieres, puedes continuar con el test, pero te recomendamos contactar a un profesional.
+        </p>
+        
+        <!-- Botón para continuar -->
+        <button 
+          id="continue-from-crisis-btn"
+          class="focus-ring py-3 px-8 bg-white border-2 border-lavender-200 text-lavender-600 font-display font-semibold rounded-xl hover:bg-lavender-50 transition-all duration-200"
+        >
+          Entiendo, deseo continuar con el test
+        </button>
+        
+      </div>
+      
+    </section>
+
+    <!-- ========================================
          PANTALLA 2: BARRA DE PROGRESO + QUIZ
          ======================================== -->
     <section id="quiz-screen" class="hidden flex-1 flex flex-col" aria-label="Cuestionario">
@@ -358,7 +462,7 @@
           
           <div class="flex flex-col items-end">
             <span class="text-xs font-medium text-muted uppercase tracking-wide">
-              Pregunta <span id="current-step" aria-live="polite">1</span> de 7
+              Pregunta <span id="current-step" aria-live="polite">1</span> de <span id="total-steps">9</span>
             </span>
             <span id="progress-percent" class="text-xs font-medium text-lavender-600" aria-live="polite">0%</span>
           </div>
@@ -375,6 +479,13 @@
       <main id="question-area" class="flex-1" role="main">
         <!-- Renderizado por JavaScript -->
       </main>
+      
+      <!-- Indicador de navegación por teclado -->
+      <div class="mt-6 text-center">
+        <p class="text-xs text-muted/60">
+          💡 Tip: Usa las flechas ↑↓ para navegar y Enter para seleccionar
+        </p>
+      </div>
 
     </section>
 
@@ -389,6 +500,16 @@
         <div id="result-icon" class="w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center text-4xl"></div>
         <h2 id="result-title" class="font-display text-2xl md:text-3xl font-bold text-center text-ink mb-2"></h2>
         <p id="result-subtitle" class="text-center text-lavender-600 font-medium text-sm uppercase tracking-wide mb-6"></p>
+        
+        <!-- NUEVO: Índice de Confianza -->
+        <div id="result-confidence" class="mb-6">
+          <!-- Renderizado por JavaScript -->
+        </div>
+        
+        <!-- NUEVO: Mensaje contextual personalizado -->
+        <div id="result-context-message" class="mb-5">
+          <!-- Renderizado por JavaScript -->
+        </div>
         
         <!-- ¿En qué consiste? -->
         <div class="bg-white/60 rounded-xl p-5 mb-5 border border-lavender-100">
@@ -473,7 +594,7 @@
         
         <!-- Botones de Acción -->
         <div class="space-y-3">
-          <!-- Botón Descargar PDF (Nuevo) -->
+          <!-- Botón Descargar PDF -->
           <button 
             id="download-pdf-btn"
             class="focus-ring w-full py-3 px-6 bg-gradient-to-r from-mint-500 to-mint-600 text-white font-display font-semibold rounded-xl hover:from-mint-600 hover:to-mint-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group"
@@ -570,7 +691,7 @@
       </div>
       <div class="text-right">
         <p class="text-sm font-medium text-ink" id="pdf-date">Fecha: --/--/----</p>
-        <p class="text-xs text-muted">ID: Privado</p>
+        <p class="text-xs text-muted" id="pdf-confidence">Índice de confianza: --%</p>
       </div>
     </div>
 
@@ -600,7 +721,7 @@
       </div>
 
       <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm">
-        <h4 class="font-display font-bold text-ink mb-4 text-center">Perfil de Afinididad</h4>
+        <h4 class="font-display font-bold text-ink mb-4 text-center">Perfil de Afinidad</h4>
         <div id="pdf-scores" class="space-y-4">
           <!-- Barras renderizadas dinámicamente -->
         </div>
