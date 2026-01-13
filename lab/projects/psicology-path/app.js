@@ -12,6 +12,27 @@
   // ====================================
   const STORAGE_KEY = 'brujula_terapeutica_state_v3';
   
+  // Iconos SVG (Lucide style) - Clean & Professional
+  const ICONS = {
+    target: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+    spiral: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`, 
+    leaf: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.5 2 9 0 5.5-4.5 10-10 9Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`,
+    network: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="13.51"/><line x1="10.5" y1="7.6" x2="7" y2="16.4"/><line x1="13.5" y1="7.6" x2="17" y2="16.4"/></svg>`,
+    brain: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>`,
+    chat: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+    heart: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`,
+    users_group: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    sparkles: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`,
+    tool: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+    search: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+    puzzle: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.439 15.4a2 2 0 0 1-3.078-1.732h-3.324a2 2 0 0 1-3.237-1.42 2 2 0 0 1-1.127.348H5.534A2.002 2.002 0 0 1 3.535 11V6.5a2 2 0 0 1 2-2h4.5a2 2 0 0 1 .536-1.464 2 2 0 1 1 2.828 2.828A2 2 0 0 1 12 7.5h3.5a2.002 2.002 0 0 1 2 2v2.137a2.002 2.002 0 0 1 1.939 2.13 2.002 2.002 0 0 1 0 1.633z"/></svg>`,
+    zap: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+    clock: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    anchor: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>`,
+    compass: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+    feather: `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>`
+  };
+
   // ====================================
   // ESTADO DE LA APLICACIÓN
   // ====================================
@@ -41,82 +62,82 @@
     {
       id: 1,
       title: "El Foco",
-      weight: 3.0, // ALTO IMPACTO: Motivo de consulta
+      weight: 3.0, 
       question: "Si tuvieras que describir lo que más te urge resolver hoy, dirías que es...",
       options: [
-        { text: "Un síntoma específico que me molesta (ansiedad, insomnio, fobia).", scores: { tcc: 1 }, icon: "🎯" },
-        { text: "Entender por qué repito los mismos patrones desde mi infancia.", scores: { psico: 1 }, icon: "🔄" },
-        { text: "Sentirme vacío, triste o sin un propósito claro.", scores: { human: 1 }, icon: "🌫️" },
-        { text: "Problemas constantes con mi pareja o familia.", scores: { sist: 1 }, icon: "👥" }
+        { text: "Un síntoma específico que me molesta (ansiedad, insomnio, fobia).", scores: { tcc: 1 }, icon: ICONS.target },
+        { text: "Entender por qué repito los mismos patrones desde mi infancia.", scores: { psico: 1 }, icon: ICONS.spiral },
+        { text: "Sentirme vacío, triste o sin un propósito claro.", scores: { human: 1 }, icon: ICONS.leaf },
+        { text: "Problemas constantes con mi pareja o familia.", scores: { sist: 1 }, icon: ICONS.network }
       ]
     },
     {
       id: 2,
       title: "La Estructura",
-      weight: 1.5, // MEDIO IMPACTO: Preferencia de formato
+      weight: 1.5,
       question: "¿Cómo te gustaría que fuera tu sesión ideal?",
       options: [
-        { text: "Que me enseñen técnicas, me den tareas y herramientas prácticas.", scores: { tcc: 1 }, icon: "🛠️" },
-        { text: "Hablar libremente de lo que se me ocurra, explorando mis sueños o recuerdos.", scores: { psico: 1 }, icon: "💭" },
-        { text: "Sentirme escuchado y acompañado sin ser juzgado, en el \"aquí y ahora\".", scores: { human: 1 }, icon: "🤝" },
-        { text: "Analizar cómo me comunico y relaciono con mi entorno.", scores: { sist: 1 }, icon: "🗣️" }
+        { text: "Que me enseñen técnicas, me den tareas y herramientas prácticas.", scores: { tcc: 1 }, icon: ICONS.tool },
+        { text: "Hablar libremente de lo que se me ocurra, explorando mis sueños o recuerdos.", scores: { psico: 1 }, icon: ICONS.chat },
+        { text: "Sentirme escuchado y acompañado sin ser juzgado, en el \"aquí y ahora\".", scores: { human: 1 }, icon: ICONS.heart },
+        { text: "Analizar cómo me comunico y relaciono con mi entorno.", scores: { sist: 1 }, icon: ICONS.users_group }
       ]
     },
     {
       id: 3,
       title: "Estilo de Pensamiento",
-      weight: 2.0, // ALTO IMPACTO: Procesamiento cognitivo
+      weight: 2.0,
       question: "Ante un problema, ¿qué buscas instintivamente?",
       options: [
-        { text: "Una solución lógica y rápida.", scores: { tcc: 1 }, icon: "⚡" },
-        { text: "El origen profundo y oculto del problema.", scores: { psico: 1 }, icon: "🔍" },
-        { text: "Conectar con mis emociones y validarlas.", scores: { human: 1 }, icon: "💚" }
+        { text: "Una solución lógica y rápida.", scores: { tcc: 1 }, icon: ICONS.zap },
+        { text: "El origen profundo y oculto del problema.", scores: { psico: 1 }, icon: ICONS.search },
+        { text: "Conectar con mis emociones y validarlas.", scores: { human: 1 }, icon: ICONS.feather }
       ]
     },
     {
       id: 4,
       title: "La Causa",
-      weight: 2.0, // ALTO IMPACTO: Atribución causal
+      weight: 2.0,
       question: "¿De dónde crees que vienen tus dificultades?",
       options: [
-        { text: "De mis pensamientos negativos o malos hábitos actuales.", scores: { tcc: 1 }, icon: "🧠" },
-        { text: "De traumas o vivencias del pasado no superadas.", scores: { psico: 1 }, icon: "📜" },
-        { text: "De la dinámica con las personas con las que convivo.", scores: { sist: 1 }, icon: "🔗" },
-        { text: "De no estar siendo fiel a mí mismo/a.", scores: { human: 1 }, icon: "🪞" }
+        { text: "De mis pensamientos negativos o malos hábitos actuales.", scores: { tcc: 1 }, icon: ICONS.brain },
+        { text: "De traumas o vivencias del pasado no superadas.", scores: { psico: 1 }, icon: ICONS.anchor },
+        { text: "De la dinámica con las personas con las que convivo.", scores: { sist: 1 }, icon: ICONS.network },
+        { text: "De no estar siendo fiel a mí mismo/a.", scores: { human: 1 }, icon: ICONS.compass }
       ]
     },
     {
       id: 5,
       title: "El Rol del Terapeuta",
-      weight: 1.5, // MEDIO IMPACTO: Transferencia inicial
+      weight: 1.5,
       question: "¿Cómo ves al psicólogo ideal?",
       options: [
-        { text: "Como un entrenador que me da instrucciones.", scores: { tcc: 1 }, icon: "🏃" },
-        { text: "Como un experto que interpreta mi inconsciente.", scores: { psico: 1 }, icon: "🎭" },
-        { text: "Como un compañero empático que facilita mi crecimiento.", scores: { human: 1 }, icon: "🌱" },
-        { text: "Como un mediador que ayuda a organizar mis relaciones.", scores: { sist: 1 }, icon: "⚖️" }
+        { text: "Como un entrenador que me da instrucciones.", scores: { tcc: 1 }, icon: ICONS.tool },
+        { text: "Como un experto que interpreta mi inconsciente.", scores: { psico: 1 }, icon: ICONS.spiral },
+        { text: "Como un compañero empático que facilita mi crecimiento.", scores: { human: 1 }, icon: ICONS.leaf },
+        { text: "Como un mediador que ayuda a organizar mis relaciones.", scores: { sist: 1 }, icon: ICONS.users_group }
       ]
     },
     {
       id: 6,
       title: "Duración",
-      weight: 1.0, // BAJO IMPACTO: Logística
+      weight: 1.0,
       question: "¿Qué esperas en cuanto a tiempo?",
       options: [
-        { text: "Resultados rápidos y concretos (pocas sesiones).", scores: { tcc: 1 }, icon: "🚀" },
-        { text: "No tengo prisa, busco autoconocimiento profundo.", scores: { psico: 0.5, human: 0.5 }, icon: "🌊" },
-        { text: "Lo necesario para arreglar la convivencia con mi entorno.", scores: { sist: 1 }, icon: "🏠" }
+        { text: "Resultados rápidos y concretos (pocas sesiones).", scores: { tcc: 1 }, icon: ICONS.zap },
+        { text: "No tengo prisa, busco autoconocimiento profundo.", scores: { psico: 0.5, human: 0.5 }, icon: ICONS.clock },
+        { text: "Lo necesario para arreglar la convivencia con mi entorno.", scores: { sist: 1 }, icon: ICONS.network }
       ]
     },
     {
       id: 7,
       title: "La Varita Mágica",
-      weight: 1.0, // BAJO IMPACTO: Fantasía de curación
+      weight: 1.0,
       question: "Si pudieras pedir un deseo sobre tu salud mental...",
       options: [
-        { text: "Que desaparezca el síntoma ya.", scores: { tcc: 1 }, icon: "✨" },
-        { text: "Saber quién soy realmente.", scores: { human: 0.5, psico: 0.5 }, icon: "🔮" },
-        { text: "Que mi familia/pareja y yo nos entendamos.", scores: { sist: 1 }, icon: "💫" }
+        { text: "Que desaparezca el síntoma ya.", scores: { tcc: 1 }, icon: ICONS.sparkles },
+        { text: "Saber quién soy realmente.", scores: { human: 0.5, psico: 0.5 }, icon: ICONS.compass },
+        { text: "Que mi familia/pareja y yo nos entendamos.", scores: { sist: 1 }, icon: ICONS.heart }
       ]
     }
   ];
@@ -129,7 +150,7 @@
       name: "Terapia Cognitivo-Conductual (TCC)",
       shortName: "Cognitivo-Conductual",
       subtitle: "Enfocada en soluciones prácticas",
-      icon: "🎯",
+      icon: ICONS.target,
       color: "sky",
       description: "La TCC es una terapia estructurada y orientada a metas que se centra en identificar y modificar patrones de pensamiento negativos y comportamientos disfuncionales. Es como tener un \"manual de instrucciones\" para tu mente: aprenderás técnicas concretas, harás ejercicios prácticos y verás resultados medibles en tiempos relativamente cortos.",
       whyRecommended: "Tus respuestas muestran que valoras la eficiencia, buscas soluciones prácticas y quieres abordar síntomas específicos. Te gusta tener herramientas claras y ver progreso tangible. La TCC te dará exactamente eso: estrategias basadas en evidencia para manejar lo que te aflige.",
@@ -170,7 +191,7 @@
       name: "Psicoanálisis / Terapia Psicodinámica",
       shortName: "Psicoanálisis",
       subtitle: "Explorando las profundidades",
-      icon: "🔍",
+      icon: ICONS.spiral,
       color: "lavender",
       description: "El psicoanálisis te invita a un viaje hacia tu mundo interior. A través de la palabra libre, la exploración de sueños, recuerdos y patrones inconscientes, irás descubriendo las raíces profundas de tu malestar. Es un proceso de autoconocimiento que va más allá del síntoma, buscando transformaciones duraderas en tu forma de relacionarte contigo y con el mundo.",
       whyRecommended: "Tus respuestas revelan una mente curiosa que quiere entender el \"por qué\" detrás de todo. Sientes que tu historia pasada tiene peso en tu presente y estás dispuesto/a a explorar territorios profundos. El psicoanálisis te acompañará en ese viaje de descubrimiento personal.",
@@ -211,7 +232,7 @@
       name: "Terapia Humanista / Gestalt",
       shortName: "Humanista-Gestalt",
       subtitle: "El aquí y ahora",
-      icon: "🌱",
+      icon: ICONS.leaf,
       color: "mint",
       description: "La terapia humanista pone el foco en tu experiencia presente, tus emociones y tu potencial de crecimiento. Aquí no se trata de \"arreglarte\", sino de acompañarte a reconectar con tu autenticidad. El terapeuta será un espejo empático que te ayudará a integrar todas las partes de ti mismo/a, sin juicio, en un espacio seguro donde puedas simplemente ser.",
       whyRecommended: "Tus respuestas muestran que buscas conexión emocional, autenticidad y un espacio donde sentirte verdaderamente escuchado/a. Valoras el proceso sobre los resultados rápidos y quieres encontrar tu propio camino. La terapia humanista honrará exactamente eso.",
@@ -252,7 +273,7 @@
       name: "Terapia Sistémica / Familiar",
       shortName: "Sistémica",
       subtitle: "Sanando en conexión",
-      icon: "🔗",
+      icon: ICONS.network,
       color: "rose",
       description: "La terapia sistémica entiende que no somos islas: nuestro bienestar está entrelazado con nuestras relaciones. Ya sea en pareja, familia o cualquier sistema de relaciones importantes, este enfoque ayuda a identificar patrones de comunicación disfuncionales, roles rígidos y dinámicas que perpetúan el conflicto. El cambio en uno transforma a todos.",
       whyRecommended: "Tus respuestas indican que muchas de tus dificultades están conectadas con tus relaciones cercanas. Sientes que resolver \"lo tuyo\" implica también trabajar en \"lo de ustedes\". La terapia sistémica te ayudará a ver el panorama completo y a mejorar la manera en que te conectas con quienes te importan.",
@@ -358,7 +379,8 @@
     document.getElementById('pdf-date').textContent = `Fecha: ${date}`;
     document.getElementById('pdf-title').textContent = therapy.name;
     document.getElementById('pdf-subtitle').textContent = therapy.subtitle;
-    document.getElementById('pdf-icon').textContent = therapy.icon;
+    // IMPORTANTE: Aseguramos que el SVG se vea bien en PDF
+    document.getElementById('pdf-icon').innerHTML = `<div style="width: 60px; height: 60px;">${therapy.icon}</div>`;
     document.getElementById('pdf-desc').textContent = therapy.description;
     document.getElementById('pdf-why').textContent = therapy.whyRecommended;
 
@@ -373,7 +395,7 @@
       const percent = Math.round((score / Object.values(state.scores).reduce((a,b)=>a+b,0))*100) || 0;
       return `
         <div class="flex items-center gap-3">
-          <span class="text-xl w-8">${info.icon}</span>
+          <div style="width: 24px; height: 24px;">${info.icon}</div>
           <div class="flex-1">
             <div class="flex justify-between text-xs font-bold mb-1">
               <span>${info.shortName}</span>
@@ -394,7 +416,8 @@
       return `
         <div class="bg-gray-50 p-4 rounded-lg">
           <h5 class="font-bold text-ink text-sm flex items-center gap-2">
-            ${alt.icon} ${alt.shortName}
+            <div style="width: 16px; height: 16px; display: inline-block; vertical-align: middle;">${alt.icon}</div>
+            ${alt.shortName}
           </h5>
           <p class="text-xs text-muted mt-1">${alt.subtitle}</p>
         </div>
@@ -474,7 +497,7 @@
         aria-checked="false"
       >
         <div class="flex items-start gap-3 relative z-10">
-          <span class="text-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-200">${opt.icon}</span>
+          <span class="w-6 h-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-200 text-lavender-500">${opt.icon}</span>
           <span class="text-ink/90 text-sm md:text-base leading-relaxed">${opt.text}</span>
         </div>
         <div class="absolute inset-0 bg-lavender-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0"></div>
@@ -573,23 +596,28 @@
     const colors = { sky:'bg-sky-100 text-sky-600', lavender:'bg-lavender-100 text-lavender-600', mint:'bg-mint-100 text-mint-600', rose:'bg-rose-100 text-rose-400' };
     const bars = { sky:'bg-sky-400', lavender:'bg-lavender-400', mint:'bg-mint-400', rose:'bg-rose-300' };
 
-    elements.resultIcon.className = `w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center text-4xl shadow-inner ring-4 ${colors[therapy.color]}`;
-    elements.resultIcon.textContent = therapy.icon;
+    elements.resultIcon.className = `w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center p-4 shadow-inner ring-4 ${colors[therapy.color]}`;
+    elements.resultIcon.innerHTML = therapy.icon;
     elements.resultTitle.textContent = therapy.shortName;
     elements.resultSubtitle.textContent = therapy.subtitle;
     elements.resultDescText.textContent = therapy.description;
     elements.resultWhyText.textContent = therapy.whyRecommended;
 
     // Listas
-    const makeList = (arr, color, icon) => arr.map(i => `<li class="flex items-start gap-2"><span class="text-${color}-400 flex-shrink-0">${icon}</span>${i}</li>`).join('');
+    const makeList = (arr, color, icon) => arr.map(i => `<li class="flex items-start gap-2"><span class="text-${color}-400 flex-shrink-0 mt-0.5 w-4 h-4">${icon}</span>${i}</li>`).join('');
     
-    elements.resultWorksFor.innerHTML = makeList(therapy.worksFor, 'sky', '•');
-    elements.resultNotIdeal.innerHTML = makeList(therapy.notIdeal, 'rose', '•');
-    elements.resultLookFor.innerHTML = makeList(therapy.lookFor, 'lavender', '→');
+    // Iconos para listas (SVGs)
+    const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const dotIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="6"/></svg>`;
+    const arrowIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+
+    elements.resultWorksFor.innerHTML = makeList(therapy.worksFor, 'sky', checkIcon);
+    elements.resultNotIdeal.innerHTML = makeList(therapy.notIdeal, 'rose', dotIcon);
+    elements.resultLookFor.innerHTML = makeList(therapy.lookFor, 'lavender', arrowIcon);
     
-    if(elements.resultFirstSessions) elements.resultFirstSessions.innerHTML = makeList(therapy.firstSessions, 'sky', '→');
-    if(elements.resultGoodMatch) elements.resultGoodMatch.innerHTML = makeList(therapy.goodMatch, 'mint', '✓');
-    if(elements.resultQuestions) elements.resultQuestions.innerHTML = therapy.questionsToAsk.map((q,i) => `<li class="flex items-start gap-2"><span class="text-lavender-400 font-bold">${i+1}.</span>${q}</li>`).join('');
+    if(elements.resultFirstSessions) elements.resultFirstSessions.innerHTML = makeList(therapy.firstSessions, 'sky', arrowIcon);
+    if(elements.resultGoodMatch) elements.resultGoodMatch.innerHTML = makeList(therapy.goodMatch, 'mint', checkIcon);
+    if(elements.resultQuestions) elements.resultQuestions.innerHTML = therapy.questionsToAsk.map((q,i) => `<li class="flex items-start gap-2"><span class="text-lavender-400 font-bold text-sm mt-0.5">${i+1}.</span>${q}</li>`).join('');
 
     // Alternativas
     elements.resultAlternatives.innerHTML = sorted.slice(1,3).map((k, i) => {
@@ -597,7 +625,7 @@
       const p = calcPercent(state.scores[k]);
       return `
         <div class="flex items-center gap-3 p-3 ${i===0?'bg-lavender-50':'bg-white/50'} rounded-xl border border-lavender-100">
-          <span class="text-2xl">${t.icon}</span>
+          <span class="w-8 h-8 flex-shrink-0 text-lavender-500">${t.icon}</span>
           <div class="flex-1">
             <div class="flex items-center gap-2 mb-1">
                <span class="text-xs font-bold text-lavender-500 bg-lavender-100 px-2 py-0.5 rounded">${i===0?'2º':'3º'}</span>
@@ -619,7 +647,7 @@
       const p = calcPercent(state.scores[k]);
       return `
         <div class="flex items-center gap-3 p-2 rounded-lg ${i===0?'bg-lavender-50 border border-lavender-100':''}">
-           <span class="text-lg">${t.icon}</span>
+           <span class="w-6 h-6 flex-shrink-0 text-gray-500">${t.icon}</span>
            <div class="flex-1">
              <div class="flex justify-between text-xs font-medium mb-1"><span>${t.shortName}</span><span>${p}%</span></div>
              <div class="h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full ${bars[t.color]} w-[${p}%] transition-all duration-1000" style="width:${p}%"></div></div>
