@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- iOS: pantalla completa cuando se agrega al home screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#fbfaf7" />
   <title>Para ti</title>
   <!-- Tipografías: manuscrita + sans elegante + serif -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -266,20 +270,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 28px;
+      margin-top: 24px;
+      padding: 20px 0;
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(16px) scale(0.95);
+      transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .heart-section.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
-    /* El SVG del corazón que se traza */
+    /* El SVG del corazón que se traza — más grande */
     .heart-svg {
-      width: 80px;
-      height: 72px;
+      width: 110px;
+      height: 100px;
       overflow: visible;
     }
     .heart-svg .heart-path {
@@ -308,10 +313,10 @@
     /* Texto dentro/debajo del corazón */
     .heart-names {
       font-family: var(--hand);
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 500;
       color: var(--accent);
-      margin-top: 8px;
+      margin-top: 10px;
       opacity: 0;
       transition: opacity 0.8s ease 2s;
     }
@@ -371,35 +376,6 @@
     }
     .btn-reveal:active { transform: scale(0.98) translateY(0); }
 
-    .stamp {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      opacity: 0.7;
-    }
-
-    /* ── Reveal (mensaje extra) ── */
-    .reveal {
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      margin-top: 0;
-      transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                  opacity 0.5s ease 0.1s,
-                  margin-top 0.4s ease;
-    }
-    .reveal.show {
-      max-height: 300px;
-      opacity: 1;
-      margin-top: 16px;
-    }
-    .reveal-inner {
-      padding-top: 18px;
-      border-top: 1px dashed rgba(31,41,55,0.10);
-    }
-
     /* ── 11:11 dentro del corazón SVG ──
        Aparece después del trazo, brilla y luego será movido por JS */
     .heart-eleven {
@@ -445,7 +421,29 @@
       50%      { text-shadow: 0 0 24px rgba(199,162,124,0.7), 0 0 56px rgba(199,162,124,0.4); opacity: 0.8; }
     }
 
-    /* ── "te quiero" que aparece debajo del 11:11 al llegar arriba ── */
+    /* ── Palabras que el 11:11 deja en su camino ── */
+    .trail-word {
+      position: fixed;
+      z-index: 19;
+      font-family: var(--hand);
+      font-weight: 500;
+      color: var(--accent);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(-50%);
+    }
+    /* Aparece suavemente y luego se desvanece lento */
+    .trail-word.show {
+      animation: trailWordLife 4.5s ease both;
+    }
+    @keyframes trailWordLife {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(4px); }
+      15%  { opacity: 0.7; transform: translateX(-50%) translateY(0); }
+      60%  { opacity: 0.5; transform: translateX(-50%) translateY(-2px); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+    }
+
+    /* ── "te quiero" final: aparece cuando el 11:11 llega arriba ── */
     .te-quiero {
       position: fixed;
       top: 48px;
@@ -453,26 +451,222 @@
       transform: translateX(-50%);
       z-index: 20;
       font-family: var(--hand);
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 15px;
+      font-weight: 500;
       color: var(--accent);
       pointer-events: none;
       opacity: 0;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }
     .te-quiero.visible {
-      animation: teQuieroIn 1.5s ease both;
+      animation: teQuieroIn 2s ease both;
     }
     @keyframes teQuieroIn {
       0%   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.9); }
-      50%  { opacity: 0.9; transform: translateX(-50%) translateY(0) scale(1); }
-      100% { opacity: 0.7; transform: translateX(-50%) translateY(0) scale(1); }
+      60%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+      100% { opacity: 0.75; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+
+    /* ── Avioncito de papel en la intro ── */
+    .paper-plane {
+      position: absolute;
+      top: calc(50% - 120px);
+      left: calc(50% + 60px);
+      width: 44px;
+      height: 44px;
+      opacity: 0;
+      animation: planeFloat 5s ease-in-out infinite, softIn 1.2s ease 1.2s both;
+      transform-origin: center;
+      filter: drop-shadow(0 2px 6px rgba(199,162,124,0.2));
+    }
+    .paper-plane svg {
+      width: 100%;
+      height: 100%;
+    }
+    /* Estela punteada detrás del avión */
+    .paper-plane::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      width: 36px;
+      height: 1px;
+      margin-right: 4px;
+      background: repeating-linear-gradient(
+        to left,
+        var(--accent) 0px, var(--accent) 3px,
+        transparent 3px, transparent 7px
+      );
+      opacity: 0.35;
+    }
+    /* Flotación orgánica: sube/baja + deriva horizontal */
+    @keyframes planeFloat {
+      0%   { transform: translateX(0) translateY(0) rotate(-10deg); }
+      25%  { transform: translateX(6px) translateY(-10px) rotate(-6deg); }
+      50%  { transform: translateX(-2px) translateY(-4px) rotate(-12deg); }
+      75%  { transform: translateX(4px) translateY(-12px) rotate(-7deg); }
+      100% { transform: translateX(0) translateY(0) rotate(-10deg); }
+    }
+
+    /* Cuando se presiona Comenzar, el avión sale volando en arco */
+    .paper-plane.fly-away {
+      animation: planeFly 1.6s cubic-bezier(0.36, 0, 0.66, 1) both !important;
+    }
+    .paper-plane.fly-away::after {
+      animation: trailFade 0.4s ease both;
+    }
+    @keyframes trailFade {
+      to { opacity: 0; }
+    }
+    @keyframes planeFly {
+      0%   {
+        opacity: 0.7;
+        transform: translateX(0) translateY(0) rotate(-10deg) scale(1);
+        filter: drop-shadow(0 2px 6px rgba(199,162,124,0.2));
+      }
+      20%  {
+        opacity: 0.9;
+        transform: translateX(-20px) translateY(10px) rotate(-5deg) scale(1.08);
+        filter: drop-shadow(0 4px 12px rgba(199,162,124,0.3));
+      }
+      50%  {
+        opacity: 0.85;
+        transform: translateX(80px) translateY(-60px) rotate(-20deg) scale(1.05);
+        filter: drop-shadow(0 4px 16px rgba(199,162,124,0.25));
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(260px) translateY(-240px) rotate(-28deg) scale(0.6);
+        filter: drop-shadow(0 0 0 transparent);
+      }
     }
 
     /* ── Animaciones utilitarias ── */
     @keyframes softIn {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════
+       MOBILE — Optimizado para iPhone
+       ══════════════════════════════════ */
+
+    /* Fix: usar dvh para altura real en Safari iOS (evita la barra de nav) */
+    @supports (min-height: 100dvh) {
+      body { min-height: 100dvh; }
+    }
+
+    /* Safe areas para iPhones con notch/Dynamic Island */
+    body {
+      padding: env(safe-area-inset-top) env(safe-area-inset-right)
+               env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    /* Pantallas pequeñas (iPhone SE, iPhone 13 mini, etc.) */
+    @media (max-width: 390px) {
+      .wrap { padding: 14px; }
+      .card { padding: 26px 20px 22px; border-radius: 18px; }
+      h1 { font-size: clamp(26px, 7vw, 36px); }
+      .note { font-size: 19px; }
+      .intro-label .to { font-size: 30px; }
+      .btn-liquid { width: 120px; height: 120px; font-size: 12px; }
+      .heart-svg { width: 90px; height: 82px; }
+      .heart-names { font-size: 18px; }
+      .paper-plane {
+        top: calc(50% - 90px);
+        left: calc(50% + 45px);
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    /* Pantallas medianas (iPhone 13/14/15 estándar) */
+    @media (max-width: 430px) and (min-width: 391px) {
+      .wrap { padding: 16px; }
+      .card { padding: 28px 22px 24px; }
+      .paper-plane {
+        top: calc(50% - 100px);
+        left: calc(50% + 50px);
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    /* General mobile: botones touch-friendly */
+    @media (max-width: 768px) {
+      /* Botones más grandes para toque fácil (min 44px Apple HIG) */
+      .btn-reveal {
+        padding: 13px 22px;
+        font-size: 15px;
+        min-height: 44px;
+      }
+
+      /* Evitar zoom en inputs/botones en iOS */
+      button, input, select, textarea {
+        font-size: 16px;
+      }
+
+      /* Desactivar hover en touch (evita sticky hover en iOS) */
+      .btn-reveal:hover {
+        transform: none;
+        box-shadow: none;
+        background: rgba(255,255,255,0.55);
+      }
+      .btn-reveal:active {
+        background: rgba(255,255,255,0.92);
+        transform: scale(0.97);
+      }
+
+      /* El 11:11 y te quiero un poco más arriba para no tapar status bar */
+      .eleven-traveler.settled {
+        top: calc(20px + env(safe-area-inset-top, 0px)) !important;
+      }
+      .te-quiero {
+        top: calc(48px + env(safe-area-inset-top, 0px));
+      }
+
+      /* Trail words un poco más grandes en mobile para legibilidad */
+      .trail-word { font-size: 17px !important; }
+
+      /* Reducir el vuelo del avión para no salir de pantalla */
+      @keyframes planeFly {
+        0%   {
+          opacity: 0.7;
+          transform: translateX(0) translateY(0) rotate(-10deg) scale(1);
+          filter: drop-shadow(0 2px 6px rgba(199,162,124,0.2));
+        }
+        20%  {
+          opacity: 0.9;
+          transform: translateX(-10px) translateY(8px) rotate(-5deg) scale(1.06);
+          filter: drop-shadow(0 4px 12px rgba(199,162,124,0.3));
+        }
+        50%  {
+          opacity: 0.85;
+          transform: translateX(50px) translateY(-50px) rotate(-18deg) scale(1.03);
+          filter: drop-shadow(0 4px 16px rgba(199,162,124,0.25));
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(160px) translateY(-180px) rotate(-25deg) scale(0.5);
+          filter: drop-shadow(0 0 0 transparent);
+        }
+      }
+    }
+
+    /* Prevenir selección de texto accidental en mobile */
+    .intro, .btn-liquid, .btn-reveal, .eleven-traveler, .te-quiero, .trail-word {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Tap highlight transparente en iOS */
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Smooth scroll para iOS */
+    html {
+      -webkit-overflow-scrolling: touch;
     }
   </style>
 </head>
@@ -486,6 +680,20 @@
   <!-- ═══ PANTALLA DE INICIO ═══ -->
   <div class="intro" id="intro">
     <div class="intro-inner">
+      <!-- Avioncito de papel flotando -->
+      <div class="paper-plane" id="paperPlane">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cuerpo del avión -->
+          <path d="M4 24L44 6L36 42L24 28L4 24Z"
+                stroke="#c7a27c" stroke-width="1.4" stroke-linejoin="round"
+                fill="rgba(199,162,124,0.06)"/>
+          <!-- Pliegue central (da profundidad) -->
+          <path d="M44 6L24 28" stroke="#c7a27c" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+          <!-- Pliegue inferior -->
+          <path d="M24 28L28 40" stroke="#c7a27c" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+        </svg>
+      </div>
+
       <div class="intro-label">
         <span class="from">de Oscar</span>
         <span class="divider"></span>
@@ -509,27 +717,22 @@
       <div class="actions" id="actions">
         <button type="button" class="btn-reveal" id="btnReveal">Sorpresa mia</button>
       </div>
+    </div>
 
-      <!-- Corazón + "matatita y pollito" se revela al presionar el botón -->
-      <div class="reveal" id="reveal">
-        <div class="reveal-inner">
-          <div class="heart-section" id="heartSection">
-            <div class="heart-float">
-              <svg class="heart-svg" viewBox="0 0 64 60" xmlns="http://www.w3.org/2000/svg">
-                <path class="heart-fill"
-                  d="M32 56 C32 56 4 36 4 18 C4 8 12 2 20 2 C26 2 30 6 32 10 C34 6 38 2 44 2 C52 2 60 8 60 18 C60 36 32 56 32 56Z"/>
-                <path class="heart-path"
-                  d="M32 56 C32 56 4 36 4 18 C4 8 12 2 20 2 C26 2 30 6 32 10 C34 6 38 2 44 2 C52 2 60 8 60 18 C60 36 32 56 32 56Z"/>
-                <!-- 11:11 centrado visualmente dentro del corazón -->
-                <text class="heart-eleven" x="32" y="28" text-anchor="middle" dominant-baseline="central">11:11</text>
-              </svg>
-            </div>
-            <span class="heart-names">
-              matatita <span class="y">&</span> pollito
-            </span>
-          </div>
-        </div>
+    <!-- Corazón grande centrado debajo de la card -->
+    <div class="heart-section" id="heartSection">
+      <div class="heart-float">
+        <svg class="heart-svg" viewBox="0 0 64 60" xmlns="http://www.w3.org/2000/svg">
+          <path class="heart-fill"
+            d="M32 56 C32 56 4 36 4 18 C4 8 12 2 20 2 C26 2 30 6 32 10 C34 6 38 2 44 2 C52 2 60 8 60 18 C60 36 32 56 32 56Z"/>
+          <path class="heart-path"
+            d="M32 56 C32 56 4 36 4 18 C4 8 12 2 20 2 C26 2 30 6 32 10 C34 6 38 2 44 2 C52 2 60 8 60 18 C60 36 32 56 32 56Z"/>
+          <text class="heart-eleven" x="32" y="28" text-anchor="middle" dominant-baseline="central">11:11</text>
+        </svg>
       </div>
+      <span class="heart-names">
+        matatita <span class="y">&</span> pollito
+      </span>
     </div>
   </div>
 
