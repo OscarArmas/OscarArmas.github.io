@@ -239,62 +239,156 @@ function sleep(ms) {
 }
 
 /* ══════════════════════════════════
-   CANVAS — Constelaciones animadas
+   CANVAS — Avioncitos y motas de luz
+   Fondo orgánico: avioncitos de papel que
+   flotan suavemente, estelas curvas detrás
+   de ellos, y pequeñas motas cálidas.
    ══════════════════════════════════ */
 const ctx = canvas.getContext("2d");
-let W, H, dots;
+let W, H;
 
-// Menos partículas en mobile para mejor rendimiento
 const isMobile = window.innerWidth <= 768;
-const DOT_COUNT = isMobile ? 40 : 70;
-const MAX_DIST_BASE = isMobile ? 110 : 140;
+const dpr = devicePixelRatio;
+
+/* ── Motas de luz cálidas (reemplazan los puntos geométricos) ── */
+const MOTE_COUNT = isMobile ? 25 : 45;
+let motes = [];
+
+/* ── Avioncitos de papel flotantes ── */
+const PLANE_COUNT = isMobile ? 3 : 5;
+let planes = [];
+
+function createMote() {
+  return {
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: (Math.random() * 1.5 + 0.5) * dpr,
+    vx: (Math.random() * 0.12 - 0.06) * dpr,
+    vy: (Math.random() * 0.12 - 0.06) * dpr,
+    // Cada mota parpadea con su propia fase
+    phase: Math.random() * Math.PI * 2,
+    speed: 0.008 + Math.random() * 0.012
+  };
+}
+
+function createPlane() {
+  return {
+    x: Math.random() * W,
+    y: Math.random() * H,
+    size: (8 + Math.random() * 6) * dpr,
+    angle: -0.4 + Math.random() * 0.3,  // Ligeramente hacia arriba-derecha
+    vx: (0.15 + Math.random() * 0.2) * dpr,
+    vy: (-0.08 + Math.random() * 0.06) * dpr,
+    // Oscilación suave (simula vuelo orgánico)
+    wobblePhase: Math.random() * Math.PI * 2,
+    wobbleAmp: (1.5 + Math.random() * 1.5) * dpr,
+    wobbleSpeed: 0.015 + Math.random() * 0.01,
+    alpha: 0.08 + Math.random() * 0.06,
+    // Estela: guardar posiciones anteriores
+    trail: []
+  };
+}
 
 function resize() {
-  W = canvas.width  = window.innerWidth  * devicePixelRatio;
-  H = canvas.height = window.innerHeight * devicePixelRatio;
-  dots = Array.from({ length: DOT_COUNT }, () => ({
-    x:  Math.random() * W,
-    y:  Math.random() * H,
-    r:  (Math.random() * 1.2 + 0.4) * devicePixelRatio,
-    vx: (Math.random() * 0.18 - 0.09) * devicePixelRatio,
-    vy: (Math.random() * 0.18 - 0.09) * devicePixelRatio
-  }));
+  W = canvas.width  = window.innerWidth * dpr;
+  H = canvas.height = window.innerHeight * dpr;
+  motes = Array.from({ length: MOTE_COUNT }, createMote);
+  planes = Array.from({ length: PLANE_COUNT }, createPlane);
 }
 window.addEventListener("resize", resize);
 resize();
 
+/* ── Dibuja un avioncito de papel minimalista ── */
+function drawPlane(x, y, size, angle, alpha) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = "rgba(199,162,124,1)";
+  ctx.lineWidth = 1.2 * dpr;
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+
+  // Forma del avión: triángulo estilizado
+  ctx.beginPath();
+  ctx.moveTo(size, 0);                    // Punta
+  ctx.lineTo(-size * 0.7, -size * 0.45);  // Ala arriba
+  ctx.lineTo(-size * 0.3, 0);             // Centro trasero
+  ctx.lineTo(-size * 0.7, size * 0.45);   // Ala abajo
+  ctx.closePath();
+  ctx.stroke();
+
+  // Pliegue central
+  ctx.beginPath();
+  ctx.moveTo(size, 0);
+  ctx.lineTo(-size * 0.3, 0);
+  ctx.globalAlpha = alpha * 0.5;
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+/* ── Loop principal ── */
+let time = 0;
+
 function loop() {
   ctx.clearRect(0, 0, W, H);
+  time++;
 
-  for (const p of dots) {
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.x < 0) p.x = W;
-    if (p.x > W) p.x = 0;
-    if (p.y < 0) p.y = H;
-    if (p.y > H) p.y = 0;
+  // Dibujar motas de luz
+  for (const m of motes) {
+    m.x += m.vx;
+    m.y += m.vy;
+    if (m.x < 0) m.x = W;
+    if (m.x > W) m.x = 0;
+    if (m.y < 0) m.y = H;
+    if (m.y > H) m.y = 0;
 
+    // Parpadeo suave con seno
+    const flicker = 0.12 + Math.sin(time * m.speed + m.phase) * 0.08;
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(31,41,55,0.22)";
+    ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(199,162,124,${flicker})`;
     ctx.fill();
   }
 
-  const maxDist = MAX_DIST_BASE * devicePixelRatio;
-  for (let i = 0; i < dots.length; i++) {
-    for (let j = i + 1; j < dots.length; j++) {
-      const a = dots[i], b = dots[j];
-      const dist = Math.hypot(a.x - b.x, a.y - b.y);
-      if (dist < maxDist) {
-        const alpha = (1 - dist / maxDist) * 0.10;
-        ctx.strokeStyle = `rgba(199,162,124,${alpha})`;
-        ctx.lineWidth = 1 * devicePixelRatio;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
+  // Dibujar avioncitos con estelas
+  for (const p of planes) {
+    // Movimiento con oscilación
+    const wobble = Math.sin(time * p.wobbleSpeed + p.wobblePhase) * p.wobbleAmp;
+    p.x += p.vx;
+    p.y += p.vy + wobble * 0.04;
+    p.angle = Math.atan2(p.vy + wobble * 0.02, p.vx);
+
+    // Wrap alrededor de la pantalla
+    if (p.x > W + p.size * 2) { p.x = -p.size * 2; p.trail = []; }
+    if (p.x < -p.size * 2) { p.x = W + p.size * 2; p.trail = []; }
+    if (p.y > H + p.size * 2) { p.y = -p.size * 2; p.trail = []; }
+    if (p.y < -p.size * 2) { p.y = H + p.size * 2; p.trail = []; }
+
+    // Guardar posición para la estela (cada 4 frames)
+    if (time % 4 === 0) {
+      p.trail.push({ x: p.x, y: p.y });
+      if (p.trail.length > 18) p.trail.shift();
+    }
+
+    // Dibujar estela punteada curva
+    if (p.trail.length > 2) {
+      for (let i = 1; i < p.trail.length; i++) {
+        // Solo cada 2 puntos (efecto punteado)
+        if (i % 2 === 0) {
+          const t = p.trail[i];
+          const fade = (i / p.trail.length) * p.alpha * 0.6;
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, 1 * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(199,162,124,${fade})`;
+          ctx.fill();
+        }
       }
     }
+
+    // Dibujar el avioncito
+    drawPlane(p.x, p.y, p.size, p.angle, p.alpha);
   }
 
   requestAnimationFrame(loop);
