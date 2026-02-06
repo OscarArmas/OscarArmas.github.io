@@ -275,15 +275,14 @@ function createPlane() {
   return {
     x: Math.random() * W,
     y: Math.random() * H,
-    size: (8 + Math.random() * 6) * dpr,
-    angle: -0.4 + Math.random() * 0.3,  // Ligeramente hacia arriba-derecha
+    size: (10 + Math.random() * 7) * dpr,
+    angle: -0.4 + Math.random() * 0.3,
     vx: (0.15 + Math.random() * 0.2) * dpr,
     vy: (-0.08 + Math.random() * 0.06) * dpr,
-    // Oscilación suave (simula vuelo orgánico)
     wobblePhase: Math.random() * Math.PI * 2,
     wobbleAmp: (1.5 + Math.random() * 1.5) * dpr,
     wobbleSpeed: 0.015 + Math.random() * 0.01,
-    alpha: 0.08 + Math.random() * 0.06,
+    alpha: 0.18 + Math.random() * 0.10,
     // Estela: guardar posiciones anteriores
     trail: []
   };
@@ -378,7 +377,7 @@ function loop() {
         // Solo cada 2 puntos (efecto punteado)
         if (i % 2 === 0) {
           const t = p.trail[i];
-          const fade = (i / p.trail.length) * p.alpha * 0.6;
+          const fade = (i / p.trail.length) * p.alpha * 0.8;
           ctx.beginPath();
           ctx.arc(t.x, t.y, 1 * dpr, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(199,162,124,${fade})`;
