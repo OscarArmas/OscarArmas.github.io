@@ -3,8 +3,8 @@
    ══════════════════════════════════ */
 const TEXTS = {
   kicker:  "solo quería decirte",
-  title:   "Disfruto cada momento contigo.",
-  note:    "En la ciudad o en el pueblito."
+  title:   "En la ciudad o en el pueblito disfruto cada momento contigo.",
+  note:    "Para mi novia, la más hermosa de todo el pueblito"
 };
 
 /* Palabras de dedicatoria que el 11:11 deja en su camino al subir.
