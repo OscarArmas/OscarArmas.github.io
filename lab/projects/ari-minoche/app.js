@@ -80,7 +80,12 @@ function typewrite(el, text, speed = 55) {
    SECUENCIA PRINCIPAL
    ══════════════════════════════════ */
 document.getElementById("btnStart").addEventListener("click", async () => {
-  // 1. Ocultar intro
+  // 1. El avioncito sale volando
+  const plane = document.getElementById("paperPlane");
+  plane.classList.add("fly-away");
+
+  // 2. Ocultar intro (después de que el avión empiece a volar)
+  await sleep(300);
   intro.classList.add("hidden");
 
   // 2. Mostrar card
