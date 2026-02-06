@@ -266,20 +266,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 28px;
+      margin-top: 24px;
+      padding: 20px 0;
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(16px) scale(0.95);
+      transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .heart-section.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
-    /* El SVG del corazón que se traza */
+    /* El SVG del corazón que se traza — más grande */
     .heart-svg {
-      width: 80px;
-      height: 72px;
+      width: 110px;
+      height: 100px;
       overflow: visible;
     }
     .heart-svg .heart-path {
@@ -308,10 +309,10 @@
     /* Texto dentro/debajo del corazón */
     .heart-names {
       font-family: var(--hand);
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 500;
       color: var(--accent);
-      margin-top: 8px;
+      margin-top: 10px;
       opacity: 0;
       transition: opacity 0.8s ease 2s;
     }
@@ -371,35 +372,6 @@
     }
     .btn-reveal:active { transform: scale(0.98) translateY(0); }
 
-    .stamp {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      opacity: 0.7;
-    }
-
-    /* ── Reveal (mensaje extra) ── */
-    .reveal {
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      margin-top: 0;
-      transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                  opacity 0.5s ease 0.1s,
-                  margin-top 0.4s ease;
-    }
-    .reveal.show {
-      max-height: 300px;
-      opacity: 1;
-      margin-top: 16px;
-    }
-    .reveal-inner {
-      padding-top: 18px;
-      border-top: 1px dashed rgba(31,41,55,0.10);
-    }
-
     /* ── 11:11 dentro del corazón SVG ──
        Aparece después del trazo, brilla y luego será movido por JS */
     .heart-eleven {
@@ -445,7 +417,29 @@
       50%      { text-shadow: 0 0 24px rgba(199,162,124,0.7), 0 0 56px rgba(199,162,124,0.4); opacity: 0.8; }
     }
 
-    /* ── "te quiero" que aparece debajo del 11:11 al llegar arriba ── */
+    /* ── Palabras que el 11:11 deja en su camino ── */
+    .trail-word {
+      position: fixed;
+      z-index: 19;
+      font-family: var(--hand);
+      font-weight: 500;
+      color: var(--accent);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(-50%);
+    }
+    /* Aparece suavemente y luego se desvanece lento */
+    .trail-word.show {
+      animation: trailWordLife 4.5s ease both;
+    }
+    @keyframes trailWordLife {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(4px); }
+      15%  { opacity: 0.7; transform: translateX(-50%) translateY(0); }
+      60%  { opacity: 0.5; transform: translateX(-50%) translateY(-2px); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+    }
+
+    /* ── "te quiero" final: aparece cuando el 11:11 llega arriba ── */
     .te-quiero {
       position: fixed;
       top: 48px;
@@ -453,20 +447,20 @@
       transform: translateX(-50%);
       z-index: 20;
       font-family: var(--hand);
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 15px;
+      font-weight: 500;
       color: var(--accent);
       pointer-events: none;
       opacity: 0;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }
     .te-quiero.visible {
-      animation: teQuieroIn 1.5s ease both;
+      animation: teQuieroIn 2s ease both;
     }
     @keyframes teQuieroIn {
       0%   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.9); }
-      50%  { opacity: 0.9; transform: translateX(-50%) translateY(0) scale(1); }
-      100% { opacity: 0.7; transform: translateX(-50%) translateY(0) scale(1); }
+      60%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+      100% { opacity: 0.75; transform: translateX(-50%) translateY(0) scale(1); }
     }
 
     /* ── Avioncito de papel en la intro ── */
@@ -597,27 +591,22 @@
       <div class="actions" id="actions">
         <button type="button" class="btn-reveal" id="btnReveal">Sorpresa mia</button>
       </div>
+    </div>
 
-      <!-- Corazón + "matatita y pollito" se revela al presionar el botón -->
-      <div class="reveal" id="reveal">
-        <div class="reveal-inner">
-          <div class="heart-section" id="heartSection">
-            <div class="heart-float">
-              <svg class="heart-svg" viewBox="0 0 64 60" xmlns="http://www.w3.org/2000/svg">
-                <path class="heart-fill"
-                  d="M32 56 C32 56 4 36 4 18 C4 8 12 2 20 2 C26 2 30 6 32 10 C34 6 38 2 44 2 C52 2 60 8 60 18 C60 36 32 56 32 56Z"/>
-                <path class="heart-path"
-                  d="M32 56 C32 56 4 36 4 18 C4 8 12 2 20 2 C26 2 30 6 32 10 C34 6 38 2 44 2 C52 2 60 8 60 18 C60 36 32 56 32 56Z"/>
-                <!-- 11:11 centrado visualmente dentro del corazón -->
-                <text class="heart-eleven" x="32" y="28" text-anchor="middle" dominant-baseline="central">11:11</text>
-              </svg>
-            </div>
-            <span class="heart-names">
-              matatita <span class="y">&</span> pollito
-            </span>
-          </div>
-        </div>
+    <!-- Corazón grande centrado debajo de la card -->
+    <div class="heart-section" id="heartSection">
+      <div class="heart-float">
+        <svg class="heart-svg" viewBox="0 0 64 60" xmlns="http://www.w3.org/2000/svg">
+          <path class="heart-fill"
+            d="M32 56 C32 56 4 36 4 18 C4 8 12 2 20 2 C26 2 30 6 32 10 C34 6 38 2 44 2 C52 2 60 8 60 18 C60 36 32 56 32 56Z"/>
+          <path class="heart-path"
+            d="M32 56 C32 56 4 36 4 18 C4 8 12 2 20 2 C26 2 30 6 32 10 C34 6 38 2 44 2 C52 2 60 8 60 18 C60 36 32 56 32 56Z"/>
+          <text class="heart-eleven" x="32" y="28" text-anchor="middle" dominant-baseline="central">11:11</text>
+        </svg>
       </div>
+      <span class="heart-names">
+        matatita <span class="y">&</span> pollito
+      </span>
     </div>
   </div>
 
