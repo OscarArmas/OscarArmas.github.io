@@ -33,22 +33,22 @@
     body {
       font-family: var(--sans);
       color: var(--text);
-      background: var(--bg);
+      background: linear-gradient(165deg, #fbfaf7 0%, #f7f2ed 40%, #faf5f0 100%);
       min-height: 100vh;
       display: grid;
       place-items: center;
       overflow-x: hidden;
     }
 
-    /* ── Canvas de constelaciones ── */
+    /* ── Canvas de fondo animado ── */
     canvas {
       position: fixed;
       inset: 0;
       z-index: 0;
-      opacity: 0.30;
-      transition: opacity 1.5s ease;
+      opacity: 0.28;
+      transition: opacity 1.8s ease;
     }
-    canvas.bright { opacity: 0.45; }
+    canvas.bright { opacity: 0.42; }
 
     /* ══════════════════════════════════
        PANTALLA DE INICIO
@@ -77,30 +77,30 @@
     }
     .intro-label .from {
       display: block;
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
+      font-family: var(--serif);
+      font-size: 13px;
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: 0.18em;
       color: var(--muted);
     }
     .intro-label .divider {
       display: block;
-      width: 32px;
+      width: 40px;
       height: 1px;
-      background: var(--accent);
-      margin: 12px auto;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 14px auto;
       opacity: 0;
-      animation: lineGrow 0.8s ease 0.7s both;
+      animation: lineGrow 1s ease 0.7s both;
     }
     @keyframes lineGrow {
       from { width: 0; opacity: 0; }
-      to   { width: 32px; opacity: 0.6; }
+      to   { width: 40px; opacity: 0.5; }
     }
     .intro-label .to {
       display: block;
       font-family: var(--hand);
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 600;
       letter-spacing: 0.02em;
       color: var(--text);
@@ -116,11 +116,11 @@
       justify-content: center;
       width: 140px;
       height: 140px;
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-family: var(--hand);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: none;
       color: var(--text);
       background: transparent;
       border: none;
@@ -183,37 +183,39 @@
       width: min(560px, 92vw);
       padding: 24px;
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(24px) scale(0.98);
+      transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .wrap.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     .card {
       position: relative;
       overflow: hidden;
-      background: var(--card);
+      background: linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.75) 100%);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(31,41,55,0.05);
+      border: 1px solid rgba(199,162,124,0.12);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,0.5) inset;
       padding: 36px 30px 28px;
     }
 
     /* ── Kicker ── */
     .kicker {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 16px;
+      font-family: var(--serif);
+      font-size: 13px;
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: 0.12em;
+      text-transform: none;
+      color: var(--accent);
+      margin-bottom: 18px;
       min-height: 1.4em;
+      opacity: 0.75;
     }
 
     /* ── Título principal — fuente manuscrita ── */
@@ -255,11 +257,24 @@
       font-family: var(--hand);
       font-weight: 400;
       font-size: 22px;
-      line-height: 1.5;
+      line-height: 1.6;
       color: var(--muted);
-      margin-top: 18px;
+      margin-top: 20px;
       min-height: 1.5em;
       max-width: 46ch;
+      position: relative;
+      padding-top: 16px;
+    }
+    /* Separador sutil entre título y nota */
+    .note::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-soft), transparent);
     }
 
     /* ══════════════════════════════════
@@ -270,11 +285,22 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 24px;
-      padding: 20px 0;
+      margin-top: 20px;
+      padding: 24px 0 16px;
       opacity: 0;
       transform: translateY(16px) scale(0.95);
       transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    /* Línea decorativa curva antes del corazón */
+    .heart-section::before {
+      content: '~';
+      display: block;
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--accent);
+      opacity: 0.35;
+      margin-bottom: 16px;
+      letter-spacing: 0.5em;
     }
     .heart-section.visible {
       opacity: 1;
@@ -313,12 +339,13 @@
     /* Texto dentro/debajo del corazón */
     .heart-names {
       font-family: var(--hand);
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 500;
       color: var(--accent);
-      margin-top: 10px;
+      margin-top: 12px;
       opacity: 0;
       transition: opacity 0.8s ease 2s;
+      text-shadow: 0 1px 8px rgba(199,162,124,0.15);
     }
     .heart-section.visible .heart-names {
       opacity: 1;
@@ -327,9 +354,9 @@
       font-family: var(--serif);
       font-style: italic;
       font-weight: 400;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--muted);
-      margin: 0 4px;
+      margin: 0 5px;
     }
 
     /* Animación flotante sutil del corazón completo */
@@ -357,21 +384,22 @@
     }
 
     .btn-reveal {
-      border: 1px solid rgba(31,41,55,0.10);
-      background: rgba(255,255,255,0.55);
-      color: var(--text);
-      padding: 11px 18px;
+      border: 1px solid rgba(199,162,124,0.20);
+      background: rgba(255,255,255,0.50);
+      color: var(--accent);
+      padding: 12px 22px;
       border-radius: 999px;
       cursor: pointer;
-      font-family: var(--sans);
-      font-weight: 500;
-      font-size: 14px;
-      letter-spacing: 0.03em;
+      font-family: var(--hand);
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.02em;
       transition: all 0.3s ease;
     }
     .btn-reveal:hover {
-      background: rgba(255,255,255,0.92);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      background: rgba(255,255,255,0.85);
+      border-color: rgba(199,162,124,0.30);
+      box-shadow: 0 4px 20px rgba(199,162,124,0.10);
       transform: translateY(-1px);
     }
     .btn-reveal:active { transform: scale(0.98) translateY(0); }
@@ -401,46 +429,51 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 20;
-      font-family: var(--hand);
+      font-family: var(--serif);
       font-size: 20px;
-      font-weight: 700;
+      font-weight: 600;
+      font-style: italic;
       color: var(--accent);
       pointer-events: none;
       opacity: 0;
       transition: none;
+      letter-spacing: 0.08em;
     }
     /* Estado final: se queda arriba brillando */
     .eleven-traveler.settled {
       opacity: 1;
-      text-shadow: 0 0 18px rgba(199,162,124,0.5),
-                   0 0 40px rgba(199,162,124,0.25);
-      animation: skyPulse 3s ease-in-out infinite;
+      text-shadow: 0 0 14px rgba(199,162,124,0.45),
+                   0 0 36px rgba(199,162,124,0.20),
+                   0 0 60px rgba(199,162,124,0.08);
+      animation: skyPulse 4s ease-in-out infinite;
     }
     @keyframes skyPulse {
-      0%, 100% { text-shadow: 0 0 18px rgba(199,162,124,0.5), 0 0 40px rgba(199,162,124,0.25); opacity: 1; }
-      50%      { text-shadow: 0 0 24px rgba(199,162,124,0.7), 0 0 56px rgba(199,162,124,0.4); opacity: 0.8; }
+      0%, 100% { text-shadow: 0 0 14px rgba(199,162,124,0.45), 0 0 36px rgba(199,162,124,0.20); opacity: 1; }
+      50%      { text-shadow: 0 0 22px rgba(199,162,124,0.6), 0 0 50px rgba(199,162,124,0.35); opacity: 0.85; }
     }
 
     /* ── Palabras que el 11:11 deja en su camino ── */
     .trail-word {
       position: fixed;
       z-index: 19;
-      font-family: var(--hand);
+      font-family: var(--serif);
       font-weight: 500;
+      font-style: italic;
       color: var(--accent);
       pointer-events: none;
       opacity: 0;
       transform: translateX(-50%);
+      letter-spacing: 0.06em;
     }
     /* Aparece suavemente y luego se desvanece lento */
     .trail-word.show {
-      animation: trailWordLife 4.5s ease both;
+      animation: trailWordLife 5s ease both;
     }
     @keyframes trailWordLife {
-      0%   { opacity: 0; transform: translateX(-50%) translateY(4px); }
-      15%  { opacity: 0.7; transform: translateX(-50%) translateY(0); }
-      60%  { opacity: 0.5; transform: translateX(-50%) translateY(-2px); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+      0%   { opacity: 0; transform: translateX(-50%) translateY(6px); filter: blur(2px); }
+      15%  { opacity: 0.65; transform: translateX(-50%) translateY(0); filter: blur(0); }
+      55%  { opacity: 0.4; transform: translateX(-50%) translateY(-3px); filter: blur(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-12px); filter: blur(1px); }
     }
 
     /* ── "te quiero" final: aparece cuando el 11:11 llega arriba ── */
@@ -451,20 +484,20 @@
       transform: translateX(-50%);
       z-index: 20;
       font-family: var(--hand);
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 500;
       color: var(--accent);
       pointer-events: none;
       opacity: 0;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.10em;
     }
     .te-quiero.visible {
-      animation: teQuieroIn 2s ease both;
+      animation: teQuieroIn 2.5s ease both;
     }
     @keyframes teQuieroIn {
-      0%   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.9); }
-      60%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-      100% { opacity: 0.75; transform: translateX(-50%) translateY(0) scale(1); }
+      0%   { opacity: 0; transform: translateX(-50%) translateY(8px) scale(0.85); filter: blur(2px); }
+      50%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); filter: blur(0); }
+      100% { opacity: 0.7; transform: translateX(-50%) translateY(0) scale(1); filter: blur(0); }
     }
 
     /* ── Avioncito de papel en la intro ── */
@@ -569,7 +602,7 @@
       h1 { font-size: clamp(26px, 7vw, 36px); }
       .note { font-size: 19px; }
       .intro-label .to { font-size: 30px; }
-      .btn-liquid { width: 120px; height: 120px; font-size: 12px; }
+      .btn-liquid { width: 120px; height: 120px; font-size: 17px; }
       .heart-svg { width: 90px; height: 82px; }
       .heart-names { font-size: 18px; }
       .paper-plane {
@@ -715,7 +748,7 @@
       <p class="note" id="note"></p>
 
       <div class="actions" id="actions">
-        <button type="button" class="btn-reveal" id="btnReveal">Sorpresa mia</button>
+        <button type="button" class="btn-reveal" id="btnReveal">Sorpresa mía</button>
       </div>
     </div>
 
