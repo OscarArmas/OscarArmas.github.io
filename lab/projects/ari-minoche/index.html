@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- iOS: pantalla completa cuando se agrega al home screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#fbfaf7" />
   <title>Para ti</title>
   <!-- Tipografías: manuscrita + sans elegante + serif -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -541,6 +545,128 @@
     @keyframes softIn {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════
+       MOBILE — Optimizado para iPhone
+       ══════════════════════════════════ */
+
+    /* Fix: usar dvh para altura real en Safari iOS (evita la barra de nav) */
+    @supports (min-height: 100dvh) {
+      body { min-height: 100dvh; }
+    }
+
+    /* Safe areas para iPhones con notch/Dynamic Island */
+    body {
+      padding: env(safe-area-inset-top) env(safe-area-inset-right)
+               env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    /* Pantallas pequeñas (iPhone SE, iPhone 13 mini, etc.) */
+    @media (max-width: 390px) {
+      .wrap { padding: 14px; }
+      .card { padding: 26px 20px 22px; border-radius: 18px; }
+      h1 { font-size: clamp(26px, 7vw, 36px); }
+      .note { font-size: 19px; }
+      .intro-label .to { font-size: 30px; }
+      .btn-liquid { width: 120px; height: 120px; font-size: 12px; }
+      .heart-svg { width: 90px; height: 82px; }
+      .heart-names { font-size: 18px; }
+      .paper-plane {
+        top: calc(50% - 90px);
+        left: calc(50% + 45px);
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    /* Pantallas medianas (iPhone 13/14/15 estándar) */
+    @media (max-width: 430px) and (min-width: 391px) {
+      .wrap { padding: 16px; }
+      .card { padding: 28px 22px 24px; }
+      .paper-plane {
+        top: calc(50% - 100px);
+        left: calc(50% + 50px);
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    /* General mobile: botones touch-friendly */
+    @media (max-width: 768px) {
+      /* Botones más grandes para toque fácil (min 44px Apple HIG) */
+      .btn-reveal {
+        padding: 13px 22px;
+        font-size: 15px;
+        min-height: 44px;
+      }
+
+      /* Evitar zoom en inputs/botones en iOS */
+      button, input, select, textarea {
+        font-size: 16px;
+      }
+
+      /* Desactivar hover en touch (evita sticky hover en iOS) */
+      .btn-reveal:hover {
+        transform: none;
+        box-shadow: none;
+        background: rgba(255,255,255,0.55);
+      }
+      .btn-reveal:active {
+        background: rgba(255,255,255,0.92);
+        transform: scale(0.97);
+      }
+
+      /* El 11:11 y te quiero un poco más arriba para no tapar status bar */
+      .eleven-traveler.settled {
+        top: calc(20px + env(safe-area-inset-top, 0px)) !important;
+      }
+      .te-quiero {
+        top: calc(48px + env(safe-area-inset-top, 0px));
+      }
+
+      /* Trail words un poco más grandes en mobile para legibilidad */
+      .trail-word { font-size: 17px !important; }
+
+      /* Reducir el vuelo del avión para no salir de pantalla */
+      @keyframes planeFly {
+        0%   {
+          opacity: 0.7;
+          transform: translateX(0) translateY(0) rotate(-10deg) scale(1);
+          filter: drop-shadow(0 2px 6px rgba(199,162,124,0.2));
+        }
+        20%  {
+          opacity: 0.9;
+          transform: translateX(-10px) translateY(8px) rotate(-5deg) scale(1.06);
+          filter: drop-shadow(0 4px 12px rgba(199,162,124,0.3));
+        }
+        50%  {
+          opacity: 0.85;
+          transform: translateX(50px) translateY(-50px) rotate(-18deg) scale(1.03);
+          filter: drop-shadow(0 4px 16px rgba(199,162,124,0.25));
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(160px) translateY(-180px) rotate(-25deg) scale(0.5);
+          filter: drop-shadow(0 0 0 transparent);
+        }
+      }
+    }
+
+    /* Prevenir selección de texto accidental en mobile */
+    .intro, .btn-liquid, .btn-reveal, .eleven-traveler, .te-quiero, .trail-word {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Tap highlight transparente en iOS */
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Smooth scroll para iOS */
+    html {
+      -webkit-overflow-scrolling: touch;
     }
   </style>
 </head>

@@ -244,15 +244,20 @@ function sleep(ms) {
 const ctx = canvas.getContext("2d");
 let W, H, dots;
 
+// Menos partículas en mobile para mejor rendimiento
+const isMobile = window.innerWidth <= 768;
+const DOT_COUNT = isMobile ? 40 : 70;
+const MAX_DIST_BASE = isMobile ? 110 : 140;
+
 function resize() {
   W = canvas.width  = window.innerWidth  * devicePixelRatio;
   H = canvas.height = window.innerHeight * devicePixelRatio;
-  dots = Array.from({ length: 70 }, () => ({
+  dots = Array.from({ length: DOT_COUNT }, () => ({
     x:  Math.random() * W,
     y:  Math.random() * H,
     r:  (Math.random() * 1.2 + 0.4) * devicePixelRatio,
-    vx: (Math.random() * 0.22 - 0.11) * devicePixelRatio,
-    vy: (Math.random() * 0.22 - 0.11) * devicePixelRatio
+    vx: (Math.random() * 0.18 - 0.09) * devicePixelRatio,
+    vy: (Math.random() * 0.18 - 0.09) * devicePixelRatio
   }));
 }
 window.addEventListener("resize", resize);
@@ -275,7 +280,7 @@ function loop() {
     ctx.fill();
   }
 
-  const maxDist = 140 * devicePixelRatio;
+  const maxDist = MAX_DIST_BASE * devicePixelRatio;
   for (let i = 0; i < dots.length; i++) {
     for (let j = i + 1; j < dots.length; j++) {
       const a = dots[i], b = dots[j];
