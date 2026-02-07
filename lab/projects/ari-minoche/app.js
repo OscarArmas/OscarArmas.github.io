@@ -37,33 +37,71 @@ const elevenEl     = document.getElementById("elevenTraveler");
    ══════════════════════════════════ */
 function typewrite(el, text, speed = 55) {
   return new Promise(resolve => {
+    el.innerHTML = "";
     const cursorSpan = document.createElement("span");
     cursorSpan.className = "cursor";
-    el.textContent = "";
+    
+    // 1. Agrupar por palabras para evitar saltos de línea a mitad de palabra
+    const words = text.split(" ");
+    const spans = [];
+    
+    words.forEach((word, index) => {
+      // Wrapper para la palabra: inline-block mantiene las letras juntas
+      const wordWrapper = document.createElement("span");
+      wordWrapper.style.display = "inline-block";
+      wordWrapper.style.whiteSpace = "nowrap";
+      
+      for (let char of word) {
+        const span = document.createElement("span");
+        span.textContent = char;
+        span.style.opacity = "0";
+        span.style.transform = "translateY(6px)";
+        span.style.transition = "opacity 0.25s ease, transform 0.3s ease";
+        span.style.display = "inline-block";
+        
+        wordWrapper.appendChild(span);
+        spans.push({ span, char });
+      }
+      
+      el.appendChild(wordWrapper);
+
+      // Agregar espacio después de la palabra (si no es la última)
+      if (index < words.length - 1) {
+        const spaceSpan = document.createElement("span");
+        spaceSpan.innerHTML = "&nbsp;";
+        spaceSpan.style.display = "inline";
+        spaceSpan.style.opacity = "0"; // También animamos el espacio para consistencia
+        el.appendChild(spaceSpan);
+        spans.push({ span: spaceSpan, char: " " });
+      }
+    });
+
     el.appendChild(cursorSpan);
 
+    // 2. Revelarlos uno a uno
     let i = 0;
     function tick() {
-      if (i < text.length) {
-        const charSpan = document.createElement("span");
-        charSpan.textContent = text[i];
-        charSpan.style.display = "inline-block";
-        charSpan.style.opacity = "0";
-        charSpan.style.transform = "translateY(6px)";
-        charSpan.style.transition = "opacity 0.25s ease, transform 0.3s ease";
-        if (text[i] === " ") {
-          charSpan.style.display = "inline";
-          charSpan.style.transform = "none";
-          charSpan.style.opacity = "1";
+      if (i < spans.length) {
+        const { span, char } = spans[i];
+        
+        // Mover cursor: si es letra, va dentro del wordWrapper; si es espacio, en el root
+        if (i < spans.length - 1) {
+          const nextSpan = spans[i+1].span;
+          // Insertar antes del siguiente span (sea hermano o primo)
+          // Si nextSpan es hijo de wordWrapper, cursor va dentro de wordWrapper
+          // Si nextSpan es espacio (hijo directo), cursor va al root
+          nextSpan.parentNode.insertBefore(cursorSpan, nextSpan);
+        } else {
+          // Al final, cursor al final del root
+          el.appendChild(cursorSpan);
         }
-        el.insertBefore(charSpan, cursorSpan);
 
+        // Animar entrada
         requestAnimationFrame(() => {
-          charSpan.style.opacity = "1";
-          charSpan.style.transform = "translateY(0)";
+          span.style.opacity = "1";
+          span.style.transform = "translateY(0)";
         });
 
-        const char = text[i];
         i++;
 
         let delay = speed + (Math.random() * 25 - 12);
