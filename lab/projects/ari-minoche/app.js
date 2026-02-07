@@ -68,9 +68,9 @@ function typewrite(el, text, speed = 55) {
       // Agregar espacio después de la palabra (si no es la última)
       if (index < words.length - 1) {
         const spaceSpan = document.createElement("span");
-        spaceSpan.innerHTML = "&nbsp;";
+        spaceSpan.innerHTML = " "; // Espacio normal para permitir salto de línea
         spaceSpan.style.display = "inline";
-        spaceSpan.style.opacity = "0"; // También animamos el espacio para consistencia
+        spaceSpan.style.opacity = "0"; 
         el.appendChild(spaceSpan);
         spans.push({ span: spaceSpan, char: " " });
       }
